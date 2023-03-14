@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hellopet.dao.MemberDAO">
+
+
+	<!-- 일반회원 type, level 은 추후 수정 예정 -->
+	<insert id="insertMember">
+		insert into `pet_owner` set
+			`uid` 	= #{uid} ,
+			`hp` 	= #{hp} ,
+			`name` 	= #{name} ,
+			`email` 	= #{email} ,
+			`pass` 	= #{pass} ,
+			`type` 	= 1 ,
+			`level` = 1 ,
+			`nick` = #{nick} ,
+			`zip` 	= #{zip} ,
+			`addr1` = #{addr1} ,
+			`addr2` = #{addr2} ,
+			`regip` = #{regip} ,
+			`rdate` = now();
+	</insert>
+	
+	<!-- 병원/약국 type, level 은 추후 수정 예정 -->
+	<insert id="insertMedical">
+		insert into `pet_hospital_pharmacy` set
+			`uid` 		  = #{uid} ,
+			`hp` 		  = #{hp} ,
+			`name` 		  = #{name} ,
+			`email` 	  = #{email} ,
+			`pass` 		  = #{pass} ,
+			`type` 		  = 2 ,
+			`level` 	  = #{level} ,
+			`medicalName` = #{medicalName} ,
+			`ceo` 		  = #{ceo} ,
+			`tel` 		  = #{tel} ,
+			`ceoHp` 	  = #{ceoHp} ,
+			`zip` 		  = #{zip} ,
+			`addr1` 	  = #{addr1} ,
+			`addr2` 	  = #{addr2} ,
+			`reserve`     = #{reserve},
+			`reserveOk`   = #{reserveOk},
+			`regip` 	  = #{regip} ,
+			`rdate` 	  = now();
+	</insert>
+	
+	<!-- register Medical 병원 조회하기 -->
+	<select id="selectMedical" resultType="kr.co.hellopet.vo.Api_HospitalVO">
+		SELECT * FROM `api_hospital` 
+								WHERE 
+									`hosAddr` LIKE concat('%', #{trial}, '%') AND 
+									`hosAddr` LIKE concat('%', #{county}, '%') AND 
+									`hosName` LIKE concat('%', #{name}, '%') and
+									`tel`     LIKE '%-%-%';
+	</select>
+	
+	<!-- register Medical 약국 조회하기 -->
+	<select id="selectPharmacy" resultType="kr.co.hellopet.vo.Api_PharmacyVO">
+		SELECT * FROM `api_pharmacy` 
+							WHERE 
+								`pharAddr` LIKE concat('%', #{trial}, '%') AND 
+								`pharAddr` LIKE concat('%', #{county}, '%') AND 
+								`pharName` LIKE concat('%',#{name},'%') AND
+								`tel`      LIKE '%-%-%';
+	</select>
+	
+	<!-- register uid 중복조회 -->
+	<select id="countUid" resultType="int">
+		SELECT COUNT(`uid`) FROM `pet_owner` WHERE `uid` = #{uid};
+	</select>
+	
+	<!-- register Medical 중복조회 -->
+	<select id="countMedicalUid" resultType="int">
+		select count(`uid`) from `pet_hospital_pharmacy` where `uid` = #{uid};
+	</select>
+	
+	<!-- register hp 중복조회 -->
+	<select id="countHp" resultType="int">
+		SELECT COUNT(`hp`) FROM `pet_owner` WHERE `hp` = #{hp};
+	</select>
+	
+	<!-- register Medical hp 중복조회 -->
+	<select id="countMedicalHp" resultType="int">
+		SELECT COUNT(`hp`) FROM `pet_hospital_pharmacy` WHERE `hp` = #{hp};
+	</select>
+	
+	<!-- register email 중복조회 -->
+	<select id="countEmail" resultType="int">
+		SELECT COUNT(`email`) FROM `pet_owner` WHERE `email` = #{email};
+	</select>
+	
+		<!-- register Medical email 중복조회 -->
+	<select id="countMedicalEmail" resultType="int">
+		SELECT COUNT(`email`) FROM `pet_hospital_pharmacy` WHERE `email` = #{email};
+	</select>
+	
+	<!-- register nick 중복조회 -->
+	<select id="countNick" resultType="int">
+		SELECT COUNT(`nick`) FROM `pet_owner` WHERE `nick` = #{nick};
+	</select>
+
+	<select id="selectFindId" resultType="kr.co.hellopet.vo.MemberVO">
+		SELECT * FROM `pet_owner` WHERE `name` = #{name} AND `hp` = #{hp};
+	</select>
+	
+	<select id="selectFindMedicalId" resultType="kr.co.hellopet.vo.MedicalVO">
+		SELECT * FROM `pet_hospital_pharmacy` WHERE `name` = #{name} AND `hp` = #{hp};
+	</select>
+	
+	<select id="selectCountMemberForChangePass" resultType="int">
+		SELECT COUNT(`uid`) FROM `pet_owner` WHERE `email`= #{email} AND `name` = #{name} AND `hp` = #{hp};
+	</select>
+	
+	<select id="selectCountMedicalForChangePass" resultType="int">
+		SELECT COUNT(`uid`) FROM `pet_hospital_pharmacy` WHERE `email`= #{email} AND `name` = #{name} AND `hp` = #{hp};
+	</select>
+	
+	
+	<update id="updatePetOwnerPasswordByCodeAndInfo">
+		update `pet_owner` set `pass` = #{pass} where `email` = #{email} AND `name` = #{name} AND `hp` = #{hp}; 
+	</update>
+	
+	<update id="updateMedicalPasswordByCodeAndInfo">
+		update `pet_hospital_pharmacy` set `pass` = #{pass} where `email` = #{email} AND `name` = #{name} AND `hp` = #{hp}; 
+	</update>
+
+</mapper>

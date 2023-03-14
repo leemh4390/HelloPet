@@ -1,0 +1,52 @@
+<th:block th:include="@{cs/_header.html}"/>
+<script>
+	function validateForm() {
+	  var title = document.forms[0]["title"].value.trim();
+	  var content = document.forms[0]["content"].value.trim();
+	  
+	  if (title == "" || content == "") {
+	    alert("제목과 내용을 모두 입력해주세요.");
+	    return false;
+	  }
+	  
+	  return true;
+	}
+</script>
+ <main id="notice">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li class="on"><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+            <section id="write">
+                <div class="container">
+                    <form onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+                        <table class="writeTable">
+                            <caption>공지사항 작성</caption>
+                            <tr>
+                                <th>제목</th>
+                                <td><input type="text" name="title" placeholder=" 제목을 입력하세요"></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea name="content" placeholder=" 내용을 입력하세요"></textarea></td>
+                            </tr>
+                            <tr>
+                                <th>파일</th>
+                                <td><input type="file" name="fileimg" style="border: none;"></td>
+                            </tr>
+                        </table>
+                        <div class="button">
+                            <a th:href="@{/cs/notice/list}" class="btnList">취소</a>
+                            <input type="submit" value="작성완료" class="btnWrite"/>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{cs/_footer.html}"/>

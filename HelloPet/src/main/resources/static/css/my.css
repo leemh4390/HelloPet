@@ -1,0 +1,358 @@
+/* 공통 */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR","Apple SD Gothic Neo",Helvetica,sans-serif,Arial;
+}
+a {
+    text-decoration: none;
+    color: #555;
+}
+ul, ol {list-style: none;}
+input, textarea {
+    outline: none;
+}
+img {border-style: none; max-width: 100%;}
+button {outline: none; border: none;}
+#wrapper {
+    width: 100%;
+    min-width: 1200px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+header {
+    min-width: 1200px;
+    width: 100%;
+    height: 105px;
+    position: relative;
+}
+
+header>div {
+    width: 100%;
+    box-sizing: border-box;
+   
+}
+
+header>.headerTop {
+    position: absolute;
+    height: 35px;
+    background: #e1f3f3;
+}
+
+header>.headerTop>div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+header>.headerTop>div>a {
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 300;
+}
+
+header>.menu {
+    position: absolute;
+    top: 35px;
+    height: 70px;
+    background: #32a69f;
+    box-sizing: border-box;
+}
+
+header > .menu > div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+}
+header > .menu > div > ul {
+    display: inline-block;
+    margin-top: 20px;
+    
+}
+header > .menu > div > ul > li {float: left;}
+header > .menu > div > ul > li > a {
+    font-size: 20px;
+    color: white;
+    padding: 0 64px;
+}
+header > .menu > div > ul > li img {width: 70px;}
+header > .menu > div > ul > li:nth-child(3) {
+    position: relative;
+    top: -22px;
+}
+
+.top {
+    overflow: hidden;
+    height: 200px;
+    background-color: #e1f4f3;
+    text-align: center;
+}
+
+.top > h3 {
+    color: #555;
+    font-size: 38px;
+    font-weight: bold;
+    padding-top: 60px;
+}
+
+.tab {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    margin-top: -40px;
+}
+.tab > ul {
+    width: 700px;
+    height: 100%;
+    background: white;
+}
+
+.tab > ul > li {
+    text-align: center;
+    float: left;
+    width: 33.3%;
+    align-items: center;
+    line-height: 70px;
+    border-bottom: 1px solid #10958b;
+}
+.tab > ul > li > a {
+    font-weight: bold;
+    font-size: 20px;
+    color: #10958b;
+}
+.tab > ul > .on {
+    background: #32a69f;
+}
+.tab > ul > .on a {
+    color: #fff;
+}
+
+footer {
+    margin-top: 100px;
+    height: 180px;
+    background: #b4e8e3;
+    padding: 43px 0 75px;
+}
+.footer-col:first-child {
+    max-width: 524px;
+}
+.footer .container {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+
+}
+.info {margin: 0 -8px;}
+.info li {
+    float: left;
+    padding: 8px;
+    line-height: .8;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 300;
+}
+.info li:first-child {
+    font-weight: bold;
+    font-weight: 700;
+}
+.link {
+    margin: -10px;
+}
+.link li {
+    float: left;
+    padding: 0 2px;
+}
+.link li a {
+    display: block;
+    line-height: 1;
+    font-family: bold;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 700;
+    padding: 2px;
+    margin: 0 2px 10px;
+}
+
+/* aside */
+
+.title {
+    text-align: right;
+    padding: 15px;
+    line-height: 1;
+    font-size: 28px;
+    color: #555;
+    font-weight: 700;
+}
+
+.info_aside {
+    position: relative;
+    float: left;
+    width: 200px;
+    min-height: 600px;
+    height: auto;
+    padding: 15px;
+    margin-left: 10px;
+    border: 1px solid #e5e5e5;
+    border-bottom: 4px solid #00e5c2;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgb(36 36 36 / 15%);
+    box-sizing: border-box;
+}
+
+.info_aside > article {
+    margin-left: 10px;
+}
+
+.info_aside > article > aside {}
+
+.info_aside > article > aside > ul {}
+
+.info_aside > article > aside > ul > li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    
+}
+
+.info_aside > article > aside > ul > li[class=on] {
+    border-bottom: 1px solid #0dbcaf;
+}
+
+.info_aside > article > aside > ul > li[class=on] > a {
+    color: #0dbcaf;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info_aside > article > aside > ul > li > a {
+    font-size: 16px;
+    
+}
+
+.sub-cate {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.sub-cate > li {
+    padding: 5px;
+}
+
+.sub-cate > li > a {
+    margin-left: 10px;
+}
+
+.sub-cate {
+    font-size: 14px;
+    background: #f9f9f9;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.sub-cate > li {
+    padding: 5px;
+}
+
+.sub-cate > li > a {
+    color: #999;
+    margin-left: 10px;
+}
+
+
+/* info */
+.info_main {
+    border: 0px solid red;
+    width: 1200px;
+    min-height: 700px;
+    margin: auto;
+    padding: 130px 0;
+    height: auto;
+}
+
+.info_div {
+    float: left;
+    width: 950px;
+    height: auto;
+    border-top: 2px solid #e5e5e5;
+    margin-left: 20px;
+    padding-top: 40px;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.info_div > table {}
+
+.info_div > table tr {}
+
+.info_div > table tr > td {
+    width: 170px;
+    height: 60px;
+    font-size: 18px;
+    font-weight: 300;
+    color: #5a5d5a;
+    padding: 5px;
+    padding-left: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.info_div > table tr > td:nth-child(1) {
+    border-left: 4px solid #e1f4f3;
+    border-right: 1px solid #e1f4f3;
+}
+
+.info_div > table tr > td:nth-child(2) button {
+    border: 1px solid #0dbcaf;
+    width: 150px;
+    height: 50px;
+    padding: 10px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    background: #0dbcaf;
+}
+
+#info_modify {
+    text-align: center;
+}
+
+#info_modify > button {
+    width: 250px;
+    height: 65px;
+    margin-top: 100px;
+    border: 4px solid #1dc6f7;
+    text-align: center;
+    background: #fff;
+    border-radius: 100px;
+
+}
+
+#info_modify > button > span {
+    color: #3c83dc;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.info_table td  > span {
+    display: block;
+    width: 600px;
+    padding: 5px;
+}
+
+/* myReserve */
+
+.reserve_main {
+    width: 1200px;
+    min-height: 700px;
+    margin: auto;
+    padding: 130px 0;
+    height: auto;
+}

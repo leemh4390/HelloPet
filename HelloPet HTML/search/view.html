@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloPet</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a9406304300a51cc8ebf8dedabf1eb4d"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <header class="header">
+                <div class="headerTop">
+                    <div>
+                        <a href="#">로그인</a>
+                        <a href="#">회원가입</a>
+                        <a href="#">마이페이지</a>
+                    </div>
+                </div>
+                <div class="menu">
+                    <div>
+                        <ul>
+                            <li><a href="#">증상별질병찾기</a></li>
+                            <li><a href="#">병원/약국찾기</a></li>
+                            <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
+                            <li><a href="#">커뮤니티</a></li>
+                            <li><a href="#">고객센터</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <main>
+                <div class="view">
+                    <div class="contents">
+                      <div class="view-top">
+                          <h3 class="title">부산 가루 병원</h3>
+                          <a href="./reserve.html"><img src="./img/search-예약하기.png" alt="예약하기"></a>
+                      </div> 
+                    </div>
+                    <div id="map"></div>
+                    <div class="mapPlus">
+                        <div><img src="./img/search-지도.jpg" alt="지도아이콘"></div>
+                        <p class="addr">부산광역시 동래구 아시아드대로 131-2 2층</p>
+                        <p class="ph">Tel 051-123-1234</p>
+                    </div>
+                    
+                    <script>
+                            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                            mapOption = { 
+                            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                            level: 3 // 지도의 확대 레벨
+                            };
+
+                            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+                            // 마커가 표시될 위치입니다 
+                            var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
+
+                            // 마커를 생성합니다
+                            var marker = new kakao.maps.Marker({
+                            position: markerPosition
+                            });
+
+                            // 마커가 지도 위에 표시되도록 설정합니다
+                            marker.setMap(map);
+
+                            // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+                            // marker.setMap(null);   
+                            
+                    </script>
+
+                </div>
+
+            </main>
+            <footer>
+                <div>
+                    <div class="footer_info">
+                        <p>
+                            <strong>HELLOPET</strong>
+                            <br>
+                            부산시 남구 수영로 299 10층
+                            <br>
+                            대표이사 : 김헬로
+                            <br>
+                            사업자등록번호 : 220-81-83676 사업자정보확인
+                            <br>
+                            통신판매업신고 : 부산 10630호 Fax : 051-589-8842
+                        </p>
+                    </div>
+                    <div class="footer_link">
+                        <ul>
+                            <li><a href="#">회사소개</a></li>
+                            <li><a href="#">서비스이용약관</a></li>
+                            <li><a href="#">개인정보처리방침</a></li>
+                            <li><a href="#">고객센터</a></li>
+                        </ul>
+                    </div>
+                </div>
+    
+            </footer>
+
+            
+
+
+
+    </body> 

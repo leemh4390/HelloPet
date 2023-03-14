@@ -1,0 +1,22 @@
+<th:block th:include="@{search/_header.html}"/>
+<!-- 
+날짜 : 2023-03-08
+이름 : 장인화
+내용 : 동물병원 search index 
+ -->
+
+        <main class="SearchIndex">
+            <div class="start">
+            <img th:src="@{/img/search2.jpg}" alt="한번에">
+                
+
+            </div>
+            <div class="btns">
+                    <a th:href="@{/search/SearchHs}" id="s1"><img th:src="@{/img/search-find1.png}" alt="찾기1"></a>
+                    <a th:href="@{/search/SearchPm}" id="s2"><img th:src="@{/img/search-find2.png}" alt="찾기2"></a>
+            </div>
+            <div class="end">
+                <img th:src="@{/img/search1.jpg}" alt="신규회원혜택">
+            </div>
+        </main>
+<th:block th:include="@{search/_footer.html}"/>

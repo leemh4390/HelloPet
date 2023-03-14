@@ -1,0 +1,57 @@
+<th:block th:include="/member/_header.html"/>
+<script>
+	$(document).ready(function(){
+	    $('.join_content').hover(function(){
+	            $(this).addClass('on');
+	        },function(){
+	            $(this).removeClass('on');
+	        }
+	    );
+	});
+</script>
+<main class="main">
+    <div class="join_div">
+        <div class="join_div_first">
+            <article class="article_first">
+                <h2>회원가입</h2>
+                <div class="join_div_second">
+                    <div class="join_content">
+                        <div class="info">
+                            <span>펫오너</span>
+                            <p>질병 데이터베이스</p>
+                            <p>무료나눔 혜택을 위해</p>
+                            <p>바로 가입하세요</p>
+                        </div>
+                        <img src="../img/join-gate-symbol-icon1.png" alt="">
+                        <div class="nav">
+                            <a th:href="@{/member/terms?type=owner}">펫오너로 가입</a>
+                        </div>
+                        <div class="sns">
+                            <div class="sns_text">
+                                <span>SNS로 간편하게 가입하기</span>
+                            </div>
+                            <div class="sns_img">
+                                <a href=""><img src="../img/social-login-icon-k.png" alt=""></a>
+                                <a href=""><img src="../img/download.png" alt=""></a>
+                                <a href=""><img src="../img/images.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="join_content">
+                        <div class="info">
+                            <span>펫병원/약국</span>
+                            <p>질병 데이터베이스</p>
+                            <p>무료나눔 혜택을 위해</p>
+                            <p>바로 가입하세요</p>
+                        </div>
+                        <img src="../img/join-gate-symbol-icon2.png" alt="">
+                        <div class="nav">
+                            <a th:href="@{/member/terms?type=medical}">병원/약국 가입</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</main>
+<th:block th:include="/member/_footer.html"/>

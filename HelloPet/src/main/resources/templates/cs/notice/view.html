@@ -1,0 +1,87 @@
+<th:block th:include="@{cs/_header.html}"/>
+<script>
+  window.onload = function() {
+    var rdate = getUrlParameter('rdate');
+    history.replaceState(null, null, window.location.pathname + "?no=" + getUrlParameter('no') + "&pg=" + getUrlParameter('pg'));
+    // rdate 값을 사용하여 필요한 곳에 전달합니다.
+  }
+
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+</script>
+<script>
+	$(function(){
+		$('.btnDel').click(function(){
+			if(confirm('정말 삭제하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
+	});
+	
+</script>
+ <main id="notice">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li class="on"><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+            <section id="view">
+            <input type="hidden" name="rdate" th:value="${vo.rdate}">
+                <div class="container">
+                    <table class="viewTable">
+                        <tr><th colspan="2">[[${vo.title}]]</th></tr>
+                        <tr>
+                            <td style="height: 40px;">
+                                작성자 : <span>[[${vo.nick}]]</span> |
+                                작성일 : <span>[[${vo.rdate.substring(2,10)}]]</span> |
+                                조회수 : <span>[[${vo.hit}]]</span>
+                            </td>
+                            <td align="right"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="content">
+                            	<th:block th:if="${vo.img} != null">
+                            		<img th:src="${vo.img}"/>
+                            	</th:block>
+                                <p>[[${vo.content}]]</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="viewTable2">
+                        <tr>
+                            <th style="width: 20%;">이전글</th>
+                            <td>
+						        <a th:if="${prev != null}" th:href="@{/cs/notice/view(no=${prev.no}, pg=${currentPage}, rdate=${prev.rdate})}" th:text="${prev.title}"></a>
+						        <span th:if="${prev == null}">이전 글이 없습니다.</span>
+						    </td>
+                        </tr>
+                        <tr>
+                            <th>다음글</th>
+                            <td>
+						        <a th:if="${next != null}" th:href="@{/cs/notice/view(no=${next.no}, pg=${currentPage}, rdate=${next.rdate})}" th:text="${next.title}"></a>
+						        <span th:if="${next == null}">다음 글이 없습니다.</span>
+						    </td>
+                        </tr>
+                    </table>
+                    <div class="button">
+                        <a th:href="@{/cs/notice/list(pg=${currentPage})}" class="btnList">목록</a>
+                        <a th:href="@{/cs/notice/modify(no=${vo.no}, pg=${currentPage})}" class="btnModify">수정</a>
+                        <a th:href="@{/cs/notice/delete(no=${vo.no},pg=${currentPage})}" class="btnDel">삭제</a>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{cs/_footer.html}"/>

@@ -1,0 +1,35 @@
+<th:block th:include="@{cs/_header.html}"/>
+        <main id="qna">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li class="on"><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+            <section id="write">
+                <div class="container">
+                    <form action="#">
+                        <table class="writeTable">
+                            <caption>문의하기</caption>
+                            <tr>
+                                <th>제목</th>
+                                <td><input type="text" name="title" placeholder=" 제목을 입력하세요"></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea name="content" placeholder=" 내용을 입력하세요"></textarea></td>
+                            </tr>
+                        </table>
+                        <div class="button">
+                            <a th:href="@{/cs/qna/list}" class="btnList">취소</a>
+                            <a href="#" class="btnWrite">작성완료</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{cs/_footer.html}"/>

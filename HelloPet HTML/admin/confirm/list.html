@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>헬로펫</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link async="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/popup.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">관리자</a>
+                    <a href="#">로그아웃</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li class="logo"><a href="#"><img src="../img/admin_logo.png" alt="logo"></a></li>
+                        <li><a href="#">정보관리</a></li>
+                        <li><a href="#">예약내역확인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="top">
+                <h3>예약내역확인</h3>
+            </div>
+            <div class="reserve_div">
+                <table class="reserve_table">
+                    <tr>
+                        <th>#</th>
+                        <th>예약번호</th>
+                        <th>보호자명</th>
+                        <th>펫이름</th>
+                        <th>예약일</th>
+                        <th>시간</th>
+                        <th>상태</th>
+                        <th>상태변경</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>001234</td>
+                        <td>이민혁</td>
+                        <td>뽀삐</td>
+                        <td>2023.03.31</td>
+                        <td>14:30</td>
+                        <td>대기중</td>
+                        <td>
+                            <a href="#" class="btn btnConfirm">수락</a>
+                            <a href="#" class="btn btnReject">거절</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>001233</td>
+                        <td>김채영</td>
+                        <td>삐삐</td>
+                        <td>2023.03.24</td>
+                        <td>10:30</td>
+                        <td>대기중</td>
+                        <td>
+                            <a href="#" class="btn btnConfirm">수락</a>
+                            <a href="#" class="btn btnReject">거절</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>001232</td>
+                        <td>임민지</td>
+                        <td>다다</td>
+                        <td>2023.03.19</td>
+                        <td>15:30</td>
+                        <td>대기중</td>
+                        <td>
+                            <a href="#" class="btn btnConfirm">수락</a>
+                            <a href="#" class="btn btnReject">거절</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>001231</td>
+                        <td>장인화</td>
+                        <td>가루</td>
+                        <td>2023.03.21</td>
+                        <td>10:30</td>
+                        <td>거절</td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>001230</td>
+                        <td>김경준</td>
+                        <td>초코</td>
+                        <td>2023.03.21</td>
+                        <td>10:30</td>
+                        <td>수락</td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+                <div class="paging">
+                    <ul>
+                        <li><a href="#" class="prev">←</a></li>
+                        <li><a href="#" class="on">1</a></li>
+                        <li><a href="#" class="num">2</a></li>
+                        <li><a href="#" class="num">3</a></li>
+                        <li><a href="#" class="num">4</a></li>
+                        <li><a href="#" class="num">5</a></li>
+                        <li><a href="#" class="num">6</a></li>
+                        <li><a href="#" class="next">→</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        <footer>
+           <div class="footer">
+                <div class="container">
+                    <div class="footer-col">
+                        <ul class="info">
+                            <li>GREEN ACADEMY</li>
+                            <li>대표이사 김헬로</li>
+                            <li>사업자 등록번호 230-12-15432</li>
+                            <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                            <li>부산광역시 남구 수영로 299</li>
+                            <li>TEL 051-000-0000</li>
+                            <li>Email HelloPet@email.com</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <ul class="link">
+                            <li><a href="#">회사소개</a></li>
+                            <li><a href="#">이용약관</a></li>
+                            <li><a href="#">문의하기</a></li>
+                            <li><a href="#">고객센터</a></li>
+                        </ul>
+                    </div>
+                </div>
+           </div>
+        </footer>
+
+        <!-- 예약 거절 팝업 -->
+        <div id="popReject" class="popup">
+            <div>
+                <nav>
+                    <h1>예약거절사유</h1>
+                    <button class="btnClose">X</button>
+                </nav>
+                <section>
+                    <article class="reserve">
+                        <h3>예약정보</h3>
+                        <table class="popupTable">
+                            <tr>
+                                <th>예약번호</th>
+                                <th>보호자명</th>
+                                <th>펫이름</th>
+                                <th>예약일</th>
+                                <th>시간</th>
+                            </tr>
+                            <tr>
+                                <td>001231</td>
+                                <td>장인화</td>
+                                <td>가루</td>
+                                <td>2023.03.21</td>
+                                <td>10:30</td>
+                            </tr>
+                        </table>
+                    </article>                    
+                    <form action="#">
+                        <table class="popup-contents">
+                            <tr>
+                                <th>거절사유</th>
+                                <td><textarea name="reject" placeholder="거절사유 입력"></textarea></td>
+                            </tr>
+                        </table>
+                        <div>
+                            <button class="btnCancel">취소</button>
+                            <input type="submit" class="btnSubmit" value="보내기">
+                        </div>
+                    </form>              
+                </section>                    
+            </div>
+        </div>
+    </div>
+</body>
+</html>

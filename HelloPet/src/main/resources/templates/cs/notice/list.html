@@ -1,0 +1,51 @@
+<th:block th:include="@{cs/_header.html}"/>
+
+ <main id="notice">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li class="on"><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+    <section id="list">
+        <div class="container">
+            <table class="table">
+            
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회</th>
+                </tr>
+                <tr th:each="article,i:${articles}">
+                    <td align="center">[[${article.id}]]</td>
+                    <td align="left" style="word-break: break-all;"><a th:href="@{/cs/notice/view(no=${article.no}, pg=${currentPage}, rdate=${article.rdate})}">[[${article.title}]]</a></td>
+                    <td align="center">관리자</td>
+                    <td align="center">[[${article.rdate.substring(0, 10)}]]</td>
+                    <td align="center">[[${article.hit}]]</td>
+                </tr>
+                
+            </table>
+            <div class="paging">
+                <ul>
+                <th:block th:if="${groups[0]>1}">
+                    <li><a th:href="@{/cs/notice/list(pg=${groups[0]-1})}" class="prev">←</a></li>
+                </th:block>
+                <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                    <li><a th:href="@{/cs/notice/list(pg=${num})}" th:class="${num == currentPage?'num on':'num'}">[[${num}]]</a></li>
+                </th:block>
+                <th:block th:if="${groups[1]<lastPageNum}">
+                    <li><a th:href="@{/cs/notice/list(pg=${groups[1]+1})}" class="next">→</a></li>
+                </th:block>
+                </ul>
+            </div>
+            <a th:href="@{/cs/notice/write}" class="btnWrite">글쓰기</a>
+        </div>
+    </section>
+</main>
+<th:block th:include="@{cs/_footer.html}"/>

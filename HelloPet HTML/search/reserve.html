@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloPet</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#">증상별질병찾기</a></li>
+                        <li><a href="#">병원/약국찾기</a></li>
+                        <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main id="reserve">
+            <div class="re">
+                <nav>
+                    <h1>예약하기</h1>
+                </nav>
+                <form action="">
+                    <section>
+                        <table>
+                            <caption>보호자 정보입력</caption>
+                            <tbody>
+                                <tr>
+                                    <th>병원</th>
+                                    <td>가루동물병원</td>
+                                </tr>
+                                <tr>
+                                    <th>예약날짜/시간</th>
+                                    <td><input type="date" required><input type="time" required ></td>
+                                </tr>
+                                <tr>
+                                    <th>보호자 성함</th>
+                                    <td>장인화</td>
+                                </tr>
+                                <tr>
+                                    <th>보호자 연락처</th>
+                                    <td><input type="text" maxlength="13" placeholder="휴대폰번호 입력" required>
+                                        <span>- 포함 13자리를 입력하세요.</span></td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                    </section>    
+                    <section>
+                        <table>
+                            <caption>반려동물 정보입력</caption>
+                            <tbody> 
+                                <div>
+                                    <tr>
+                                        <th>반려동물 수</th>
+                                        <td>
+                                            <select id="num">
+                                                <option value="1">1</option>
+                                                <option value="1">2</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </div>
+                                <div id="petEx">    
+                                    <tr>
+                                        <th>반려동물 종</th>
+                                        <td><input type="text" placeholder="ex) 강아지" required></td>
+                                    </tr>
+                                    <tr>
+                                        <th>반려동물 이름</th>
+                                        <td><input type="text" required></td>
+                                    </tr>
+                                    <tr>
+                                        <th>반려동물 나이</th>
+                                        <td><input type="text" placeholder="ex)17" required><span>숫자만 입력해주세요.</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>진료항목</th>
+                                        <td><input type="text" placeholder="ex)예방접종" required><span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>특이사항</th>
+                                        <td><input type="text" placeholder="ex) oo 알러지 보유"><span>수의사가 알아야 하는 반려동물의 특이사항을 기재해 주세요.</span></td>
+                                    </tr>
+                                </div>           
+                            </tbody>
+                        </table>
+                    </section>
+                    <div class="explain">
+                        · 특이사항을 제외한 모든 항목은 필수 기재 바랍니다. <br>
+                        · 반려동물이 3마리 이상인 경우는 특이사항에 상세내용을 적어주세요.<br>
+                        · 예약 신청 후 마이페이지 에서 예약 목록 및 예약 상태를 확인 할 수 있습니다.<br>
+
+                    </div>
+                    <div>
+                        <input type="submit" class="reSubmit" value="예약신청">
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <div class="footer">
+                 <div class="container">
+                     <div class="footer-col">
+                         <ul class="info">
+                             <li>GREEN ACADEMY</li>
+                             <li>대표이사 김헬로</li>
+                             <li>사업자 등록번호 230-12-15432</li>
+                             <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                             <li>부산광역시 남구 수영로 299</li>
+                             <li>TEL 051-000-0000</li>
+                             <li>Email HelloPet@email.com</li>
+                         </ul>
+                     </div>
+                     <div class="footer-col">
+                         <ul class="link">
+                             <li><a href="#">회사소개</a></li>
+                             <li><a href="#">이용약관</a></li>
+                             <li><a href="#">문의하기</a></li>
+                             <li><a href="#">고객센터</a></li>
+                         </ul>
+                     </div>
+                 </div>
+            </div>
+         </footer>
+     </div>
+ </body>
+ </html>

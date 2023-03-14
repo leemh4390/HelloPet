@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 
+ 	날짜 : 2023/03/09 ~
+ 	이름 : 김채영
+ 	내용 : HelloPet CS 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.CsDAO">
+
+	<!-- notice -->
+	<insert id="insertNotice">
+		insert into `cs_article` set 
+		    `group`='notice', 
+		    `uid`='admin',
+		    `title`=#{title}, 
+		    `content`=#{content},
+		    `img`=#{img},
+		    `regip`=#{regip},
+		    `rdate`=NOW();
+	</insert>
+	<select id="selectNotices" resultType="kr.co.hellopet.vo.CsVO">
+		 select a.*, b.`nick` from `cs_article` as a
+            join `pet_owner` as b on a.uid=b.uid
+            where `parent`=0 and `group`='notice'
+            order by `no` desc
+            limit #{start},10;
+	</select>
+	<select id="selectCountTotalNotice" resultType="int" parameterType="map">
+        select count(`no`) from `cs_article` where `parent`=0 and `group`='notice';
+    </select>
+    <select id="getNext" resultType="kr.co.hellopet.vo.CsVO">
+    	SELECT *
+		  FROM `cs_article`
+		  WHERE `rdate` &lt; #{rdate}
+		  ORDER BY `rdate` desc
+		  LIMIT 1;
+    </select>
+    <select id="getPrev" resultType="kr.co.hellopet.vo.CsVO">
+    	SELECT *
+		  FROM `cs_article`
+		  WHERE `rdate` &gt; #{rdate}
+		  ORDER BY `rdate` asc
+		  LIMIT 1;
+    </select>
+    
+    <!-- faq -->
+	<insert id="insertFaq">
+		insert into `cs_article` set 
+		    `group`='faq', 
+		    `uid`='admin',
+		    `title`=#{title}, 
+		    `content`=#{content},
+		    `regip`=#{regip},
+		    `rdate`=NOW();
+	</insert>
+	<select id="selectFaqs" resultType="kr.co.hellopet.vo.CsVO">
+		 select a.*, b.`nick` from `cs_article` as a
+            join `pet_owner` as b on a.uid=b.uid
+            where `parent`=0 and `group`='faq'
+            order by `no` desc
+            limit 0,5;
+	</select>
+	<select id="selectCountTotalFaq" resultType="int" parameterType="map">
+        select count(`no`) from `cs_article` where `parent`=0 and `group`='notice';
+    </select>
+    
+    <!-- 공통 -->
+    <select id="selectArticle" resultType="kr.co.hellopet.vo.CsVO">
+    	select a.*, b.`nick` from `cs_article` as a
+            join `pet_owner` as b on a.uid=b.uid
+            where `no`=#{no};
+    </select>
+    <update id="updateArticleHit">
+        update `cs_article` set `hit`=`hit`+1 where `no`=#{no};
+    </update>
+    <update id="updateArticle">
+        update `cs_article` set
+            `title`=#{title},
+            `content`=#{content}
+        where `no`=#{no};
+    </update>
+	<delete id="deleteArticle">
+        delete from `cs_article` where `no`=#{no} or `parent`=#{parent};
+    </delete>
+</mapper>

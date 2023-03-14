@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloPet</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/member.css">
+</head>
+<script>
+
+    $(document).ready(function(){
+        $('button[name=btnFindEmail]').click(function(){
+            let name = $('input[name=findEmailName]').val();
+            let hp = $('input[name=findEmailHp]').val();
+            let includes = hp.includes('-');
+            let count = hp.split('-').length-1;
+            
+            if(name == ''){
+                alert('이름을 입력');
+            }else if(hp == ''){
+                alert('연락처를 입력');
+            }else if(count < 2){
+                alert('- 포함하여 입력해주세요.');
+            }else{
+                alert('고객님의 아이디는 leemh4390 입니다.');
+            };
+        });
+
+        $('button[name=btnFindPass]').click(function(){
+            let email = $('input[name=findEamil]').val();
+            let name = $('input[name=findPassName]').val();
+            let hp = $('input[name=findPassHp]').val();
+            let count = hp.split('-').length-1;
+
+            if(email == ''){
+                alert('이메일을 입력');
+            }else if(name == ''){
+                alert('이름을 입력');
+            }else if(hp == ''){
+                alert('연락처를 입력');
+            }else if(count < 2){
+                alert('- 포함하여 입력해주세요.');
+            }else{
+                alert('고객님의 아이디는 leemh4390 입니다.');
+            }
+        });
+    });
+
+</script>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#">증상별질병찾기</a></li>
+                        <li><a href="#">병원/약국찾기</a></li>
+                        <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="find_div">
+            <main class="find_main">
+                <div class="findEmail">
+                    <h3>이메일 찾기</h3>
+                    <div>
+                        <input type="text" name="findEmailName" placeholder="이름">
+                        <input type="text" name="findEmailHp" placeholder="010-0000-0000">
+                        <button type="button" name="btnFindEmail">이메일찾기</button>
+                    </div>
+                </div>
+                <div class="findPass">
+                    <h3>비밀번호 찾기</h3>
+                    <div>
+                        <input type="text" name="findEamil" placeholder="이메일">
+                        <input type="text" name="findPassName" placeholder="이름">
+                        <input type="text" name="findPassHp" placeholder="010-0000-0000">
+                        <button type="button" name="btnFindPass">비밀번호변경</button>
+                    </div>
+                </div>
+                
+            </main>
+            <div class="alert">
+                    <p>
+                        회원정보는 개인정보취급방침에 따라 안전하게 보호되며, 
+                        회원님의 명백한 동의 없이 공개 또는 제 3자에게 제공되지 않습니다.
+                    </p>
+                    <a href="">개인정보취급방침 ></a>
+            </div>
+        </div>
+        <div class="footer_div">
+            <footer>
+                <div class="footer">
+                     <div class="container">
+                         <div class="footer-col">
+                             <ul class="info">
+                                 <li>GREEN ACADEMY</li>
+                                 <li>대표이사 김헬로</li>
+                                 <li>사업자 등록번호 230-12-15432</li>
+                                 <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                                 <li>부산광역시 남구 수영로 299</li>
+                                 <li>TEL 051-000-0000</li>
+                                 <li>Email HelloPet@email.com</li>
+                             </ul>
+                         </div>
+                         <div class="footer-col">
+                             <ul class="link">
+                                 <li><a href="#">회사소개</a></li>
+                                 <li><a href="#">이용약관</a></li>
+                                 <li><a href="#">문의하기</a></li>
+                                 <li><a href="#">고객센터</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                </div>
+             </footer>
+        </div>
+    </div>
+</body>
+</html>

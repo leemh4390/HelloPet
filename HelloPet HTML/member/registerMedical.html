@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>헬로펫</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="../css/member.css">
+</head>
+<script>
+    $(document).ready(function(){
+        $('button[name=btnPhar]').click(function(){
+            $('.change').remove();
+            $(this).addClass('on');
+            $('button[name=btnHos]').removeClass('on');
+            $('.change').remove();
+            let tags = "<tr class='change'>";
+                tags += "<td>약국명</td>";
+                tags += "<td>";
+                tags += "<input type='text' name='PharName' required='required' placeholder='정보 입력하기 전에 미리 찾아보세요.'>";
+                tags += "<input type='button' name='searchPhar' value='약국찾기'>";
+                tags += "</td>";
+                tags += "</tr>";
+                tags += "<tr class='change'>";
+                tags += "<td>대표 약사</td>";
+                tags += "<td>";
+                tags += "<input type='text' name='Chemist'>";
+                tags += "</td>";
+                tags += "</tr>";
+            $('#pass').after(tags);
+        });
+
+        $('button[name=btnHos]').click(function(){
+            $('.change').remove();
+            $(this).addClass('on');
+            $('button[name=btnPhar]').removeClass('on');
+            $('#change').remove();
+            let tags = "<tr class='change'>";
+                tags += "<td>병원명</td>";
+                tags += "<td>";
+                tags += "<input type='text' name='hosName' required='required' placeholder='정보 입력하기 전에 미리 찾아보세요.'>";
+                tags += "<input type='button' name='searchHos' value='병원찾기'>";
+                tags += "</td>";
+                tags += "</tr>";
+                tags += "<tr class='change'>";
+                tags += "<td>대표 수의사</td>";
+                tags += "<td>";
+                tags += "<input type='text' name='Doctor'>";
+                tags += "</td>";
+                tags += "</tr>";
+            $('#pass').after(tags);
+        });
+    });
+
+    function postcode() {
+	new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }                
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zip').value = data.zonecode;
+                document.getElementById("addr1").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addr2").focus();
+            }
+        }).open();
+    }
+
+
+    $(document).ready(function(){
+        $('input[name=btnHpCheck]').click(function(){
+
+            let hp = $('input[name=registerHp]').val();
+
+            if(!hp.match(regHp)){
+                isHpOk = false;
+                alert('유효성 확인!');
+            }else{
+                isHpOk = true;
+            }
+        });
+
+        $('input[name=registerName]').focusout(function(){
+
+            let name = $(this).val();
+
+            if(!name.match(regName)){
+                isNameOk = false;
+                alert('유효성 확인!');
+            }else{
+                isNameOk = true;
+            }
+        });
+
+        $('input[name=btnEmailCheck]').click(function(){
+
+            let email = $('input[name=registerEmail]').val();
+
+            if(!email.match(regEmail)){
+                isEmailOk = false;
+                alert('유효성 확인!');
+            }else{
+                isEmailOk = true;
+            }
+        });
+
+        $('input[name=pass2]').focusout(function(){
+            let pass1 = $('input[name=pass1]').val();
+            let pass2 = $(this).val();
+
+            if(pass1 == pass2){
+                if(pass2.match(regPass)){
+                    isPassOk = true;
+                }else{
+                    isPassOk = false;
+                    alert('유효하지 않습니다.');
+                }
+            }else{
+                alert('일치안함');
+            }
+        });
+
+        $('input[name=btnNickCheck]').click(function(){
+
+            let nick = $('input[name=registerNick]').val();
+
+            if(!nick.match(regNick)){
+                isNickOk =false;
+                alert('dd');
+            }else{
+                isNickOk = true;
+                alert('true');
+            }
+        });
+
+        $('input[name=register_submit]').click(function(){
+
+        // 휴대폰 검증
+		if(!isHpOk){
+			alert('휴대폰을 확인 하십시요.');
+			return false;
+		}
+
+        // 이름 검증
+		if(!isNameOk){
+			alert('이름을 확인 하십시요.');
+			return false;
+		}
+
+		// 비밀번호 검증
+		if(!isPassOk){
+			alert('비밀번호를 확인 하십시요.');
+			return false;
+		}
+		
+		// 별명 검증
+		if(!isNickOk){
+			alert('별명을 확인 하십시요.');
+			return false;
+		}
+		// 이메일 검증
+		if(!isEmailOk){
+			alert('이메일을 확인 하십시요.');
+			return false;
+		}
+		
+		
+		// 최종 전송
+		return true;
+        });
+
+    });
+    
+    $(document).ready(function(){
+        $('#btn-modal').click(function(){
+            $('#modal').css('display','flex');
+            document.body.style.overflow = "hidden";
+        });
+
+        $('.close-area').click(function(){
+            $('#modal').css('display','none');
+            document.body.style.overflow = "unset";
+        });
+    });
+
+</script>
+<style>
+
+    button[name=btnPhar].on {
+        color: #fff;
+        font-weight: 700;
+        background-image: linear-gradient(90deg,#1dc6f7,#00e5c2);
+        margin-left: 10px;
+    }
+
+    button[name=btnHos] {
+        background: #f0f0f0;
+    }
+
+    #modal.modal-overlay {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+   .modal-window {
+        background: #fff;
+        border: 1px solid;
+        width: 800px;
+        height: 250px;
+        position: relative;
+        top: -100px;
+        padding: 10px;
+    }
+
+    #modal .title {
+        text-align: center;
+        border-bottom: 1px solid #dddddd;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+
+    #modal .title h2 {}
+
+    #modal .close-area {
+        position: relative;
+        float: right;
+        top: -60px;
+        right: 10px;
+        padding-right: 10px;
+        cursor: pointer;
+        color: #0dbcaf;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .medical_select {
+        padding-top: 12px;
+        margin-left: 25px;
+
+    }
+
+    .medical_select > select {
+        float: left;
+        border: 1px solid #e5e5e5;
+        width: 200px;
+        height: 50px;
+        margin-right: 10px;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 300;
+        color: #999;
+        box-sizing: border-box;
+    }
+
+    .selectMedical > select > option {
+
+    }
+
+    #search {
+        float: left;
+        width: 300px;
+        height: 40px;
+        box-sizing: border-box;
+    }
+
+    #search > input {
+        position: relative;
+        top: -3px;
+        max-width: 400px;
+        width: 100%;
+        height: 55px;
+        font-size: 16px;
+        text-indent: 8px;
+        margin-left: 10px;
+        background-image: url(../img/eeee.png);
+        background-repeat: no-repeat;
+        background-position: 97% 50%;
+        background-size: 40px 40px;
+        border: 3px solid #1dc6f7;
+    }
+
+    #search > input::placeholder {
+        font-weight: bold;
+        color: #0dbcaf;
+    }
+
+</style>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#">증상별질병찾기</a></li>
+                        <li><a href="#">병원/약국찾기</a></li>
+                        <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="business_main">
+            <div class="business_div">
+                <div class="business_top">
+                    <span>펫병원 약국 회원가입</span>
+                    <div class="business_top2">
+                        <span>회원가입</span>
+                        <div class="business_img">
+                            <img src="../img/tab2.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="join_tap">
+                    <div>
+                        <button type="button" class="on" name="btnHos" value="0">병원</button>
+                        <button type="button" name="btnPhar" value="1">약국</button>
+                    </div>
+                </div>
+                <div class="register_business">
+                    <form action="" class="register_business_form">
+                        <table class="register_business_table">
+                            <tr>
+                                <td>휴대폰</td>
+                                <td>
+                                    <input type="text" name="registerHp" required="required" placeholder="- 포함 13자리">
+                                    <input type="button" name="btnHpCheck" value="본인확인">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이름</td>
+                                <td>
+                                    <input type="text" name="registerName" required="required" placeholder="이름">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이메일</td>
+                                <td>
+                                    <input type="email" name="registerEmail" required="required" placeholder="이메일">
+                                    <input type="button" name="btnEmailCheck" value="중복확인">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>비밀번호</td>
+                                <td>
+                                    <input type="password" name="pass1" required="required" placeholder="숫자, 영어, 특수문자 포함 5자 이상 패스워드">
+                                </td>
+                            </tr>
+                            <tr id="pass">
+                                <td>비밀번호 확인</td>
+                                <td>
+                                    <input type="password" name="pass2" required="required" placeholder="숫자, 영어, 특수문자 포함 5자 이상 패스워드">
+                                </td>
+                            </tr>
+                            <tr class="change">
+                                <td>병원명</td>
+                                <td>
+                                    <input type="text" name="hosName" required="required" placeholder="정보 입력하기 전에 미리 찾아보세요.">
+                                    <input type="button" name="searchHos" id="btn-modal" value="병원찾기">
+                                </td>
+                            </tr>
+                            <tr class="change">
+                                <td>대표수의사</td>
+                                <td>
+                                    <input type="text" name="Doctor">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>대표연락처</td>
+                                <td>
+                                    <input type="text" name="representHp">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>주소</td>
+                                <td>
+                                    <input type="text" id="zip" name="address" readonly="readonly" placeholder="우편번호">
+                                    <input type="button" onclick="postcode()" value="주소검색">
+                                    <input type="text" id="addr1" name="addr1" placeholder="기본주소">
+                                    <input type="text" id="addr2" name="addr2" placeholder="상세주소">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>사업자등록증</td>
+                                <td>
+                                    <input type="file" id="Business_Registration" placeholder="선택된 파일없음">
+                                    <input type="button" value="파일찾기">
+                                </td>
+                            </tr>
+                            <tr id="radio">
+                                <td>예약하기</td>
+                                <td>
+                                    <input type="radio" name="agree" value="1"><span>동의</span>
+                                    <input type="radio" name="disagree" value="2" checked="check"><span>비동의</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="register_button">
+                            <ul>
+                                <li><input type="button" value="취소"></li>
+                                <li><input type="submit" value="가입하기"></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="modal" class="modal-overlay">
+                <div class="modal-window">
+                    <div class="title">
+                        <h2>병원찾기</h2>
+                    </div>
+                    <div class="close-area">X</div>
+                    <div class="medical_select">
+                        <select name="trial" id="trial">
+                            <option value="">시·도</option>
+                            <option value="seoul">서울</option>
+                            <option value="daejun">대전</option>
+                            <option value="daegu">대구</option>
+                            <option value="busan">부산</option>
+                            <option value="gwangju">광주</option>
+                        </select>
+                
+                        <select name="county" id="county">
+                            <option value="">시·군·구</option>
+                        </select>
+                
+                        <div id="search">
+                            <input type="text" placeholder="병원이름 검색">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="footer_div">
+            <footer>
+                <div class="footer">
+                     <div class="container">
+                         <div class="footer-col">
+                             <ul class="info">
+                                 <li>GREEN ACADEMY</li>
+                                 <li>대표이사 김헬로</li>
+                                 <li>사업자 등록번호 230-12-15432</li>
+                                 <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                                 <li>부산광역시 남구 수영로 299</li>
+                                 <li>TEL 051-000-0000</li>
+                                 <li>Email HelloPet@email.com</li>
+                             </ul>
+                         </div>
+                         <div class="footer-col">
+                             <ul class="link">
+                                 <li><a href="#">회사소개</a></li>
+                                 <li><a href="#">이용약관</a></li>
+                                 <li><a href="#">문의하기</a></li>
+                                 <li><a href="#">고객센터</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                </div>
+             </footer>
+        </div>
+    </div>
+</body>
+</html>

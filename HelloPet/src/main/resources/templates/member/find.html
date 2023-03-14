@@ -1,0 +1,102 @@
+<th:block th:include="/member/_header.html"/>
+<script>
+    $(document).ready(function(){
+        $('button[name=btnFindEmail]').click(function(){
+            let name = $('input[name=name]').val();
+            let hp = $('input[name=hp]').val();
+            let includes = hp.includes('-');
+            let count = hp.split('-').length-1;
+            
+            if(name == ''){
+                alert('이름을 입력');
+            }else if(hp == ''){
+                alert('연락처를 입력');
+            }else if(count < 2){
+                alert('- 포함하여 입력해주세요.');
+            }else{
+            	let jsonData = {'name' : name, 'hp' : hp};
+            	
+                $.ajax({
+                	url : '/HelloPet/member/findId',
+                	method : 'POST',
+                	data : jsonData,
+                	dataType : 'json',
+                	success : function(data){
+                	    if (data.owner) {
+                	        alert("회원님의 아이디는 " + data.owner.uid + "입니다.");
+                	    } else if (data.medical) {
+                	        alert("회원님의 아이디는 " + data.medical.uid + "입니다");
+                	    } else {
+                	        alert("회원 정보를 찾을 수 없습니다.");
+                	    }
+                	}
+                });
+            };
+        });
+
+        $('button[name=btnFindPass]').click(function(){
+            let email = $('input[name=findEamil]').val();
+            let name = $('input[name=findPassName]').val();
+            let hp = $('input[name=findPassHp]').val();
+            let count = hp.split('-').length-1;
+
+            if(email == ''){
+                alert('이메일을 입력');
+            }else if(name == ''){
+                alert('이름을 입력');
+            }else if(hp == ''){
+                alert('연락처를 입력');
+            }else if(count < 2){
+                alert('- 포함하여 입력해주세요.');
+            }else{
+            	let jsonData = {'email': email, 'name' : name, 'hp' : hp};
+            	console.log('here1');
+            	$.ajax({
+            		url : '/HelloPet/member/changePass',
+                	method : 'POST',
+                	data : jsonData,
+                	dataType : 'json',
+                	success : function(data){
+                		console.log('here2');
+                		if(data.result == 1){
+							alert('이메일로 임시비밀번호를 전송했습니다.');                			
+                		}else{
+                			alert('일치하는 사용자가 없습니다.');
+                		}
+                	}       		
+            	});
+            }                
+        });
+    });
+
+</script>
+<div class="find_div">
+    <main class="find_main">
+        <div class="findEmail">
+            <h3>이메일 찾기</h3>
+            <div>
+                <input type="text" name="name" placeholder="이름">
+                <input type="text" name="hp" placeholder="010-0000-0000">
+                <button type="button" name="btnFindEmail">이메일찾기</button>
+            </div>
+        </div>
+        <div class="findPass">
+            <h3>비밀번호 찾기</h3>
+            <div>
+                <input type="text" name="findEamil" placeholder="이메일">
+                <input type="text" name="findPassName" placeholder="이름">
+                <input type="text" name="findPassHp" placeholder="010-0000-0000">
+                <button type="button" name="btnFindPass">비밀번호변경</button>
+            </div>
+        </div>
+        
+    </main>
+    <div class="alert">
+            <p>
+                회원정보는 개인정보취급방침에 따라 안전하게 보호되며, 
+                회원님의 명백한 동의 없이 공개 또는 제 3자에게 제공되지 않습니다.
+            </p>
+            <a href="">개인정보취급방침 ></a>
+    </div>
+</div>
+<th:block th:include="/member/_footer.html"/>

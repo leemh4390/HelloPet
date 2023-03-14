@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>헬로펫</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="../css/member.css">
+</head>
+<script>
+    $(document).ready(function(){
+
+        let s1 = ['종로구', '중구', '용산구', '마포구', '동대문'];
+        let d1 = ['동구','중구','서구','남구','북구'];
+        let d2 = ['수성구','달성군','달서구'];
+        let b1 = ['해운대구','진구','동래구','어쩌구'];
+        let g1 = ['아이고','가나다','마바사'];
+
+        $('#trial').change(function(){
+            let city = $(this).val();
+            
+            $('#se').empty();
+            $('#se').append("<option value=''>시군구를 선택</option>");
+            if(city == 'seoul'){
+                for(let value of s1){
+                    let tags = "<option value='"+value+"'>"+value+"</option>";
+                    $('#county').append(tags);
+                }
+            }
+        });
+    });
+</script>
+<style>
+    .selectMedical {
+        width: 800px;
+        height: 200px;
+        margin: 0 auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    .selectMedical > h3 {
+        text-align: center;
+        border-bottom: 1px solid #dddddd;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+
+    .medical_select {
+        padding-top: 12px;
+    }
+
+    .medical_select > select {
+        float: left;
+        border: 1px solid #e5e5e5;
+        width: 200px;
+        height: 55px;
+        margin-right: 10px;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: 300;
+        color: #999;
+        box-sizing: border-box;
+    }
+
+    .selectMedical > select > option {
+
+    }
+
+    #search {
+        float: left;
+        width: 300px;
+        height: 40px;
+        
+        box-sizing: border-box;
+    }
+
+    #search > input {
+        position: relative;
+        top: -3px;
+        max-width: 400px;
+        width: 100%;
+        height: 55px;
+        font-size: 16px;
+        text-indent: 8px;
+        margin-left: 10px;
+        background-image: url(../img/eeee.png);
+        background-repeat: no-repeat;
+        background-position: 97% 50%;
+        background-size: 40px 40px;
+        border: 3px solid #1dc6f7;
+    }
+
+    #search > input::placeholder {
+        font-weight: bold;
+        color: #0dbcaf;
+    }
+</style>
+<body>
+    <div class="selectMedical">
+        <h3>병원 찾기</h3>
+        <div class="medical_select">
+            <select name="trial" id="trial">
+                <option value="">시·도</option>
+                <option value="seoul">서울</option>
+                <option value="daejun">대전</option>
+                <option value="daegu">대구</option>
+                <option value="busan">부산</option>
+                <option value="gwangju">광주</option>
+            </select>
+    
+            <select name="county" id="county">
+                <option value="">시·군·구</option>
+            </select>
+    
+            <div id="search">
+                <input type="text" placeholder="병원이름 검색">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

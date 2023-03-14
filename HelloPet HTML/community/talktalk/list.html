@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>헬로펫</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link async="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        $(function(){
+                $('.gallery_delete').click(function(){
+                    if(!confirm('정말 삭제하시겠습니까?')){
+                        return false;
+                    }
+                    alert('삭제되었습니다.');
+                });
+            });
+
+        $(function(){
+                $('.gallery_item').click(function(){
+                    $('#modal').css('display','flex');
+                });
+            });
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#">증상별질병찾기</a></li>
+                        <li><a href="#">병원/약국찾기</a></li>
+                        <li class="logo"><a href="/index.html"><img src="/img/ci.png" alt="logo"></a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="top">
+                <h3>커뮤니티</h3>
+            </div>
+            <div class="tab">
+                <ul>
+                    <li><a href="../tip/list.html">반려동물 꿀팁</a></li>
+                    <li class="on"><a href="#">반려동물 톡톡</a></li>
+                </ul>
+            </div>
+            <section id="talkMain">
+                <div class="container">
+                    <div class="talk_title">
+                        <h3>내가 올린 사진</h3>
+                        <div class="talk_write">
+                            <a href="./write.html"><div>사진 올리기</div></a>
+                        </div>
+                    </div>
+                    <div class="talk_head">
+                        <div class="select">
+                            <select class="c1Name">
+                                <option value="0">최신순</option>
+                                <option>좋아요순</option>
+                                <option>댓글순</option>
+                            </select>
+                            <select class="c2Name">
+                                <option value="0">마이펫 제 2기 모델 콘테스트</option>
+                                <option>마이펫 제 1기 모델 콘테스트</option>
+                                <option>일상공유</option>
+                                <option>건강일기</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="talk_rank">
+                        <div class="rank_img">
+                            <img src="../img/congratulate_img.png" alt="랭킹이미지">
+                        </div>
+                        <div class="gallery_items">
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/talk_rank_thumb1.jpg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">마이펫 제2기 모델(로이 밍밍 2살)</div>
+                                        <div class="gallery_like_comment">
+                                            <div class="gallery_like"><span class="gallery_like_icon" style="background-image: url(../img/icon-heart.png);"></span>23</div>
+                                            <div class="gallery_comment"><span class="gallery_comment_icon" style="background-image: url(../img/icon-talk.png);"></span>21</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon"  style="background-image: url(../img/로이밍밍프사.jpg);"></span>로이밍밍</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/talk_rank_thumb2.jpg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">2기 모델 지원합니다</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>18</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>10</div>
+                                    </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/봉팔공주엄뉘프사.jpg);"></span>동동</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/talk_rank_thumb3.jpg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">마이펫 2기모델 4살 반달과 3살 포비</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>14</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>6</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/반달포비맘프사.jpg);"></span>반달포비맘</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="talk_normal">
+                        <div class="gallery_items">
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gallery_item">
+                                <div class="gallery_item_con1" style="background-image: url(../img/normal_thumb.jpeg);"></div>
+                                <div class="gallery_item_con2">
+                                    <div class="gallery_info1">
+                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_like_comment">
+                                        <div class="gallery_like"><span class="gallery_like_icon"  style="background-image: url(../img/icon-heart.png);"></span>5</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  style="background-image: url(../img/icon-talk.png);"></span>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_info2">
+                                        <div class="rank_nick_inner">
+                                            <div class="rank_nick"><span class="rank_nick_icon" style="background-image: url(../img/favicon_x32.png);"></span>소풍이</div>
+                                        </div>    
+                                        <div class="rank_date">2023-03-05</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="paging">
+                            <a href="#" class="prev">←</a>
+                            <a href="#" class="num on">1</a>
+                            <a href="#" class="num">2</a>
+                            <a href="#" class="num">3</a>
+                            <a href="#" class="next">→</a>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+            </section>
+
+            
+        </main>
+        <footer class="footer_talk_list">
+            <div class="footer">
+                 <div class="container">
+                     <div class="footer-col">
+                         <ul class="info">
+                             <li>GREEN ACADEMY</li>
+                             <li>대표이사 김헬로</li>
+                             <li>사업자 등록번호 230-12-15432</li>
+                             <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                             <li>부산광역시 남구 수영로 299</li>
+                             <li>TEL 051-000-0000</li>
+                             <li>Email HelloPet@email.com</li>
+                         </ul>
+                     </div>
+                     <div class="footer-col">
+                         <ul class="link">
+                             <li><a href="#">회사소개</a></li>
+                             <li><a href="#">이용약관</a></li>
+                             <li><a href="#">문의하기</a></li>
+                             <li><a href="#">고객센터</a></li>
+                         </ul>
+                     </div>
+                 </div>
+            </div>
+         </footer>
+         <div role="document" id="modal" tabindex="0" style="z-index: 202;">
+            <div class="modal_active" style="transform-origin: center center; max-width: 1200px;">
+                <div class="modal_gallery_view">
+                    <div class="modal_head">
+                        <button type="button" class="modal_close"></button>
+                    </div>
+                    <div class="modal_body">
+                        <div class="gallery_modal">
+                            <div class="gallery_modal_left">
+                                <div class="gallery_slide_wrap">
+                                    <div class="gallery_slide">
+                                        <div class="swiper_container">
+                                            <div class="swiper_wrapper">
+                                                <div class="swiper_slide" style="width: 600px;">
+                                                    <div class="gallery_slide_img" style="background-image: url(../img/talk_rank_thumb2.jpg);"></div>
+                                                </div>
+                                            </div>
+                                            <div class="button_prev"></div>
+                                            <div class="button_next"></div>
+                                            <div class="swiper_pagination">
+                                                <span class="swiper_pagination_bullet active"></span>
+                                                <span class="swiper_pagination_bullet"></span>
+                                                <span class="swiper_pagination_bullet"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery_modal_right">
+                                <div class="gallery_content">
+                                    <div class="gallery_content_head">
+                                        <div class="gallery_content_head_top">
+                                            <div class="content_item">
+                                                <div class="content_item_inner">
+                                                    <div class="content_item_img" style="background-image: url(../img/content_item.jpg);"></div>
+                                                    <div class="content_item_con">
+                                                        <div class="content_item_txt">
+                                                            <strong>동동</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="content_info_items">
+                                                <div class="content_info_item">
+                                                    <button class="icon-heart"></button>
+                                                </div>
+                                                <div class="content_info_item">
+                                                    <i class="icon-talk"></i>
+                                                    <span>21</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="gallery_content_head_bottom">
+                                            <div role="button" aria-haspopup="true" aria-expanded="false" class="like_con">
+                                                <div class="like_con_img">
+                                                    <div class="v_img" style="height: 20px; width: 20px;">
+                                                        <div class="v_responsive" style="padding-bottom: 100%;"></div>
+                                                        <div class="v_img_img" style="background-image: url(../img/favicon_x32.png); background-position: center center;"></div>
+                                                        <div class="v_responsive_content" style="width: 260px;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="like_aria">
+                                                    <strong>소풍이</strong>님 외 <strong>22명</strong>이 좋아합니다.
+                                                </div>
+                                            </div>
+                                            <div role="dialog" class="v_dialog_container"></div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_content_body">
+                                        <div class="gallery_content_con">
+                                            <div class="gallery_content_info">
+                                                <div class="gallery_content_tit">2기 모델 지원합니다.</div>
+                                                <div class="gallery_content_date">2022.05.14</div>
+                                            </div>
+                                            <div class="gallery_content_txt">지원합니다.</div>
+                                            <div class="gallery_modify_delete">
+                                                <div class="gallery_modify"><a href="./modify.html">수정</a></div>ㅣ
+                                                <div class="gallery_delete"><a href="#">삭제</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="content_items">
+                                            <div class="content_item">
+                                                <div class="content_item_inner">
+                                                    <div class="content_item_img" style="background-image: url(../img/favicon_x32.png);"></div>
+                                                    <div class="content_item_con">
+                                                        <div class="content_item_con_head">
+                                                            <div class="content_item_txt">
+                                                                <strong>소풍이</strong>
+                                                            </div>
+                                                            <div class="content_item_date">2023.03.05</div>
+                                                        </div>
+                                                        <div class="content_item_con_body">
+                                                            <div class="content_item_txt">귀여워요</div>
+                                                            <div class="content_item_btn_wrap">
+                                                                <div class="info_item">
+                                                                    <button class="icon-heart"></button>
+                                                                    <div role="dialog" class="v_dialog_container"></div>
+                                                                    <span style="cursor: pointer;">좋아요 2</span>
+                                                                </div>
+                                                                <button class="reply_btn">답글</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="reply_items">
+                                                    <div class="reply_item">
+                                                        <div class="reply_item_inner">
+                                                            <div class="reply_item_img" style="background-image: url(../img/봉팔공주엄뉘프사.jpg);"></div>
+                                                            <div class="reply_item_con">
+                                                                <div class="reply_item_con_head">
+                                                                    <div class="reply_item_txt">
+                                                                        <strong>동동</strong>
+                                                                    </div>
+                                                                    <div class="reply_item_date">2023.03.05</div>
+                                                                </div>
+                                                                <div class="reply_item_con_body">
+                                                                    <div class="reply_item_txt">감사합니다!</div>
+                                                                    <div class="reply_item_btn_wrap">
+                                                                        <div class="reply_info_item">
+                                                                            <button class="icon-heart"></button>
+                                                                            <div role="dialog" class="v_dialog_container"></div>
+                                                                            <span style="cursor: pointer;"> 좋아요 0 </span>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gallery_content_foot">
+                                        <div class="content_write">
+                                            <div class="input_box">
+                                                <input type="text" placeholder="댓글을 입력해주세요." class="input">
+                                                <button class="button"> 확인 </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</body>
+
+</html>

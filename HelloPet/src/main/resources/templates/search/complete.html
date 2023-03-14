@@ -1,0 +1,45 @@
+<th:block th:include="@{search/_header.html}"/>
+        <div id="complete">
+            <div class="titles">
+                <div class="view-top">
+                    <h3 class="title">예약신청이 완료되었습니다.</h3>
+                    <h4 class="title2">HelloPet을 이용해주셔서 감사합니다.</h4>
+                </div> 
+            </div>
+            <div class="contents">
+                <nav>
+                    <h1>예약내역</h1>
+                </nav>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>병원</th>
+                            <td>부산가루병원</td>
+                        </tr>
+                        <tr>
+                            <th>날짜</th>
+                            <td>23.03.05 16시 00분</td>
+                        </tr>
+                        <tr>
+                            <th>보호자 이름</th>
+                            <td>장인화</td>
+                        </tr>
+                        <tr>
+                            <th>반려동물 이름</th>
+                            <td>가루</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="explain">
+                    · 마이페이지 에서 예약 목록 및 예약 상태를 확인 할 수 있습니다.<br>
+                    · 병원에서 예약 승인 후 예약 대기중에서 예약 확정이 됩니다.<br>
+                    · 예약 확정 후 취소 및 변경은 병원 문의 바랍니다.<br>
+                </div>
+
+                
+                <a th:href="@{/my/myReserve}"><button type="button" id="button">마이페이지 이동</button></a>
+                
+            </div>
+        </div>
+<th:block th:include="@{search/_footer.html}"/>

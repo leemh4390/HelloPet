@@ -1,0 +1,78 @@
+<th:block th:include="/member/_header.html"/>
+<script th:src="@{/js/terms.js}"></script>
+<script>
+	$(document).ready(function(){
+		$('#terms_next').click(function(e){
+			e.preventDefault();
+			
+			let check = $('input[name=all]').prop('checked');
+			if(check){
+				
+				let jsonData = {'check' : check};
+				
+				$.ajax({
+					url : '/HelloPet/member/authority',
+					method : 'POST',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						
+					}
+				});
+				
+			}else{
+				alert('약관에 동의해주세요.');
+			}
+		});
+	});
+
+</script>
+<main class="terms_main">
+    <div class="terms_div">
+        <div class="terms_top">
+            <span>펫오너 회원가입</span>
+            <div class="terms_top2">
+                <span>이용약관</span>
+                <div class="terms_img">
+                    <img src="../img/tab1.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="terms_content">
+            <div class="content">
+                <span>이용약관</span>
+                <p>
+                    여기에는 약관 내용이 들어갑니다.
+                </p>
+            </div>
+            <div class="terms_check">
+            	<input type="hidden" name="type" th:value="${type}">
+                <input type="checkbox" name="terms_check" id="member_check">
+                <span>이용약관에 동의합니다.</span>
+            </div>
+        </div>
+        <div class="terms_content">
+            <div class="content">
+                <span>개인정보처리방침</span>
+                <p>
+                    여기에는 약관 내용이 들어갑니다.
+                </p>
+            </div>
+            <div class="terms_check">
+                    <input type="checkbox" name="privacy_check" id="member_check">
+                    <span>이용약관에 동의합니다.</span>
+                    <div>
+                        <input type="checkbox" name="all">
+                        <span>전체동의합니다.</span>    
+                    </div>
+            </div>
+        </div>
+        <div class="terms_button">
+            <ul>
+                <li><input type="button" value="취소"></li>
+                <li><input type="button" id="terms_next" value="다음 단계로"></li>
+            </ul>
+        </div>
+    </div>
+</main>
+<th:block th:include="/member/_footer.html"/>

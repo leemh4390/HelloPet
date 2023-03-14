@@ -1,0 +1,67 @@
+<th:block th:include="@{cs/_header.html}"/>
+<script>
+       $(function(){
+	       	$('.question0').click(function() {
+	       	    $('.answer0').toggle();
+	       	});
+	       	$('.question1').click(function() {
+	       	    $('.answer1').toggle();
+	       	});
+	       	$('.question2').click(function() {
+	       	    $('.answer2').toggle();
+	       	});
+	       	$('.question3').click(function() {
+	       	    $('.answer3').toggle();
+	       	});
+	       	$('.question4').click(function() {
+	       	    $('.answer4').toggle();
+	       	});
+       });
+</script>            
+         <main id="faq">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li class="on"><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+            <section id="list">
+                <div class="container">
+                    <ul class="tab-list"></ul>
+                    <div class="faq">
+                        <ul th:each="faq,i:${faqs}">
+                            <li class="opened">
+                                <div th:class="'q question' + ${i.index}">
+                                    <span class="question-mark">Q</span>
+                                    <div class="question-title">
+                                        <div class="centre">
+                                            <div class="inner">
+                                                <button data-index="[(${i.index})]">[[${faq.title}]]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:class="'a answer' + ${i.index}" style="display: none;" data-index="[(${i.index})]">
+                                    <div class="answer-inner">
+                                        <span class="answer-mark">A</span>
+                                        <div class="answer-contents">
+                                            <p>[[${faq.content}]]</p>
+                                        </div>
+                                    </div>
+                                    <div class="button">
+                                        <a th:href="@{/cs/faq/modify(index=${i.index})}" class="btnModify">수정</a>    
+                                        <a href="#" class="btnDel">삭제</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                <a th:href="@{/cs/faq/write}" class="btnWrite">글쓰기</a>    
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{cs/_footer.html}"/>

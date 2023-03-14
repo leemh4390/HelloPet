@@ -1,0 +1,433 @@
+/* 공통 */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR","Apple SD Gothic Neo",Helvetica,sans-serif,Arial;
+}
+a {
+    text-decoration: none;
+    color: #555;
+}
+ul, ol {list-style: none;}
+input, textarea {
+    outline: none;
+}
+img {border-style: none; max-width: 100%;}
+button {outline: none; border: none;}
+#wrapper {
+    width: 100%;
+    min-width: 1200px;
+}
+
+header {
+    min-width: 1200px;
+    width: 100%;
+    height: 105px;
+    position: relative;
+}
+
+header>div {
+    width: 100%;
+    box-sizing: border-box;
+   
+}
+
+header>.headerTop {
+    position: absolute;
+    height: 35px;
+    background: #e1f3f3;
+}
+
+header>.headerTop>div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+header>.headerTop>div>a {
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 300;
+}
+
+header>.menu {
+    position: absolute;
+    top: 35px;
+    height: 70px;
+    background: #32a69f;
+    box-sizing: border-box;
+}
+
+header > .menu > div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+}
+header > .menu > div > ul {
+    display: inline-block;
+    margin-top: 20px;
+    
+}
+header > .menu > div > ul > li {float: left;}
+header > .menu > div > ul > li > a {
+    font-size: 20px;
+    color: white;
+    padding: 0 64px;
+}
+header > .menu > div > ul > li img {width: 70px;}
+header > .menu > div > ul > li:nth-child(3) {
+    position: relative;
+    top: -22px;
+}
+main {
+    width: 100%;
+    min-width: 1200px;
+    min-height: 800px;
+    margin: 0 auto;
+}
+.top {
+    overflow: hidden;
+    height: 200px;
+    background-color: #e1f4f3;
+    text-align: center;
+}
+
+.top > h3 {
+    color: #555;
+    font-size: 38px;
+    font-weight: bold;
+    padding-top: 60px;
+}
+
+.tab {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    margin-top: -40px;
+}
+.tab > ul {
+    width: 700px;
+    height: 100%;
+    background: white;
+}
+
+.tab > ul > li {
+    text-align: center;
+    float: left;
+    width: 33.3%;
+    align-items: center;
+    line-height: 70px;
+    border-bottom: 1px solid #10958b;
+}
+.tab > ul > li > a {
+    font-weight: bold;
+    font-size: 20px;
+    color: #10958b;
+}
+.tab > ul > .on {
+    background: #32a69f;
+}
+.tab > ul > .on a {
+    color: #fff;
+}
+
+footer {
+    margin-top: 100px;
+    height: 180px;
+    background: #b4e8e3;
+    padding: 43px 0 75px;
+}
+.footer-col:first-child {
+    max-width: 524px;
+}
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+}
+.info {margin: 0 -8px;}
+.info li {
+    float: left;
+    padding: 8px;
+    line-height: .8;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 300;
+}
+.info li:first-child {
+    font-weight: bold;
+    font-weight: 700;
+}
+.link {
+    margin: -10px;
+}
+.link li {
+    float: left;
+    padding: 0 2px;
+}
+.link li a {
+    display: block;
+    line-height: 1;
+    font-family: bold;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 700;
+    padding: 2px;
+    margin: 0 2px 10px;
+}
+
+/*list*/
+.List {
+    min-height: 600px;
+    
+    
+}
+
+.List > .contents{
+    padding: 0px 0px 160px;
+    margin: 0 auto;
+}
+
+
+.List > .contents> div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 215px;
+    background: #e1f4f3;
+}
+
+.List > .contents>.search-top > .title {
+line-height: 1.4;
+font-size: 35px;
+color: #555;
+font-weight: 700;
+text-align: center;
+padding: 0 15px;
+}
+
+.List  section {
+    margin-top: 60px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; 
+}
+.List  section > .container{
+    margin: auto;
+    max-width: 1200px;
+    padding: 0;
+}
+
+
+
+.List  section > .container > .search-head {
+    position: relative;
+    z-index: 3;
+    margin-top: -115px;
+    margin-bottom: 40px;
+}
+.List  section > .container > .search-head > .search-box-container {
+    margin: 62px auto 0;
+    padding: 10px;
+    max-width: 450px;
+    width: 100%;
+    height: 60px;
+    background-image: linear-gradient(90deg,#1dc6f7,#00e5c2);
+    box-shadow: 0 6px 15px 0 rgb(36 36 36 / 21%);
+}
+
+.List .inner {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}
+.List .inner input {
+    padding: 0 90px 0 20px;
+    width: 100%;
+    height: 100%;
+    font-size: 34px;
+    color: #0dbcaf;
+    font-weight: 300;
+    border: none!important;
+}
+
+.List .inner button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 90px;
+    height: 100%;
+    background: url(../img/search3.png) no-repeat 50%;
+    border: none;
+}
+
+.List #section2 {
+    margin: 100px auto;
+    width: 1000px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; 
+}
+
+.List #section2 > .mapContainer {
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+    margin: 0 auto 30px;
+    width: 100%;
+    border-bottom: 2px solid #39d9c8;
+}
+
+.List #section2 > .mapContainer > ul > li > h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+} 
+
+
+.List #section2 > .mapContainer > .option {
+    margin-left: 650px;;
+}
+
+.List #section2 > .mapContainer > .option a {
+    margin-right: 17px;
+    font-size: smaller;
+    font-style: normal;
+    color: #666;
+}
+
+.List #section2 > .mapContainer > .option a:hover{
+    color:#39d9c8; transition:all .2s ease
+}
+
+.List #section2 > .lists > ul> li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    margin-bottom: 10px;
+}
+
+.List #section2 > .lists > ul> li > .titleHs {
+    margin-left: 10px;
+    width: 25%;
+}
+
+.List #section2 > .lists > ul> li > .titleHs a{
+    color: #3c83dc;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.List #section2 > .lists > ul> li > .titleHs a:hover{
+    color: #3063a1;
+}
+
+.List #section2 > .lists > ul> li > .infoHs {
+    width: 50%;
+   
+}
+
+.List #section2 > .lists > ul> li > .infoHs > span {
+    display: inline-block;
+    width: 16%;
+    padding: 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    justify-content: space-between;
+}
+
+.List #section2 > .lists > ul> li > .infoHs > span {
+    justify-content: space-between;
+    width: 40%;
+}
+
+
+
+.List #section2 > .lists > ul> li > .button-wrap {
+    width: 20%;
+    margin-left: 30px;
+}
+
+.List #section2 > .lists > ul> li > .button-wrap > a > button:hover {
+    transform: scale(1.1);
+}
+
+
+.List #btnDt{
+    width: 80px;
+    margin: 0 auto;
+    height: 40px;
+    background-color: rgb(101, 173, 240);
+    color: #fff;
+    border: solid 2px rgb(212, 212, 212);
+    border-radius: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+    margin-left: -20px;
+    margin-right: 7px;
+    margin-left: -30px;
+}
+
+.List #btnga{
+    width: 80px;
+    margin: 0 auto;
+    height: 40px;
+    background-color: rgb(32, 231, 231);
+    color: #fff;
+    border: solid 2px rgb(212, 212, 212);
+    border-radius: 12px;
+    font-weight: 600;
+    
+}
+
+
+
+.List #section2 > .paging {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.List #section2 > .paging > span > a {
+    color: #777;
+    font-size: 11px;
+    letter-spacing: -1px;
+}
+
+.List #section2 > .paging > .num > a {
+    display: inline-block;
+    min-width: 14px;
+    margin: 0 2px;
+    padding: 8px 9px;
+    border: 1px solid #c4c4c4;
+    background: url() 0 0 repeat-x;
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.List #section2 > .paging > .num > a.on {
+    color: #39d9c8;
+     font-weight: bold;
+     border: 1px solid #39d9c8;
+}
+
+.List #section2 > .paging > span > a:hover{
+    color: #39d9c8;
+}
+
+.List #section2 > .paging > .num > a:hover {
+    border: 1px solid #39d9c8;
+    text-decoration: none;
+}
+

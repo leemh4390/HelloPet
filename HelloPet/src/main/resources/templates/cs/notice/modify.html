@@ -1,0 +1,47 @@
+<th:block th:include="@{cs/_header.html}"/>
+<script>
+	$(function(){
+		$('.btnModify').click(function(){
+			if(confirm('수정하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		});
+	});
+
+</script>
+ <main id="notice">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li class="on"><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+            <section id="modify">
+                <div class="container">
+                    <form action="#" method="post">
+                        <table class="modifyTable">
+                            <caption>공지사항 수정</caption>
+                            <tr>
+                                <th>제목</th>
+                                <td><input type="text" name="title" th:value="${vo.title}"></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea name="content" th:text="${vo.content}"></textarea></td>
+                            </tr>
+                        </table>
+                        <div class="button">
+                            <a th:href="@{/cs/notice/view(no=${vo.no}, pg=${currentPage}, rdate=${vo.rdate})}" class="btnCancel">취소</a>
+                            <input type="submit" value="수정완료" class="btnModify"/>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{cs/_footer.html}"/>

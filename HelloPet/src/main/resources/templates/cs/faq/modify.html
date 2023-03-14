@@ -1,0 +1,43 @@
+<th:block th:include="@{cs/_header.html}"/>
+<script>
+	$(function(){
+		
+		var urlParams = new URL(location.href).searchParams;
+		var index = urlParams.get('index');
+		console.log(index);
+	});
+</script>
+	<main id="faq">
+		    <div class="top">
+		        <h3>고객센터</h3>
+		    </div>
+		    <div class="tab">
+		        <ul>
+		            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
+		            <li class="on"><a th:href="@{/cs/faq/list}">FAQ</a></li>
+		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		        </ul>
+		    </div>
+            <section id="modify">
+                <div class="container">
+                    <form action="#">
+                        <table class="modifyTable">
+                            <caption>FAQ 수정</caption>
+                            <tr>
+                                <th>Q</th>
+                                <td><input type="text" name="title"></td>
+                            </tr>
+                            <tr>
+                                <th>A</th>
+                                <td><textarea name="content"></textarea></td>
+                            </tr>
+                        </table>
+                        <div class="button">
+                            <a th:href="@{/cs/faq/list}" class="btnCancel">취소</a>
+                            <a href="#" class="btnModify">수정완료</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{cs/_footer.html}"/>

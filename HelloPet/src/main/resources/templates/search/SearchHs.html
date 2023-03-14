@@ -1,0 +1,115 @@
+<th:block th:include="@{search/_header.html}"/>
+<!-- 
+날짜 : 2023-03-09
+이름 : 장인화
+내용 : 동물병원 검색하고 결과를0 목록 ajax로 구현하기
+ -->
+<script>
+	$(function(){
+		
+		var currentPage = 1;
+		
+		
+		 $('input[name=search]').keypress(function(event) {
+		        if (event.which == 13) { // Enter 키 누름
+		            $('#btnSh').click(); // 검색 버튼 클릭 이벤트 실행
+		        }
+		    });
+		
+		$('#btnSh').click(function(){
+			
+			
+			//alert('욜');
+			
+			let search = $('input[name=search]').val();
+	    	   console.log(search);
+	    	   
+	    	   if(search){
+	    		   $.ajax({
+		    	          url : '/HelloPet/search/SearchHs',
+		    	          type : 'POST',
+		    	          data : {"search": search},
+		    	          success : function(data) {
+		    	        	  console.log(data);
+		    	        	  
+		    	        	  if(data != null){
+		    	        		  // #section2 보이기
+		    	        		  $('#section2').show();
+									
+		    	        		  console.log(data);
+			    	              var html = "";
+			    	              $.each(data.hss, function(index, hs) {
+			    	            	  var hosAddr = hs.hosAddr !== null ? hs.hosAddr : " "; // hosAddr가 null이면 공백 처리
+			    	            	  var tel = hs.tel !== null ? hs.tel : " "; // teldl null이면 공백 처리
+			    	                  html += "<li><span class='titleHs'><a href='#'>" + hs.hosName + "</a></span>"
+			    	                  html += "<span class='infoHs'><span>" + hosAddr + "</span>"
+			    	                  html += "<span>" + tel + "</span></span>"
+			    	                  html += "<span class='button-wrap'>"
+			    	                  html += "<a th:href='@{/search/view}'><button type='button' id='btnDt'>자세히</button></a>"
+			    	                  html += "<a th:href='@{/search/reserve}'><button type='button' id='btnga'>예약가능</button></a></span></li>";
+			    	              });
+			    	              
+			    	            
+			    	              
+			    	              
+			    	              $('.lists ul li').empty();
+			    	              $('.lists ul').append(html);
+			    	              
+			    	              
+			    	              
+								}
+		    	          }
+		    	    });
+	    	   }else{
+	    		   alert('검색어를 입력하세요');
+	    		   return false;
+	    	   }
+		});
+	});
+
+</script>
+        <div class="SearchHs">
+          <div class="contents">
+            <div class="search-top">
+                <h3 class="title">동물병원 찾기</h3>
+            </div>
+            <section class="section1">
+                <div class="container">
+                    <div class="search-head">
+                      <div class="search-box-container">
+                         <div class="inner">
+                             <input type="text" name="search">
+                             <button type="button" id="btnSh"></button>
+                         </div>    
+                      </div>      
+                   </div>  
+                 </div>
+            </section>
+            <section id="section2" style="display: none;">
+                <div class="mapContainer">
+                    <ul>
+                        <li>
+                            <img th:src="@{/img/search-병원.jpg}" alt="btnHs">
+                        </li>
+                    </ul>
+                   <span class="option">
+                        <a href="#">방문순</a>
+                        <a href="#">최근등록순</a>
+                        <a href="#">예약많은순</a>
+                   </span>
+                </div>
+                <div class="lists">
+                    <ul>
+                       
+                    </ul>
+                </div>
+         
+
+            </section>
+            
+                
+            
+
+         </div>
+        </div>
+  <th:block th:include="@{search/_footer.html}"/>

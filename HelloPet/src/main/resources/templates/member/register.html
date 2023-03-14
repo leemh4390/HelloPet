@@ -1,0 +1,415 @@
+<th:block th:include="/member/_header.html"/>
+<script>
+let regUid    = /^[a-z]+[a-z0-9]{4,19}$/g;
+let regName   = /^[가-힣]{2,4}$/;
+let regNick   = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+let regEmail  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+let regHp	  = /^\d{3}-\d{3,4}-\d{4}$/;
+let regTel 	  = /^\d{2,3}-\d{3,4}-\d{3,4}$/;
+let regCeoHP  = /^\d{3}-\d{3,4}-\d{4}$/;
+let regPass   = /^.*(?=^.{5,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+let isUidOk   		= false;
+let isHpOk   		= false;
+let isNameOk  		= false;
+let isEmailOk 		= false;
+let isPassOk  	 	= false;
+let isNickOk 		= false;
+
+$(document).ready(function(){
+	
+	 // uid 유효성 검사
+	 $('input[name=uid]').keydown(function(){
+		 isUidOk = false;
+	 });
+	 
+	 $('input[name=btnUidCheck]').click(function(){
+		 let uid = $('input[name=uid]').val();
+		 
+		 if(isUidOk){
+			 return;
+		 }
+		 
+		 if(uid == ''){
+			 isUidOk = false;
+			 alert('아이디를 입력해주세요.');
+		 }else{
+			 
+			 if(!uid.match(regUid)){
+				 isUidOk = false;
+				 alert('영어 또는 영어 숫자 섞어 4글자 이상으로 해주세요.');
+				 
+			 }else{
+				 
+				 let jsonData = {'uid' : uid};
+				 
+				 $.ajax({
+					url : '/HelloPet/member/countUid',
+					method : 'GET',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						if(data.result == 0){
+							isUidOk = true;
+							alert('사용가능한 아이디입니다.');
+						}else{
+							isUidOk = false;
+							alert('사용중인 아이디입니다.');
+						}
+					}
+				 });
+			 }
+		 }
+	 });
+	 
+		// hp 유효성 검사	 
+	 $('input[name=hp]').keydown(function(){
+		 isHpOk =false;
+	 });
+	 
+	 $('input[name=btnHpCheck]').click(function(){
+		 
+		 let hp = $('input[name=hp]').val();
+		 
+		 if(hp == ''){
+			 isHpOk = false;
+			 alert('휴대폰 번호를 입력해주세요.');
+		 }else{
+			 if(!hp.match(regHp)){
+				 isHpOk = false;
+				 alert('- 포함 13자리 입력해주세요.');
+			 }else{
+				let jsonData = {'hp' : hp};
+				
+				 $.ajax({
+					 url : '/HelloPet/member/countHp',
+					 method : 'GET',
+					 data : jsonData,
+					 dataType : 'json',
+					 success : function(data){
+						if(data.result == 0){
+							isHpOk = true;
+							alert('사용 가능한 연락처입니다.');
+						}else{
+							isHpOk = false;
+							alert('사용중인 전화번호입니다.');
+						}			 
+					 }
+				 });
+			 }
+		 }
+	 });
+	
+	 // name 유효성 검사
+	 $('input[name=name]').focusout(function(){
+		 
+		 let name = $(this).val();
+		 
+		 if(name == ''){
+			 isNameOk = false;
+		 }else{
+			 if(!name.match(regName)){
+				 isNameOk = false;
+				 alert('이름은 한글 2글자 이상으로 해주세요.');
+			 }else{
+				 isNameOk = true;
+			 }
+		 }
+	 });
+	 
+	 // email 유효성 검사
+	 $('input[name=btnEmailCheck]').click(function(){
+		 
+		 let email = $('input[name=email]').val();
+		 
+		 //유효성 검사
+
+		 if(email == ''){
+			 isEmailOk = false;
+			 alert('이메일 입력해주세요.');
+			 
+		 }else{
+			 
+			 if(!email.match(regEmail)){
+				 isEmailOk = false;
+				 alert('유효하지 않은 이메일입니다.');
+				 
+			 }else{
+				 
+				 let jsonData = {'email' : email};
+				 
+				 $.ajax({
+					url : '/HelloPet/member/countEmail',
+					method : 'GET',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						if(data.result == 0){
+							isEmailOk = false;
+							//인증번호 받기
+							alert('인증번호가 전송되었습니다.');
+							$('.Email-auth').css('display','table-row','block');
+							$('.auth-Code').focus();
+							let email = $('input[name=email]').val();
+							let jsonData = {'email' : email};
+							let check = $('.auth-Code') //인증번호 입력받는곳
+							
+							$.ajax({
+								url : '/HelloPet/member/registerAuth',
+								method : 'GET',
+								data : jsonData,
+								success : function(data) {
+									check.attr('disabled',false);
+									code = data;
+									isEmailOk = false;
+								}
+							});
+							
+						}else{
+							isEmailOk = false;
+							alert('사용중인 이메일입니다.');
+						}				
+					}
+				 });
+			 }
+		 }
+	 });
+	 
+	$('input[name=email-auth]').click(function(){
+		let inputCode = $('.auth-Code').val();
+		
+		if(inputCode != ''){
+			
+			if(inputCode == code){
+				alert('인증번호 일치');
+				$('.Email-auth').css('display','none');
+				isEmailOk = true;
+				$('input[name=pass1]').focus();
+			}else{
+				alert('인증번호가 일치하지 않습니다.');
+				isEmailOk = false;
+			}
+			
+		}else{
+			alert('인증번호를 입력해주세요.');
+			isEmailOk = false;
+		}
+	});
+	
+	 $('input[name=pass2]').keyup(function(){
+		 let pass1 = $('input[name=pass1]').val();
+		 let pass2 = $('input[name=pass2]').val();
+		 
+		if(pass1 == '' && pass == ''){
+			isPassOk = false;
+		}else{
+			
+		 if(pass1 == pass2){
+				//비밀번호 일치여부 확인 
+				if(pass2.match(regPass)){
+					//비밀번호 유효성 검사
+					isPassOk = true;
+					$('.passwordMsg').css('color','green').text('사용 가능한 패스워드입니다..');
+				}else{
+					isPassOk = false;
+					$('.passwordMsg').css('color','red').text('비밀번호가 유효하지 않습니다.');
+				}
+			 }else{
+				 isPassOk = false;
+				 $('.passwordMsg').css('color','red').text('비밀번호가 일치하지 않습니다.');
+			 }
+		}
+	 });
+	 
+	 $('input[name=btnNickCheck]').click(function(){
+		 
+		 let nick = $('input[name=nick]').val();
+		 
+		 //입력 여부 확인
+		 if(nick == ''){
+			 isNickOk = false;
+			 alert('닉네임을 입력해주세요.');
+			 
+		 }else{
+			 //유효성 검사 시작
+			 if(nick.match(regNick)){
+				 isNickOk = false;
+				 //중복검사
+				 let jsonData = {'nick' : nick};
+				 
+				 $.ajax({
+					url : '/HelloPet/member/countNick',
+					method : 'GET',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						if(data.result == 0){
+							//중복 없음
+							isNickOk = true;
+							alert('사용가능한 닉네임입니다.');
+						}else{
+							isNickOk = false;
+							alert('사용중인 닉네임입니다.');
+						}
+					}					
+				 });
+				 
+			 }else{
+				 //유효하지 않음.
+				 isNickOk = false;
+				 alert('유효하지 않은 닉네임입니다.');
+			 }
+		 }		 
+	 });
+	 
+	
+	
+	$('.register_submit').click(function(){
+		let uid = $('input[name=name]').val();
+		let hp = $('input[name=hp]').val();
+		let name = $('input[name=name]').val();
+		let email = $('input[name=email]').val();
+		let pass = $('input[name=pass2]').val();
+		
+		// 아이디 검증
+		if(!isUidOk){
+			alert('아이디를 확인 하십시요.');
+			$('input[name=uid]').focus();
+			return false;
+		}
+		
+		// 연락처 검증
+		if(!isHpOk){
+			alert('전화번호를 확인 하십시요.');
+			$('input[name=hp]').focus();
+			return false;
+		}
+		
+		// 이름 검증
+		if(!isNameOk){
+			alert('이름 확인 하십시요.');
+			$('input[name=name]').focus();
+			return false;
+		}
+		
+		// 이메일 검증
+		if(!isEmailOk){
+			alert('이메일을 확인 하십시요.');
+			$('input[name=email]').focus();
+			return false;
+		}
+		
+		// 패스워드 검증
+		if(!isPassOk){
+			alert('비밀번호를 확인 하십시요.');
+			$('input[name=pass2]').focus();
+			return false;
+		}
+		
+		// 닉네임 검증
+		if(!isNickOk){
+			alert('닉네임을 확인해주세요.');
+			$('input[name=nick]').focus();
+			return false;
+		}
+		
+		
+		// 최종 전송
+		return true;
+	});
+	
+	
+	
+	
+});
+
+
+</script>
+        <main class="register_main">
+            <div class="register_div">
+                <div class="register_top">
+                    <span>펫오너 회원가입</span>
+                    <div class="register_top2">
+                        <span>회원가입</span>
+                        <div class="register_img">
+                            <img src="../img/tab2.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="register_div2">
+                    <form th:action="@{/member/register}" method="post" class="register_form">
+                        <table class="register_table">
+	                        <tr>
+                                <td>아이디</td>
+                                <td>
+                                    <input type="text" name="uid" placeholder="아이디를 입력" required="required">
+                                    <input type="button" name="btnUidCheck" value="중복확인">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>휴대폰</td>
+                                <td>
+                                    <input type="text" name="hp" placeholder="- 포함 13자리">
+                                    <input type="button" name="btnHpCheck" value="중복확인">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이름</td>
+                                <td>
+                                    <input type="text" name="name" placeholder="이름">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이메일</td>
+                                <td>
+                                    <input type="email" name="email" placeholder="이메일">
+                                    <input type="button" name="btnEmailCheck" value="중복확인">
+                                </td>
+                            </tr>
+                            <tr class="Email-auth" style="display: none;">
+                            	<td>이메일 인증하기</td>
+                            	<td>
+                            		<input type="text" class="auth-Code" placeholder="입력받은 인증코드를 입력">
+                            		<input type="button" name="email-auth" value="인증하기">
+                            	</td>
+                            </tr>
+                            <tr>
+                                <td>비밀번호</td>
+                                <td>
+                                    <input type="password" name="pass1" placeholder="숫자, 영어, 특수문자 포함 5자 이상 패스워드">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>비밀번호 확인</td>
+                                <td>
+                                    <input type="password" name="pass2" placeholder="숫자, 영어, 특수문자 포함 5자 이상 패스워드">
+                                    <span style="margin-left: 10px; font-size: 12px" class="passwordMsg"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>닉네임</td>
+                                <td>
+                                    <input type="text" name="nick" placeholder="닉네임">
+                                    <input type="button" name="btnNickCheck" value="중복확인">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>주소</td>
+                                <td>
+                                    <input type="text" name="zip" id="zip" readonly="readonly" placeholder="우편번호">
+                                    <input type="button" onclick="postcode()" value="주소검색">
+                                    <input type="text" id="addr1" name="addr1" placeholder="기본주소">
+                                    <input type="text" id="addr2" name="addr2" placeholder="상세주소">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="register_button">
+                            <ul>
+                                <li><input type="button" value="취소"></li>
+                                <li><input type="submit" class="register_submit" value="가입하기"></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+<th:block th:include="/member/_footer.html"/>

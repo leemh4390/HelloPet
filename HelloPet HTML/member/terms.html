@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>헬로펫</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/member.css">
+</head>
+<script>
+    $(document).ready(function(){
+        $('input[id=terms_next]').click(function(){
+    
+            let check1 = $('input[name=terms_check]').is(':checked');
+            let check2 = $('input[name=privacy_check]').is(':checked');
+
+            if(check1 && check2){
+                location.href= './register.html';
+            }else{
+                alert('동의체크 확인!');
+            }
+        });
+
+        $('input[name=all]').click(function(){
+            let allcheck = $(this).is(':checked');
+
+            if(allcheck){
+                $('input:checkbox').prop('checked',true);
+            }else{
+                $('input:checkbox').prop('checked',false);
+            }
+        });
+
+        $('input:checkbox').click(function(){
+
+            let length = $('#member_check:checked').length;
+
+            if(length > 1){
+                $('input[name=all]').prop('checked',true);
+            }else{
+                $('input[name=all]').prop('checked',false);
+            }
+
+        });
+    });
+</script>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#">증상별질병찾기</a></li>
+                        <li><a href="#">병원/약국찾기</a></li>
+                        <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="terms_main">
+            <div class="terms_div">
+                <div class="terms_top">
+                    <span>펫오너 회원가입</span>
+                    <div class="terms_top2">
+                        <span>이용약관</span>
+                        <div class="terms_img">
+                            <img src="../img/tab1.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="terms_content">
+                    <div class="content">
+                        <span>이용약관</span>
+                        <p>
+                            여기에는 약관 내용이 들어갑니다.
+                        </p>
+                    </div>
+                    <div class="terms_check">
+                        <input type="checkbox" name="terms_check" id="member_check">
+                        <span>이용약관에 동의합니다.</span>
+                    </div>
+                </div>
+                <div class="terms_content">
+                    <div class="content">
+                        <span>개인정보처리방침</span>
+                        <p>
+                            여기에는 약관 내용이 들어갑니다.
+                        </p>
+                    </div>
+                    <div class="terms_check">
+                            <input type="checkbox" name="privacy_check" id="member_check">
+                            <span>이용약관에 동의합니다.</span>
+                            <div>
+                                <input type="checkbox" name="all">
+                                <span>전체동의합니다.</span>    
+                            </div>
+                    </div>
+                </div>
+                <div class="terms_button">
+                    <ul>
+                        <li><input type="button" value="취소"></li>
+                        <li><input type="button" id="terms_next" value="다음 단계로"></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        <footer title="footer">
+            <div class="footer">
+                 <div class="container">
+                     <div class="footer-col">
+                         <ul class="info">
+                             <li>GREEN ACADEMY</li>
+                             <li>대표이사 김헬로</li>
+                             <li>사업자 등록번호 230-12-15432</li>
+                             <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                             <li>부산광역시 남구 수영로 299</li>
+                             <li>TEL 051-000-0000</li>
+                             <li>Email HelloPet@email.com</li>
+                         </ul>
+                     </div>
+                     <div class="footer-col">
+                         <ul class="link">
+                             <li><a href="#">회사소개</a></li>
+                             <li><a href="#">이용약관</a></li>
+                             <li><a href="#">문의하기</a></li>
+                             <li><a href="#">고객센터</a></li>
+                         </ul>
+                     </div>
+                 </div>
+            </div>
+         </footer>
+    </div>
+</body>
+</html>

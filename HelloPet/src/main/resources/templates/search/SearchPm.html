@@ -1,0 +1,74 @@
+<th:block th:include="@{search/_header.html}"/>
+        <div class="SearchPm">
+          <div class="contents">
+            <div class="search-top">
+                <h3 class="title">약국 찾기</h3>
+            </div>
+            <section class="section1">
+                <div class="container">
+                   <div class="search-head">
+                     <div class="search-box-container">
+                        <div class="inner">
+                            <input type="text">
+                            <button type="button" id="btnSh"></button>
+                        </div>    
+                     </div>      
+                  </div>  
+                </div>
+            </section>
+            <section id="section2">
+                <div class="mapContainer">
+                    <ul>
+                        <li>
+                            <img th:src="@{/img/search-약국.jpg}" alt="btnHs">
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="lists">
+                    <ul>
+                        <li>
+                            <span class="titleHs"><a href="#">서울가루약국</a></span>
+                            <span class="infoHs">
+                                <span>서울 중구</span>
+                                <span>051-111-1234</span>
+                            </span>
+                            <span class="button-wrap">
+                                <a th:href="@{/search/view}"><button type="button" id="btnDt">자세히</button></a>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="titleHs"><a href="#">서울이나약국</a></span>
+                            <span class="infoHs">
+                                <span>서울 관악구</span>
+                                <span>051-222-1234</span>
+                            </span>
+                            <span class="button-wrap">
+                                <a th:href="@{/search/view}"><button type="button" id="btnDt">자세히</button></a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 검색목록 페이지 번호 -->
+                <div class="paging">
+                    <span class="prev">
+                        <a href="#"><&nbsp;이전</a>
+                    </span>
+                    <span class="num">
+                        <a href="#" class="on">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                    </span>
+                    <span class="next">
+                        <a href="#">다음&nbsp;></a>
+                    </span>
+                </div>
+
+            </section>
+            
+                
+            
+
+         </div>
+        </div>
+<th:block th:include="@{search/_footer.html}"/>

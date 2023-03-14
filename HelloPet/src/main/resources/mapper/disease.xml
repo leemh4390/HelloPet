@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hellopet.dao.DiseaseDAO">
+
+<!-- 
+	<select id="selectDisease_cate1" resultType="kr.co.hellopet.vo.Disease_cate1VO">
+		select * from `disease_cate1`;
+	</select>
+	
+	<select id="selectDisease_cate2" resultType="kr.co.hellopet.vo.Disease_cate2Vo">
+		select * from `disease_cate2`;
+	</select>
+	 -->
+	<select id="selectDisease" resultMap="selectDiseaseResultMap">
+		select b.`c1Name`, c.* FROM `disease` AS a
+		JOIN `disease_cate1` AS b ON a.cate1 = b.cate1
+		JOIN `disease_cate2` AS c ON a.cate1 = c.cate1
+		WHERE a.`group` = #{group}
+		GROUP BY c.`cate1` , c.`cate2`;
+	</select>
+	
+	<resultMap id="selectDiseaseResultMap" type="kr.co.hellopet.vo.DiseaseResultMapVO">
+		<result property="c1Name" column="c1Name"/>
+		<collection property="cate2VOList" ofType="kr.co.hellopet.vo.Disease_cate2VO">			
+			<result property="cate1" column="cate1"/>
+			<result property="cate2" column="cate2"/>
+			<result property="c2Name" column="c2Name"/>
+		</collection>	
+	</resultMap>
+	
+</mapper>

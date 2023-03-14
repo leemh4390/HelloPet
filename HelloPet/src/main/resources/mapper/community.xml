@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  
+ * 날짜 : 2023/03/09
+ * 이름 : 김경준
+ * 설명 : HelloPet 커뮤니티 페이지 기능구현
+ -->
+ 
+<mapper namespace="kr.co.hellopet.dao.CommunityDAO">
+
+	<insert id="insertTipArticle">
+		insert into `community_article` set 
+			`group`= #{group}, 
+			`title`= #{title}, 
+			`content`= #{content}, 
+			`img1`= #{img1},
+			`uid`= #{uid}, 
+			`regip`= #{regip}, 
+			`rdate`= NOW();
+	</insert>
+	
+	<select id="selectTipArticles" resultType="kr.co.hellopet.vo.CommunityVO">
+		 select * from `community_article` 
+			where `group`='tip'
+			order by `no` desc
+			limit #{start},10;
+	</select>
+
+	<select id="selectTipCount" resultType="int">
+    	select count(`no`) from `community_article` 
+    		where `group`='tip';
+    </select>
+	
+
+
+
+</mapper>

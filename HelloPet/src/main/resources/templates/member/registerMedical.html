@@ -1,0 +1,217 @@
+<th:block th:include="/member/_header.html"/>
+<script th:src="@{/js/modal.js}"></script>
+<script th:src="@{/js/registerMedical.js}"></script>
+<script th:src="@{/js/medical.js}"></script>
+<main class="business_main">
+    <div class="business_div">
+        <div class="business_top">
+            <span>펫병원 약국 회원가입</span>
+            <div class="business_top2">
+                <span>회원가입</span>
+                <div class="business_img">
+                    <img src="../img/tab2.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="join_tap">
+            <div>
+                <button type="button" class="on" name="btnTap" value="2">병원</button>
+                <button type="button" name="btnTap" value="3">약국</button>
+            </div>
+        </div>
+        <div class="register_business">
+            <form th:action="@{/member/registerMedical}" method="post" class="register_business_form">
+            <input type="hidden" class="change_level" name="level" placeholder="level" value="2">
+                <table class="register_business_table">
+	                <tr>
+	                    <td>아이디</td>
+	                    <td>
+	                        <input type="text" name="uid" placeholder="아이디를 입력">
+	                        <input type="button" name="btnUidCheck" value="중복확인">
+	                    </td>
+	                </tr>
+                    <tr>
+                        <td>휴대폰</td>
+                        <td>
+                            <input type="text" name="hp" placeholder="- 포함 13자리">
+                            <input type="button" name="btnHpCheck" value="본인확인">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이름</td>
+                        <td>
+                            <input type="text" name="name" placeholder="이름">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td>
+                            <input type="email" name="email"   placeholder="이메일">
+                            <input type="button" name="btnEmailCheck" value="중복확인">
+                        </td>
+                    </tr>
+                   <tr class="Email-auth" style="display: none;">
+                   	<td>이메일 인증하기</td>
+                   	<td>
+                   		<input type="text" class="auth-Code" placeholder="입력받은 인증코드를 입력"  >
+                   		<input type="button" name="email-auth" value="인증하기">
+                   	</td>
+                   </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td>
+                            <input type="password" name="pass1"   placeholder="숫자, 영어, 특수문자 포함 5자 이상 패스워드">
+                        </td>
+                    </tr>
+                    <tr id="pass">
+                        <td>비밀번호 확인</td>
+                        <td>
+                            <input type="password" name="pass2" placeholder="숫자, 영어, 특수문자 포함 5자 이상 패스워드">
+                            <span style="margin-left: 10px; font-size: 12px" class="passwordMsg"></span>
+                        </td>
+                    </tr>
+                    <tr class="change">
+                        <td>병원명</td>
+                        <td>
+                            <input type="text" name="medicalName" placeholder="정보 입력하기 전에 미리 찾아보세요.">
+                            <input type="button" name="searchHos" id="btn-modal" value="병원찾기">
+                        </td>
+                    </tr>
+                    <tr class="change">
+                        <td>대표수의사</td>
+                        <td>
+                            <input type="text" name="ceo" placeholder="대표수의사 입력해주세요">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td>
+                            <input type="text" name="tel" placeholder="연락처 입력">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>대표연락처</td>
+                        <td>
+                            <input type="text" name="ceoHp" placeholder="대표연락처 입력해주세요">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>주소</td>
+                        <td>
+                            <input type="text" id="zip" class="address" name="zip" readonly="readonly" placeholder="우편번호">
+                            <input type="button" onclick="postcode()" value="주소검색">
+                            <input type="text" id="addr1" name="addr1" placeholder="기본주소">
+                            <input type="text" id="addr2" name="addr2" placeholder="상세주소">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>사업자등록증</td>
+                        <td>
+                            <input type="file" id="Business_Registration" name="business" placeholder="선택된 파일없음" required="required">
+                            <input type="button" class="btnFile" value="파일찾기">
+                        </td>
+                    </tr>
+                    <tr id="radio">
+                        <td>예약하기</td>
+                        <td>
+                            <input type="radio" name="reserveOk" value="1"><span>동의</span>
+                            <input type="radio" name="reserveOk" value="2" checked="check"><span>비동의</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="register_button">
+                    <ul>
+                        <li><input type="button" value="취소"></li>
+                        <li><input type="submit" class="medicalRegister" value="가입하기"></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="modal-medical">
+        <div class="modal-window">
+            <div class="modal-title">
+                <h2>병원찾기</h2>
+            </div>
+            <div class="close-area">X</div>
+            <div class="medical_select">
+                <select name="trial" class="trial">
+                    <option value="0">시·도</option>
+                    <option value="서울">서울특별시</option>
+                    <option value="부산">부산광역시</option>
+                    <option value="대구">대구광역시</option>
+                    <option value="인천">인천광역시</option>
+                    <option value="광주">광주광역시</option>
+                    <option value="대전">대전광역시</option>
+                    <option value="울산">울산광역시</option>
+                    <option value="세종">세종특별자치시</option>
+                    <option value="경기">경기도</option>
+                    <option value="강원">강원도</option>
+                    <option value="충청북도">충청북도</option>
+                    <option value="충청남도">충청남도</option>
+                    <option value="전라북도">전라북도</option>
+                    <option value="전라남도">전라남도</option>
+                    <option value="경상북도">경상북도</option>
+                    <option value="경상남도">경상남도</option>
+                    <option value="제주">제주특별자치도</option>
+                </select>
+        
+                <select name="county" class="county">
+                    <option value="0">시·군·구</option>
+                </select>
+        
+               <div class="search">
+                  <div class="input-wrapper">
+                      <input type="text" class="SearchName" placeholder="병원이름 검색">
+                      <button type="submit" name="btnSearch-Hospital">검색</button>
+                  </div>
+              </div>
+              <div class="medical-result">
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-pharmacy">
+        <div class="modal-window">
+            <div class="modal-title">
+                <h2>약국찾기</h2>
+            </div>
+            <div class="close-area">X</div>
+            <div class="medical_select">
+                <select name="trial" class="trial" id="pharmacy-trial">
+                    <option value="0">시·도</option>
+                    <option value="서울">서울특별시</option>
+                    <option value="부산">부산광역시</option>
+                    <option value="대구">대구광역시</option>
+                    <option value="인천">인천광역시</option>
+                    <option value="광주">광주광역시</option>
+                    <option value="대전">대전광역시</option>
+                    <option value="울산">울산광역시</option>
+                    <option value="세종">세종특별자치시</option>
+                    <option value="경기">경기도</option>
+                    <option value="강원">강원도</option>
+                    <option value="충청북도">충청북도</option>
+                    <option value="충청남도">충청남도</option>
+                    <option value="전라북도">전라북도</option>
+                    <option value="전라남도">전라남도</option>
+                    <option value="경상북도">경상북도</option>
+                    <option value="경상남도">경상남도</option>
+                    <option value="제주">제주특별자치도</option>
+                </select>
+        
+                <select name="county" class="county" id="pharmacy-county">
+                    <option value="0">시·군·구</option>
+                </select>
+                <div class="search">
+                  <div class="input-wrapper">
+                      <input type="text" class="SearchName" id="pharmacy-name" placeholder="병원이름 검색">
+                      <button type="submit" name="btnSearch-Pharmacy">검색</button>
+                  </div>
+              	</div>
+              	<div class="pharmacy-result">
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="/member/_footer.html"/>

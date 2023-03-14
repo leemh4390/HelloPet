@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloPet</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#">증상별질병찾기</a></li>
+                        <li><a href="#">병원/약국찾기</a></li>
+                        <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="SearchHs">
+          <div class="contents">
+            <div class="search-top">
+                <h3 class="title">동물병원 찾기</h3>
+            </div>
+            <section class="section1">
+                <div class="container">
+                    <div class="search-head">
+                      <div class="search-box-container">
+                         <div class="inner">
+                             <input type="text">
+                             <button type="button" id="btnSh"></button>
+                         </div>    
+                      </div>      
+                   </div>  
+                 </div>
+            </section>
+            <section id="section2">
+                <div class="mapContainer">
+                    <ul>
+                        <li>
+                            <img src="./img/search-병원.jpg" alt="btnHs">
+                        </li>
+                    </ul>
+                   <span class="option">
+                        <a href="#">방문순</a>
+                        <a href="#">최근등록순</a>
+                        <a href="#">예약많은순</a>
+                   </span>
+                </div>
+                <div class="lists">
+                    <ul>
+                        <li>
+                            <span class="titleHs"><a href="#">부산가루병원</a></span>
+                            <span class="infoHs">
+                                <span>부산 연제구</span>
+                                <span>051-111-1234</span>
+                            </span>
+                            <span class="button-wrap">
+                                <a href="./view.html"><button type="button" id="btnDt">자세히</button></a>
+                                <a href="./reserve.html"><button type="button" id="btnga">예약가능</button></a>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="titleHs"><a href="">부산이나병원</a></span>
+                            <span class="infoHs">
+                                <span>부산 금정구</span>
+                                <span>051-222-1234</span>
+                            </span>
+                            <span class="button-wrap">
+                                <a href="./view.html"><button type="button" id="btnDt">자세히</button></a>
+                                <a href="./reserve.html"><button type="button" id="btnga">예약가능</button></a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 검색목록 페이지 번호 -->
+                <div class="paging">
+                    <span class="prev">
+                        <a href="#"><&nbsp;이전</a>
+                    </span>
+                    <span class="num">
+                        <a href="#" class="on">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                    </span>
+                    <span class="next">
+                        <a href="#">다음&nbsp;></a>
+                    </span>
+                </div>
+
+            </section>
+            
+                
+            
+
+         </div>
+        </div>
+        <footer>
+            <div>
+                <div class="footer_info">
+                    <p>
+                        <strong>HELLOPET</strong>
+                        <br>
+                        부산시 남구 수영로 299 10층
+                        <br>
+                        대표이사 : 김헬로
+                        <br>
+                        사업자등록번호 : 220-81-83676 사업자정보확인
+                        <br>
+                        통신판매업신고 : 부산 10630호 Fax : 051-589-8842
+                    </p>
+                </div>
+                <div class="footer_link">
+                    <ul>
+                        <li><a href="#">회사소개</a></li>
+                        <li><a href="#">서비스이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+</body>
+</html>
