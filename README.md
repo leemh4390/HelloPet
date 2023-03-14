@@ -8,7 +8,7 @@ API 설계
 
 HelloPet/index
 
-멤버
+HelloPet member page 입니다.
 
 HelloPet/member/login
 
