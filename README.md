@@ -1,6 +1,16 @@
-# HelloPet
+팀장 : 김채영
+팀원 : 임민지, 이민혁, 김경준, 장인화
 
+API 설계
 
-2023/03/02 그린컴퓨터 아카데미 풀스택 2번째 프로젝트 입니다.
+메인페이지
+HelloPet/index
 
-HelloPet/member 를 맡았으며 HTML, CSS, JAVA SCRIPT, SPRING 을 이용
+멤버
+HelloPet/member/login
+HelloPet/member/join
+HelloPet/member/terms
+HelloPet/member/register
+HelloPet/member/registerMedical
+HelloPet/member/find
+
