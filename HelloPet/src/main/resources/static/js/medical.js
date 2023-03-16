@@ -1,4 +1,4 @@
-let regUid    = /^[a-z]+[a-z0-9]{4,19}$/g;
+let regUid    = /^[a-zA-Z0-9]{3,12}$/;
 let regName   = /^[가-힣]{2,4}$/;
 let regNick   = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
 let regEmail  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -38,7 +38,7 @@ let isReserveOk 	= false;
 			 
 			 if(!uid.match(regUid)){
 				 isUidOk = false;
-				 alert('영어 또는 영어 숫자 섞어 4글자 이상으로 해주세요.');
+				 alert('영어 또는 영어 숫자 섞어 3글자 이상으로 해주세요.');
 				 
 			 }else{
 				 
@@ -238,7 +238,7 @@ let isReserveOk 	= false;
 			}
 		});
 		
-		$('input[name=ceo]').keyup(function(){
+		$('input[name=ceo]').focusout(function(){
 			
 			let ceo = $(this).val();
 			

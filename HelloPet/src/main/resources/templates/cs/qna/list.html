@@ -1,4 +1,30 @@
 <th:block th:include="@{cs/_header.html}"/>
+<script>
+	$(function(){
+		$('.qnalink').click(function(){
+			
+			var currentUser = $('input[name=currentUser]').val(); // 현재 로그인한 사용자의 아이디를 얻어옵니다.
+			console.log("current "+currentUser);
+
+			var level = $('input[name=level]').val(); // 현재 로그인한 사용자의 레벨을 얻어옵니다.
+			console.log(level);
+			
+			var writer = $(this).closest('tr').find('input[name=writer]').val(); // 현재 클릭한 a 태그가 속한 행의 writer 값을 가져옵니다.
+			console.log("writer "+writer);
+			
+			if(currentUser != writer){
+				if(level < 7){
+					alert('해당 글은 작성자만 확인할 수 있습니다.'); // 알림창을 띄웁니다.
+					return false; // a 태그의 기본 동작을 막습니다.
+				}
+				return true;
+			}
+		});
+		
+	});
+
+
+</script>
         <main id="qna">
 		    <div class="top">
 		        <h3>고객센터</h3>
@@ -6,8 +32,8 @@
 		    <div class="tab">
 		        <ul>
 		            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
-		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
-		            <li class="on"><a th:href="@{/cs/qna/list}">QNA</a></li>
+		            <li><a th:href="@{/cs/faq/list}">자주묻는질문</a></li>
+		            <li class="on"><a th:href="@{/cs/qna/list}">문의하기</a></li>
 		        </ul>
 		    </div>
             <section id="list">
@@ -20,24 +46,34 @@
                             <th>작성일</th>
                             <th>조회</th>
                         </tr>
-                        <tr>
-                            <td align="center">1</td>
-                            <td align="left" style="word-break: break-all;"><a th:href="@{/cs/qna/view}">예약 문의드립니다.</a></td>
-                            <td align="center">김**</td>
-                            <td align="center">2023-03-02</td>
-                            <td align="center">4</td>
-                        </tr>
+                        <tr th:each="article,i:${articles}">
+                        <input type="hidden" name="currentUser" th:value="${#authentication.principal.member.uid}"/>
+                        <input type="hidden" name="level" th:value="${#authentication.principal.member.level}"/>
+                        <input type="hidden" name="writer" th:value="${article.uid}"/>
+		                    <td align="center">[[${article.id}]]</td>
+		                    <td align="left" style="word-break: break-all;"><a class="qnalink" th:href="@{/cs/qna/view(no=${article.no}, pg=${currentPage}, rdate=${article.rdate})}">[[${article.title}]]</a></td>
+		                    <td align="center" th:text="${article.nick != null ? article.nick.substring(0, 1) + '*'.repeat(article.nick.length() - 1) : ''}"></td>
+		                    <td align="center">[[${article.rdate.substring(0, 10)}]]</td>
+		                    <td align="center">[[${article.hit}]]</td>
+		                </tr>
                         
                     </table>
                     <div class="paging">
-                        <ul>
-                            <li><a href="#" class="prev">←</a></li>
-                            <li><a href="#" class="on">1</a></li>
-                            <li><a href="#" class="num">2</a></li>
-                            <li><a href="#" class="next">→</a></li>
-                        </ul>
-                    </div>
-                    <a th:href="@{/cs/qna/write}" class="btnWrite">글쓰기</a>
+		                <ul>
+		                <th:block th:if="${groups[0]>1}">
+		                    <li><a th:href="@{/cs/qna/list(pg=${groups[0]-1})}" class="prev">←</a></li>
+		                </th:block>
+		                <th:block th:if="${groups[1] != 0}">
+		                <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+		                    <li><a th:href="@{/cs/qna/list(pg=${num})}" th:class="${num == currentPage?'num on':'num'}">[[${num}]]</a></li>
+		                </th:block>
+		                </th:block>
+		                <th:block th:if="${groups[1]<lastPageNum}">
+		                    <li><a th:href="@{/cs/qna/list(pg=${groups[1]+1})}" class="next">→</a></li>
+		                </th:block>
+		                </ul>
+		            </div>
+		            <a th:href="@{/cs/qna/write}" class="btnWrite">글쓰기</a>
                 </div>
             </section>
         </main>

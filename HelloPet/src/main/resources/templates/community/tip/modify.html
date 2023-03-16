@@ -28,83 +28,23 @@
                 <h3 class="modify_tip">반려동물 꿀팁 수정</h3>
             </div>
             <div>
-                <form action="#" class="modify_form">
+                <form action="#" class="modify_form" method="post">
                     <table class="modify_table">
+                    	<input type="hidden" name="uid" value="admin">
+                    	<input type="hidden" name="group" value="tip">
                         <tr>
                             <td class="modify_font">제목</td>
-                            <td class="modify_title"><input type="text" name="title" placeholder="제목을 입력하세요." value="고양이 유전질환 비대성 심근증(HCM)"></td>
+                            <td class="modify_title"><input type="text" name="title" placeholder="제목을 입력하세요." th:value="${article.title}"></td>
                         </tr>
                         <tr>
                             <td class="modify_font" style="border-bottom: none;">내용</td>
                             <td class="modify_content" style="border-bottom: none;"><textarea name="content" placeholder="내용을 입력하세요.">
-안녕하세요 헬로펫입니다🥰
-
-
-
-고양이, 강아지는 물론 사람에게도 유전 질환이 있는데요,
-
-그래서 품종묘들에게는 늘 따라다니는 유전 질환이 있습니다.
-
-오늘은 고양이 유전질환 비대성 심근증(HCM)에 대해 알아보았습니다!
-
-함께 보시죠😎
-
-
-
-📌 비대성 심근증(HCM)이란
-
-주로 몇 년생 이상 된 나이부터 1년생 이전 고양이에 발병하기도 합니다.
-
-고양이들에게 빈번하게 발병하는 심장질환으로써
-
-심장벽을 구성하는 한쪽이나 여러 쪽 부위, 좌심실 심장근육 비대해지는 특징이 나타난다고 합니다.
-
-
-
-📌 품종
-
-주로 페르시안, 히말라얀, 메인쿤, 렉돌, 스핑크스, 코숏에 많이 나타나는 유전병, 유전질환이 됩니다.
-
-
-
-📌 증상-폐의 압박
-
-폐의 압박과 함께 호흡곤란, 기침을 대표적 증상으로 보고 있습니다.
-
-폐에 물이 차는 증상은 혈압의 상승과 혈액 순환이 이루어지지 못해
-
-부정맥이나 폐동맥 혈압이 상승하여 폐 안에 물이 차는 증상이 발현하는 것입니다.
-
-폐수종으로 인해서 호흡곤란이 발생합니다.
-
-
-
-📌 증상-뒷다리 마비
-
-혈액의 혈전들로 인해서 뒷다리 마비 증상이 나타나기도 합니다.
-
-다리 마비는 혈액이 잘 순환되지 못하는 경우 혈전들이 생겨나게 되고,
-
-혈전 조각들이 몸 전체 순환 혈류로 들어가서 주로 다리의 동맥을 막게 되는데,
-
-이의 경우에 다리를 절거나 걷지 못하게 된다고 합니다.
-
-가장 일반적으로는 동물 병원에서 심장초음파를 통해서 확인이 가능합니다.
-
-
-
-📌 치료법
-
-물론 완치는 어렵고, 적절한 약물요법 등으로 증상을 완화하여 유지하는 것이 목표가 될 것입니다.
-
-고양이 유전성 질환은 완치가 불가능하지만, 어느 정도 관리를 통해서 증상을 완화 시키고
-
-반려동물과의 삶의 질을 높일 수 있도록 각별한 관리가 필요합니다.
+[[${article.content}]]
                             </textarea></td>
                         </tr>
                     </table>
                     <div class="modify_link">
-                        <a th:href="@{/community/tip/view}"><button type="button" class="modify_cancel">취소</button></a>
+                        <a th:href="@{/community/tip/view(no=${article.no})}"><button type="button" class="modify_cancel">취소</button></a>
                         <input type="submit" class="btn_modify_submit" value="수정">
                     </div>
 

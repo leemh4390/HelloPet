@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+ 	날짜 : 2023/03/14 ~
+ 	이름 : 김채영
+ 	내용 : HelloPet Admin 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.AdminDAO">
+	
+	<select id="selectAdmin" resultType="kr.co.hellopet.vo.MedicalVO">
+		select * from `pet_hospital_pharmacy` where `uid`=#{uid};
+	</select>
+	
+	<update id="updateAdmin">
+		update `pet_hospital_pharmacy` set
+            `email`=#{email},
+            `ceo`=#{ceo},
+            `ceoHp`=#{ceoHp}
+        where `uid`=#{uid};
+	</update>
+
+	<select id="selectReserves" resultType="kr.co.hellopet.vo.AdminReserveVO">
+		select a.*, b.`uid` from `reserve_list` as a
+			join `pet_hospital_pharmacy` as b on a.medNo=b.medNo
+		 	where `uid`=#{uid} order by `rdate` desc #{start}, 10;
+	</select>
+
+</mapper>

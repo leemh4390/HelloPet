@@ -27,6 +27,7 @@ public class CsService {
 	@Autowired
 	private CsDAO dao;
 	
+	/* notice */
 	public int insertNotice(CsVO vo) {
 		int result = 0;
 		// 썸네일 이미지 경로 지정
@@ -48,9 +49,6 @@ public class CsService {
 	public int selectCountTotalNotice() {
 		return dao.selectCountTotalNotice();
 	}
-	public CsVO selectArticle(int no) {
-		return dao.selectArticle(no);
-	}
 	
 	public CsVO getPrev(String rdate) {
 		return dao.getPrev(rdate);
@@ -59,11 +57,48 @@ public class CsService {
 		return dao.getNext(rdate);
 	}
 	
+	/* qna */
+	public int insertQna(CsVO vo) {
+		int result = dao.insertQna(vo);
+		return result;
+	}
+	
+	public List<CsVO> selectQnas(int start, int pageSize){
+		return dao.selectQnas(start, pageSize);
+	}
+	public int selectCountTotalQna() {
+		return dao.selectCountTotalQna();
+	}
+	
+	/* qna - reply*/
+	public int insertReply(CsVO vo) {
+		int result = dao.insertReply(vo);
+		return result;
+	}
+	public List<CsVO> selectReply(int no){
+		return dao.selectReply(no);
+	}
+	public int deleteReply(int no) {
+		return dao.deleteReply(no);
+	}
+	public int updateReply(int no) {
+		return dao.updateReply(no);
+	}
+	public int updateDelReply(int no) {
+		return dao.updateDelReply(no);
+	}
+	
+	/* faq */
 	public int insertFaq(CsVO vo) {
 		return dao.insertFaq(vo);
 	}
 	public List<CsVO> selectFaqs(){
 		return dao.selectFaqs();
+	}
+	
+	/* 공통 */
+	public CsVO selectArticle(int no) {
+		return dao.selectArticle(no);
 	}
 	
 	public int updateArticleHit(int no) {

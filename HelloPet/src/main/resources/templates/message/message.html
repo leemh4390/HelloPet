@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloPet</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/message.css}">
+    <script th:src="@{/js/popup.js}"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <div class="headerTop">
+                <div>
+                    <a href="#">로그인</a>
+                    <a href="#">회원가입</a>
+                    <a href="#">마이페이지</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a th:href="@{/disease/index}">증상별질병찾기</a></li>
+                        <li><a th:href="@{/search/index}">병원/약국찾기</a></li>
+                        <li class="logo"><a th:href="@{/}"><img th:src="@{/img/ci.png}" alt="logo"></a></li>
+                        <li><a th:href="@{/community/tip/list}">커뮤니티</a></li>
+                        <li class="cs"><a th:href="@{/cs/notice/list}">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section>
+                <section class="message">
+                    <div class="container">
+                        <div class="msg-div">
+                            <h2>알림창</h2>
+                            <ul class="msg-list">
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status0">안읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 댓글을 달았습니다.</a>
+                                    <span class="status0">안읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status0">안읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status0">안읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status0">안읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status0">안읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status1">읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status1">읽음</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="msg">김채영님이 좋아요를 눌렀습니다.</a>
+                                    <span class="status1">읽음</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+
+                </section>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="footer">
+                    <div class="container">
+                        <div class="footer-col">
+                            <ul class="info">
+                                <li>GREEN ACADEMY</li>
+                                <li>대표이사 김헬로</li>
+                                <li>사업자 등록번호 230-12-15432</li>
+                                <li>통신판매업신고번호 제 2023-부산-00213호</li>
+                                <li>부산광역시 남구 수영로 299</li>
+                                <li>TEL 051-000-0000</li>
+                                <li>Email HelloPet@email.com</li>
+                            </ul>
+                        </div>
+                        <div class="footer-col">
+                            <ul class="link">
+                                <li><a href="#">회사소개</a></li>
+                                <li><a href="#">이용약관</a></li>
+                                <li><a href="#">문의하기</a></li>
+                                <li><a href="#">고객센터</a></li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </footer>
+        <!-- 알림 자세히보기 팝업 -->
+        <div id="popMsg" class="popup">
+            <div>
+                <nav>
+                    <h1>알림</h1>
+                    <button class="btnClose">X</button>
+                </nav>
+                <p>김채영님이 회원님의 게시물에 좋아요를 눌렀습니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

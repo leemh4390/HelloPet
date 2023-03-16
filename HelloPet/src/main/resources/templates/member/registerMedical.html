@@ -2,6 +2,13 @@
 <script th:src="@{/js/modal.js}"></script>
 <script th:src="@{/js/registerMedical.js}"></script>
 <script th:src="@{/js/medical.js}"></script>
+<script>
+	$(document).ready(function(){
+		$('.register_cancel').click(function(){
+			location.href="/HelloPet/member/terms?type=medical"		
+		});
+	});
+</script>
 <main class="business_main">
     <div class="business_div">
         <div class="business_top">
@@ -86,13 +93,13 @@
                     <tr>
                         <td>연락처</td>
                         <td>
-                            <input type="text" name="tel" placeholder="연락처 입력">
+                            <input type="text" name="tel" placeholder="02-000-0000 형식으로 입력">
                         </td>
                     </tr>
                     <tr>
                         <td>대표연락처</td>
                         <td>
-                            <input type="text" name="ceoHp" placeholder="대표연락처 입력해주세요">
+                            <input type="text" name="ceoHp" placeholder="010-0000-0000 형식으로 입력">
                         </td>
                     </tr>
                     <tr>
@@ -121,7 +128,7 @@
                 </table>
                 <div class="register_button">
                     <ul>
-                        <li><input type="button" value="취소"></li>
+                        <li><input type="button" class="register_cancel" value="취소"></li>
                         <li><input type="submit" class="medicalRegister" value="가입하기"></li>
                     </ul>
                 </div>

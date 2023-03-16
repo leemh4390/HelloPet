@@ -20,8 +20,12 @@
                     <div class="tip_table">
                         <table border="0">
                             <tr th:each="article : ${articles}">
-                                <td class="tipImg">
+                                <td class="tipImg" th:if="${article.img1} ne null">
                                     <span th:style="'background: url('+@{__${article.img1.substring(9)}__}+')  center center / cover no-repeat ; '"></span>
+                                </td>
+                                <!-- 이미지가 없을때는 로고 이미지출력 -->
+                                <td class="tipImg" th:if="${article.img1} eq null">
+                                    <span th:style="'background: url('+@{/img/favicon_x32.png}+')  center center / cover no-repeat ; '"></span>
                                 </td>
                                 <td>
                                     <div class="tipTitle"><a th:href="@{/community/tip/view(group='tip', no=${article.no})}">[[${article.title}]]</a></div><br>
@@ -59,4 +63,3 @@
 
             
         </main>
-<th:block th:include="@{community/_footer.html}"/>

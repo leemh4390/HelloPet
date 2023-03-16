@@ -4,16 +4,42 @@
 이름 : 장인화
 내용 : 동물병원 search index 
  -->
+ <script>
+ 
+ function checkUidHs() {
+	 let uid = $('.uid').text();
+	 console.log(uid)
+	 
+	  if (uid) {
+	    window.location.href = "/HelloPet/search/SearchHs" // uid가 있으면 해당 페이지로 이동
+	  } else {
+	    alert("로그인이 필요합니다."); // uid가 없으면 알람 띄우기
+	  }
+	}
+ 
+ function checkUidPh() {
+	 let uid = $('.uid').text();
+	 console.log(uid)
+	 
+	  if (uid) {
+	    window.location.href = "/HelloPet/search/SearchPh" // uid가 있으면 해당 페이지로 이동
+	  } else {
+	    alert("로그인이 필요합니다."); // uid가 없으면 알람 띄우기
+	  }
+	}
+ 
+ 
+ </script>
 
         <main class="SearchIndex">
             <div class="start">
-            <img th:src="@{/img/search2.jpg}" alt="한번에">
-                
-
-            </div>
+            	<img th:src="@{/img/search2.jpg}" alt="한번에">
+				<label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span>
+				</label>
+			</div>
             <div class="btns">
-                    <a th:href="@{/search/SearchHs}" id="s1"><img th:src="@{/img/search-find1.png}" alt="찾기1"></a>
-                    <a th:href="@{/search/SearchPm}" id="s2"><img th:src="@{/img/search-find2.png}" alt="찾기2"></a>
+                    <div id="s1" onclick="checkUidHs()"><img th:src="@{/img/search-find1.png}" alt="찾기1"></div>
+                    <div id="s2" onclick="checkUidPh()"><img th:src="@{/img/search-find2.png}" alt="찾기2"></a>
             </div>
             <div class="end">
                 <img th:src="@{/img/search1.jpg}" alt="신규회원혜택">

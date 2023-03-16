@@ -1,29 +1,100 @@
 <th:block th:include="@{search/_header.html}"/>
+<!-- 
+날짜 : 2023-03-15
+이름 : 장인화
+내용 : 병원 예약하기
+ -->
+<script>
+
+$(function(){
+	
+	$('.two').hide();
+	
+	let uid = $('span[name=uid]').text();
+	
+	$('#num').change(function() {
+	    var selectedValue = $(this).val(); // 현재 선택된 select option의 값을 확인합니다.
+	    console.log(selectedValue);
+	    
+	    if (selectedValue === '2') {
+	      $('.two').show(); // 값이 2일 때 #two 요소를 보이도록 설정합니다.
+	    } else {
+	      $('.two').hide(); // 값이 2가 아닐 때 #two 요소를 숨기도록 설정합니다.
+	    }
+	  });
+	
+	
+	
+	$('#formReserve').submit(function(){
+		
+		let uid = $('input[name=uid]').val();
+		let medNo = $('input[name=medNo]').val();
+		let oPh = $('input[name=oPh]').val();
+		let oName = $('input[name=oName]').text();
+		let petNum = $('#num').val();
+		let petType1 = $('input[name=petType1]').val();
+		let petType2 = $('input[name=petType2]').val();
+		let petName1 = $('input[name=petName1]').val();
+		let petName2 = $('input[name=petName2]').val();
+		let petAge1 = $('input[name=petAge1]').val();
+		let petAge2 = $('input[name=petAge2]').val();
+		let department = $('input[name=department]').val();
+		let memo = $('input[name=memo]').val();
+		let revDate = $('input[name=revDate]').val();
+		let revTime = $('input[name=revTime]').val();
+		
+		
+		
+		console.log("uid : " + uid);
+		console.log("medNo : " + medNo);
+		console.log("oPh : " + oPh);
+		console.log("oName : " + oName);
+		console.log("petNum : " + petNum);
+		console.log("petType1 : " + petType1);
+		console.log("petType2 : " + petType2);
+		console.log("petName1 : " + petName1);
+		console.log("petName2 : " + petName2);
+		console.log("petAge1 : " + petAge1);
+		console.log("petAge2 : " + petAge2);
+		console.log("department : " + department);
+		console.log("memo : " + memo);
+		console.log("revDate : " + revDate);
+		console.log("revTime : " + revTime);
+		
+		return true;
+		
+	});
+	
+
+});
+
+
+</script>
         <main id="reserve">
             <div class="re">
                 <nav>
                     <h1>예약하기</h1>
                 </nav>
-                <form action="">
+                <form id="formReserve" th:action="@{/search/reserve}" method="post">
                     <section>
                         <table>
-                            <caption>보호자 정보입력</caption>
+                            <caption>보호자 정보입력</ caption>
                             <tbody>
                                 <tr>
                                     <th>병원</th>
-                                    <td>가루동물병원</td>
+                                    <td>[[${hs.hosName}]]</td>
                                 </tr>
                                 <tr>
                                     <th>예약날짜/시간</th>
-                                    <td><input type="date" required><input type="time" required ></td>
+                                    <td><input type="date" name="revDate"><input type="time" name="revTime" required></td>
                                 </tr>
                                 <tr>
                                     <th>보호자 성함</th>
-                                    <td>장인화</td>
+                                    <td th:text="${#authentication.principal.member.name}"></td>
                                 </tr>
                                 <tr>
                                     <th>보호자 연락처</th>
-                                    <td><input type="text" maxlength="13" placeholder="휴대폰번호 입력" required>
+                                    <td><input type="text" maxlength="13" name="oPh" placeholder="휴대폰번호 입력" required>
                                         <span>- 포함 13자리를 입력하세요.</span></td>
                                 </tr>
                             </tbody>
@@ -38,10 +109,9 @@
                                     <tr>
                                         <th>반려동물 수</th>
                                         <td>
-                                            <select id="num">
+                                            <select id="num" name="petNum">
                                                 <option value="1">1</option>
-                                                <option value="1">2</option>
-                                                <option value="1">3</option>
+                                                <option value="2">2</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -49,23 +119,35 @@
                                 <div id="petEx">    
                                     <tr>
                                         <th>반려동물 종</th>
-                                        <td><input type="text" placeholder="ex) 강아지" required></td>
+                                        <td><input type="text" name="petType1" placeholder="ex) 강아지" required></td>
                                     </tr>
                                     <tr>
                                         <th>반려동물 이름</th>
-                                        <td><input type="text" required></td>
+                                        <td><input type="text" name="petName1" required></td>
                                     </tr>
                                     <tr>
                                         <th>반려동물 나이</th>
-                                        <td><input type="text" placeholder="ex)17" required><span>숫자만 입력해주세요.</span></td>
+                                        <td><input type="text" name="petAge1" placeholder="ex)17" required><span>숫자만 입력해주세요.</span></td>
+                                    </tr>
+                                    <tr class="two">
+                                        <th>반려동물 종 (2)</th>
+                                        <td><input type="text" name="petType2" placeholder="ex) 강아지"></td>
+                                    </tr>
+                                    <tr class="two">
+                                        <th>반려동물 이름 (2)</th>
+                                        <td><input type="text" name="petName2"></td>
+                                    </tr>
+                                    <tr class="two">
+                                        <th>반려동물 나이 (2)</th>
+                                        <td><input type="text" name="petAge2" placeholder="ex)17"><span>숫자만 입력해주세요.</span></td>
                                     </tr>
                                     <tr>
                                         <th>진료항목</th>
-                                        <td><input type="text" placeholder="ex)예방접종" required><span></span></td>
+                                        <td><input type="text" name="department" placeholder="ex)예방접종"><span></span></td>
                                     </tr>
                                     <tr>
                                         <th>특이사항</th>
-                                        <td><input type="text" placeholder="ex) oo 알러지 보유"><span>수의사가 알아야 하는 반려동물의 특이사항을 기재해 주세요.</span></td>
+                                        <td><input type="text" name="memo" placeholder="ex) oo 알러지 보유"><span>수의사가 알아야 하는 반려동물의 특이사항을 기재해 주세요.</span></td>
                                     </tr>
                                 </div>           
                             </tbody>
@@ -75,8 +157,12 @@
                         · 특이사항을 제외한 모든 항목은 필수 기재 바랍니다. <br>
                         · 반려동물이 4마리 이상인 경우는 특이사항에 상세내용을 적어주세요.<br>
                         · 예약 신청 후 마이페이지 에서 예약 목록 및 예약 상태를 확인 할 수 있습니다.<br>
-
                     </div>
+                    <label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
+                    <label sec:authorize="isAuthenticated()" style="display: none;"><span class="oName" name="oName" sec:authentication="principal.member.name">길동</span></label>
+                    <input type="hidden" name="medNo" th:value="${hs.hosNo}">
+                    <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}">
+                    <input type="hidden" name="oName" th:value="${#authentication.principal.member.name}">
                     <div>
                         <input type="submit" class="reSubmit" value="예약신청">
                     </div>

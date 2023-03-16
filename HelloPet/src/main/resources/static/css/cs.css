@@ -54,7 +54,15 @@ header>.headerTop>div>a {
     color: #555;
     font-weight: 300;
 }
-
+header>.headerTop>div>label{
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+}
 header>.menu {
     position: absolute;
     top: 35px;
@@ -67,22 +75,29 @@ header > .menu > div {
     width: 1200px;
     height: 100%;
     margin: 0 auto;
+    position: relative;
 }
 header > .menu > div > ul {
     display: inline-block;
     margin-top: 20px;
-    
 }
 header > .menu > div > ul > li {float: left;}
 header > .menu > div > ul > li > a {
     font-size: 20px;
     color: white;
-    padding: 0 64px;
+    padding: 0 60px;
 }
-header > .menu > div > ul > li img {width: 70px;}
+header > .menu > div > ul > li img {
+position: absolute;
+width: 120px;
+z-index: 1;
+}
 header > .menu > div > ul > li:nth-child(3) {
     position: relative;
-    top: -22px;
+    top: -46px;
+}
+header > .menu > div > ul > li:nth-child(4) {
+margin-left: 110px;
 }
 main {
     min-width: 1200px;
@@ -204,14 +219,14 @@ footer {
     padding: 20px 10px;
     color: #333;
     background-color: #fbfbfb;
-    font-size: 16px;
+    font-size: 17px;
     border-bottom: 1px solid #ddd;
 }
 #notice > #list > .container > .table tr td {
     padding: 15px 10px;
     color: #555;
     background-color: #fff;
-    font-size: 16px;
+    font-size: 17px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -265,7 +280,7 @@ footer {
 #notice > #list > .container > .btnWrite {
     position: absolute;
     right: 40px;
-    bottom: 70px;
+    bottom: 10px;
     width: 70px;
     text-align: center;
     padding: 8px;
@@ -300,12 +315,13 @@ footer {
     text-align: left;
     padding-left: 15px;
     border-bottom: 1px solid #ddd;
+    font-size: 18px;
 }
 #notice > #view > .container > .viewTable tr td .content {
     padding: 20px 15px;
     height: 150px;
 }
-#notice > #view > .container > .viewTable .content > img {width: 35%;}
+#notice > #view > .container > .viewTable .content > img {width: 50%;}
 #notice > #view > .container > .viewTable p {
     margin-top: 20px;
     margin-bottom: 80px;
@@ -314,6 +330,7 @@ footer {
 
 #notice > #view > .container > .viewTable tr:last-child > td {
     border-bottom: none;
+    padding-top: 10px;
 }
 
 #notice > #view > .container > .viewTable2 {
@@ -605,7 +622,7 @@ footer {
 }
 .a {
     width: 100%;
-    height: 150px;
+    height: 200px;
 }
 .answer-inner {
     display: flex;
@@ -805,13 +822,14 @@ footer {
     font-size: 17px;
 }
 #faq > #modify .button > .btnModify {
-    width: 70px;
+    width: 80px;
     text-align: center;
     padding: 8px;
     background: #32a69f;
     color: #fff;
     margin: 5px;
     font-size: 17px;
+    border: none;
 }
 
 /*///////// qna ///////////*/
@@ -897,7 +915,7 @@ footer {
 #qna > #list > .container > .btnWrite {
     position: absolute;
     right: 40px;
-    bottom: 70px;
+    bottom: 10px;
     width: 70px;
     text-align: center;
     padding: 8px;
@@ -918,6 +936,7 @@ footer {
     width: 100%;
     border-top: 2px solid #0dbcaf;
     border-collapse: collapse;
+    font-size: 19px;
 }
 #qna > #view > .container > .viewTable tr th {
     height: 60px;
@@ -991,7 +1010,7 @@ footer {
     resize: none;
     padding: 6px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 17px;
 }
 #qna > #view > .container > .replyForm > article > div {
     text-align: right;
@@ -1011,9 +1030,34 @@ footer {
     font-size: 17px;
     cursor: pointer;
 }
+#qna > #view > .container > .replyList {
+	
+}
 #qna > #view > .container > .replyList .content {
-    padding: 10px;
+	font-size: 20px;
+    padding-left: 20px;
     box-sizing: border-box;
+}
+#qna > #view > .container > .replyList > article {
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin-top: 100px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#qna > #view > .container > .replyList > article > h3 {
+	padding-left: 20px;
+	padding-bottom:20px;
+	color: #32a69f;
+	font-size: 25px;
+}
+#qna > #view > .container > .replyList > article > .nick {
+	padding-left: 20px;
+	padding-top: 100px;
+	font-size: 18px;
+}
+#qna > #view > .container > .replyList > article > .date {
+	font-size: 18px;
 }
 #qna > #view > .container > .replyList > article > div {
     text-align: right;
@@ -1025,6 +1069,21 @@ footer {
     padding: 20px;
     text-align: center;
     box-sizing: border-box;
+    border:none;
+    font-size: 18px;
+}
+#qna > #view > .container > .replyList .remove {
+	width: 50px;
+	position: absolute;
+    right: 10px;
+    bottom: 20px;
+    text-align: center;
+    padding: 7px;
+    border: 1px solid #aaaaaa;
+    background: #aaaaaa;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
 }
 
 /* qna write */
@@ -1097,11 +1156,13 @@ footer {
     margin: 5px;
 }
 #qna > #write .button > .btnWrite {
-    width: 70px;
+    width: 80px;
+    border: none;
     text-align: center;
     padding: 8px;
     background: #32a69f;
     color: #fff;
     margin: 5px;
+    font-size: 17px;
 }
 

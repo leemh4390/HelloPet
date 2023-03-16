@@ -27,7 +27,7 @@
 			<div th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser' and #authentication.principal.member != null}">
 			    <span class="nick" th:text="${#authentication.principal.member.name}" ></span>님 반갑습니다.
 			    <a th:href="@{/member/logout}">로그아웃</a>
-			    <a href="#">마이페이지</a>
+			    <a th:href="@{/my/info}">마이페이지</a>
 			</div>
 			<div th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser' and #authentication.principal.medical != null}">
 			    <span class="nick" th:text="${#authentication.principal.medical.name}" ></span>님 반갑습니다.

@@ -12,6 +12,7 @@ import kr.co.hellopet.vo.Api_HospitalVO;
 import kr.co.hellopet.vo.Api_PharmacyVO;
 import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.MemberVO;
+import kr.co.hellopet.vo.TermsVO;
 
 /*
  * 날짜 : 2023/03/08
@@ -40,6 +41,10 @@ public class MemberService {
 		vo.setPass(passwordEncoder.encode(vo.getPass2()));
 		dao.insertMedical(vo);
 	};
+	
+	public List<TermsVO> selectTerms(){
+		return dao.selectTerms();
+	}
 	
 	public MemberVO selectMember(String uid) {
 		return dao.selectMember(uid);
@@ -129,6 +134,6 @@ public class MemberService {
 	
 	public void updateMedicalPasswordByCodeAndInfo(String code, String email, String name, String hp) {
 		String pass = passwordEncoder.encode(code);
-		dao.updatePetOwnerPasswordByCodeAndInfo(pass, email, name, hp);
+		dao.updateMedicalPasswordByCodeAndInfo(pass, email, name, hp);
 	}
 }

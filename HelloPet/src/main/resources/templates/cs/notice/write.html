@@ -19,14 +19,15 @@
 		    <div class="tab">
 		        <ul>
 		            <li class="on"><a th:href="@{/cs/notice/list}">공지사항</a></li>
-		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
-		            <li><a th:href="@{/cs/qna/list}">QNA</a></li>
+		            <li><a th:href="@{/cs/faq/list}">자주묻는질문</a></li>
+		            <li><a class="btnqna" th:href="@{/cs/qna/list}">문의하기</a></li>
 		        </ul>
 		    </div>
             <section id="write">
                 <div class="container">
                     <form onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
                         <table class="writeTable">
+                        <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}"/>
                             <caption>공지사항 작성</caption>
                             <tr>
                                 <th>제목</th>

@@ -1,4 +1,54 @@
 <th:block th:include="@{cs/_header.html}"/>
+<script>
+  window.onload = function() {
+    var rdate = getUrlParameter('rdate');
+    history.replaceState(null, null, window.location.pathname + "?no=" + getUrlParameter('no') + "&pg=" + getUrlParameter('pg'));
+    // rdate 값을 사용하여 필요한 곳에 전달합니다.
+  }
+
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+</script>
+<script>
+	$(function(){
+		
+		var level = $('input[name=level]').val(); // 현재 로그인한 사용자의 레벨을 얻어옵니다.
+		console.log(level);
+		
+		$('.btnDel').click(function(){
+			if(confirm('정말 삭제하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		});
+		$('.btnComplete').click(function(){
+			if(level < 7){
+				alert('관리자만 답변을 작성할 수 있습니다.');
+				return false;
+			}else{
+				if(confirm('답변을 작성하시겠습니까?')){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		});
+
+		$('.remove').click(function(){
+			if(confirm('답변을 삭제하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		});
+	});
+	
+</script>
         <main id="qna">
 		    <div class="top">
 		        <h3>고객센터</h3>
@@ -6,61 +56,67 @@
 		    <div class="tab">
 		        <ul>
 		            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
-		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
-		            <li class="on"><a th:href="@{/cs/qna/list}">QNA</a></li>
+		            <li><a th:href="@{/cs/faq/list}">자주묻는질문</a></li>
+		            <li class="on"><a th:href="@{/cs/qna/list}">문의하기</a></li>
 		        </ul>
 		    </div>
             <section id="view">
                 <div class="container">
                     <table class="viewTable">
-                        <tr><th colspan="2">예약 문의드립니다</th></tr>
+                        <tr><th colspan="2">[[${vo.title}]]</th></tr>
                         <tr>
                             <td style="height: 40px;">
-                                작성자 : <span>김채영</span> |
-                                작성일 : <span>2023-03-02</span> |
-                                조회수 : <span>4</span>
+                                작성자 : <span>[[${vo.nick}]]</span> |
+                                작성일 : <span>[[${vo.rdate.substring(2,10)}]]</span> |
+                                조회수 : <span>[[${vo.hit}]]</span>
                             </td>
                             <td align="right"></td>
                         </tr>
                         <tr>
                             <td colspan="2" class="content">
-                                <p>
-                                   예약이 왜 거절됐나요?
-                                </p>
+                                <p>[[${vo.content}]]</p>
                             </td>
                         </tr>
                     </table>
                     <div class="button">
-                        <a th:href="@{/cs/qna/list}" class="btnList">목록</a>
-                        <a href="#" class="btnDel">삭제</a>
+                        <a th:href="@{/cs/qna/list(pg=${currentPage})}" class="btnList">목록</a>
+                        <a th:href="@{/cs/qna/delete(no=${vo.no},pg=${currentPage})}" class="btnDel">삭제</a>
                     </div>
+                    
                     <!-- 답변쓰기 -->
-                    <section class="replyForm">
-                        <form action="#">
-                            <textarea name="content" placeholder="답변 입력"></textarea>
-                            <div>
-                                <input type="submit" class="btn btnComplete" value="작성"/>
-                            </div>
-                        </form>
-                    </section>
+                    <th:block th:if="${#lists.isEmpty(replys)}">
+	                    <section class="replyForm">
+	                        <form action="#" method="post">
+	                        <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}"/>
+	                        <input type="hidden" name="level" th:value="${#authentication.principal.member.level}"/>
+	                            <textarea name="content" placeholder="답변 입력"></textarea>
+	                            <div>
+	                                <input type="submit" class="btn btnComplete" value="작성"/>
+	                            </div>
+	                        </form>
+	                    </section>
+                    </th:block>
+                    <th:block th:unless="${#lists.isEmpty(replys)}">
+	                    <p></p>
+                    </th:block>
 
                     <!-- 답변목록 -->
                     <section class="replyList">
-                        <!--
-                        <article>
-                            <span class="nick" >관리자</span>
-                            <span class="date" >23-03-05</span>
-                            <p class="content" >이메일을 확인해주세요.</p>
-                            <div>
-                                <a href="#" class="remove">삭제&nbsp;&nbsp;|</a>
-                                <a href="#" class="modify">&nbsp;수정</a>
-                            </div>
-                        </article>
-                        -->             
-                        <p class="empty">등록된 답변이 없습니다.</p>
+	                    <th:block th:if="${#lists.isEmpty(replys)}">
+		                    <p class="empty">등록된 답변이 없습니다.</p>
+	                    </th:block>
+	                    <th:block th:unless="${#lists.isEmpty(replys)}">
+	                        <article th:each="reply:${replys}">
+	                        	<h3>Reply</h3>
+	                        	<p class="content" >[[${reply.content}]]</p><br>
+	                            <span class="nick" >관리자&nbsp;</span>
+	                            <span class="date" >[[${reply.rdate.substring(2,10)}]]</span>
+	                            <div>
+	                                <a sec:authorize="hasAuthority('ROLE_7')" th:href="@{/cs/qnaReply/delete(no=${vo.no},pg=${currentPage})}" class="remove">삭제</a>
+	                            </div>
+	                        </article>
+	                    </th:block>                
                     </section>
-                 
-                    
                 </div>
             </section>
         </main>

@@ -40,7 +40,8 @@
 			`zip` 		  = #{zip} ,
 			`addr1` 	  = #{addr1} ,
 			`addr2` 	  = #{addr2} ,
-			`reserve`     = #{reserve},
+			`business` 	  = #{business} ,
+			`reserve`     = 0,
 			`reserveOk`   = #{reserveOk},
 			`regip` 	  = #{regip} ,
 			`rdate` 	  = now();
@@ -64,6 +65,11 @@
 								`pharAddr` LIKE concat('%', #{county}, '%') AND 
 								`pharName` LIKE concat('%',#{name},'%') AND
 								`tel`      LIKE '%-%-%';
+	</select>
+	
+	<!-- terms 약관 출력 -->
+	<select id="selectTerms" resultType="kr.co.hellopet.vo.TermsVO">
+		SELECT * FROM `member_terms`
 	</select>
 	
 	<!-- register uid 중복조회 -->

@@ -1,4 +1,17 @@
 <th:block th:include="@{cs/_header.html}"/>
+<script>
+	function validateForm() {
+	  var title = document.forms[0]["title"].value.trim();
+	  var content = document.forms[0]["content"].value.trim();
+	  
+	  if (title == "" || content == "") {
+	    alert("제목과 내용을 모두 입력해주세요.");
+	    return false;
+	  }
+	  
+	  return true;
+	}
+</script>
         <main id="qna">
 		    <div class="top">
 		        <h3>고객센터</h3>
@@ -6,14 +19,15 @@
 		    <div class="tab">
 		        <ul>
 		            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
-		            <li><a th:href="@{/cs/faq/list}">FAQ</a></li>
-		            <li class="on"><a th:href="@{/cs/qna/list}">QNA</a></li>
+		            <li><a th:href="@{/cs/faq/list}">자주묻는질문</a></li>
+		            <li class="on"><a th:href="@{/cs/qna/list}">문의하기</a></li>
 		        </ul>
 		    </div>
             <section id="write">
                 <div class="container">
-                    <form action="#">
+                    <form onsubmit="return validateForm()" action="#" method="post">
                         <table class="writeTable">
+                        <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}"/>
                             <caption>문의하기</caption>
                             <tr>
                                 <th>제목</th>
@@ -26,7 +40,7 @@
                         </table>
                         <div class="button">
                             <a th:href="@{/cs/qna/list}" class="btnList">취소</a>
-                            <a href="#" class="btnWrite">작성완료</a>
+                            <input type="submit" value="작성완료" class="btnWrite"/>
                         </div>
                     </form>
                 </div>

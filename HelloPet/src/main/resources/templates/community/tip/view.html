@@ -12,6 +12,12 @@
                     }
                     alert('삭제되었습니다.');
                 });
+                
+                
+                
+                $('.heart_img').click(function(){
+                	
+                });
             });
         </script>
         <main>
@@ -25,82 +31,19 @@
                 </ul>
             </div>
             <div class="tip_view_title">
-                <h3>고양이 유전질환 비대성 심근증(HCM)</h3>
+                <h3>[[${article.title}]]</h3>
                 <span class="tip_view_nick"><div class="tipIcon" th:style="'background: url('+ @{/img/favicon_x32.png}+');'"></div>&nbsp헬로펫</span>
             </div>
             <div class="tip_view_content">
                 <div class="tip_view_hit">
-                    조회0ㅣ2023-00-00
+                    조회[[${article.hit}]]ㅣ[[${article.rdate.substring(2, 10)}]]
                 </div>
-                <div class="view_img_div">
-                <div class="view_img" th:style="'background: url('+ @{/img/tip_table1.png}+') center center / cover no-repeat;'">
+                <div class="view_img_div" th:if="${article.img1} ne null">
+                <div class="view_img" th:style="'background: url('+ @{__${article.img1.substring(9)}__}+') center center / cover no-repeat;'">
                 </div>
                 </div>
-                <div class="tip_view_text">
-                    안녕하세요 헬로펫입니다🥰<br><br>
-
-
-
-                    고양이, 강아지는 물론 사람에게도 유전 질환이 있는데요,<br>
-
-                    그래서 품종묘들에게는 늘 따라다니는 유전 질환이 있습니다.<br>
-
-                    오늘은 고양이 유전질환 비대성 심근증(HCM)에 대해 알아보았습니다!<br>
-
-                    함께 보시죠😎<br><br>
-
-
-
-                    📌 비대성 심근증(HCM)이란<br>
-
-                    주로 몇 년생 이상 된 나이부터 1년생 이전 고양이에 발병하기도 합니다.<br>
-
-                    고양이들에게 빈번하게 발병하는 심장질환으로써 <br>
-
-                    심장벽을 구성하는 한쪽이나 여러 쪽 부위, 좌심실 심장근육 비대해지는 특징이 나타난다고 합니다.<br><br><br>
-
-
-
-                    📌 품종<br>
-
-                    주로 페르시안, 히말라얀, 메인쿤, 렉돌, 스핑크스, 코숏에 많이 나타나는 유전병, 유전질환이 됩니다.<br><br><br>
-
-
-
-                    📌 증상-폐의 압박<br>
-
-                    폐의 압박과 함께 호흡곤란, 기침을 대표적 증상으로 보고 있습니다.<br>
-
-                    폐에 물이 차는 증상은 혈압의 상승과 혈액 순환이 이루어지지 못해<br>
-
-                    부정맥이나 폐동맥 혈압이 상승하여 폐 안에 물이 차는 증상이 발현하는 것입니다.<br>
-
-                    폐수종으로 인해서 호흡곤란이 발생합니다.<br><br><br>
-
-
-
-                    📌 증상-뒷다리 마비<br>
-
-                    혈액의 혈전들로 인해서 뒷다리 마비 증상이 나타나기도 합니다.<br>
-
-                    다리 마비는 혈액이 잘 순환되지 못하는 경우 혈전들이 생겨나게 되고, <br>
-
-                    혈전 조각들이 몸 전체 순환 혈류로 들어가서 주로 다리의 동맥을 막게 되는데, <br>
-
-                    이의 경우에 다리를 절거나 걷지 못하게 된다고 합니다.<br>
-
-                    가장 일반적으로는 동물 병원에서 심장초음파를 통해서 확인이 가능합니다.<br><br><br>
-
-
-
-                    📌 치료법<br>
-
-                    물론 완치는 어렵고, 적절한 약물요법 등으로 증상을 완화하여 유지하는 것이 목표가 될 것입니다.<br>
-
-                    고양이 유전성 질환은 완치가 불가능하지만, 어느 정도 관리를 통해서 증상을 완화 시키고<br>
-
-                    반려동물과의 삶의 질을 높일 수 있도록 각별한 관리가 필요합니다.<br>
-
+                <div class="tip_view_text" style="white-space: pre-line;">
+[[${article.content}]]
 
                 </div>
                 <div class="tip_view_heart">
@@ -115,8 +58,8 @@
                 </div>
                 <div class="view_link">
                     <a th:href="@{/community/tip/list}"><button class="view_list">목록</button></a>
-                    <a th:href="@{/community/tip/modify}"><button class="view_modify">수정</button></a>
-                    <a href="#"><button class="view_delete">삭제</button></a>
+                    <a th:href="@{/community/tip/modify(group='tip', no=${article.no})}"><button class="view_modify">수정</button></a>
+                    <a th:href="@{/community/tip/delete(group='tip', no=${article.no})}"><button class="view_delete">삭제</button></a>
                 </div>
             </div>
         </main>

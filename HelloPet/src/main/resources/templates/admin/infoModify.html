@@ -1,0 +1,77 @@
+<th:block th:include="@{admin/_header.html}"/>
+<script>
+	$(function(){
+		
+		var uid = $('input[name=uid]').val();
+		console.log(uid);
+		
+		$('.mod').click(function(){
+			if(confirm('정보를 수정하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
+		
+		
+		$('input[name=ceoHp]').click(function(){
+			var ceo = $('input[name=ceo]').val();
+			console.log(ceo);
+		});
+	});
+</script>
+        <main>
+            <div class="top">
+                <h3>정보관리</h3>
+            </div>
+            <div class="info_div">
+            <form th:action="@{/admin/infoModify}" method="post">
+                <table class="info_table">
+                <input type="hidden" name="uid" th:value="${#authentication.principal.medical.uid}"/>
+                    <tr>
+                        <td>아이디</td>
+                        <td><span>[[${vo.uid}]]</span></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td><a href="#"><button>비밀번호수정</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>병원명/약국명</td>
+                        <td><span>[[${vo.medicalName}]]</span></td>
+                    </tr>
+                    <tr>
+                        <td>TEL</td>
+                        <td><span>[[${vo.tel}]]</span></td>
+                    </tr>
+                    <tr>
+                        <td>EMAIL</td>
+                        <td><input type="text" name="email" th:value="${vo.email}"/></td>
+                    </tr>
+                    <tr>
+                        <td>대표자명</td>
+                        <td><input type="text" name="ceo" th:value="${vo.ceo}"/></td>
+                    </tr>
+                    <tr>
+                        <td>대표자 전화번호</td>
+                        <td><input type="text" name="ceoHp" th:value="${vo.ceoHp}"/></td>
+                    </tr>
+                    <tr>
+                        <td>회원탈퇴</td>
+                        <td><a href="#"><button>탈퇴하기</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>주소</td>
+                        <td><span>[[${vo.addr1}]]</span></td>
+                    </tr>
+                    
+                </table>
+                <div id="modify_button">
+                    <a th:href="@{/admin/info}" class="modCancel">취소</a>
+                    <input type="submit" value="수정완료" class="mod"/>
+                </div>
+                </form>
+            </div>
+        </main>
+<th:block th:include="@{_footer.html}"/>

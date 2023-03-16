@@ -11,6 +11,7 @@ import kr.co.hellopet.vo.Api_HospitalVO;
 import kr.co.hellopet.vo.Api_PharmacyVO;
 import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.MemberVO;
+import kr.co.hellopet.vo.TermsVO;
 
 @Mapper
 @Repository
@@ -21,6 +22,9 @@ public interface MemberDAO {
 	
 	// 병원·약국 등록
 	public void insertMedical(MedicalVO vo);
+	
+	// terms(약관) 출력
+	public List<TermsVO> selectTerms();
 	
 	public MemberVO selectMember(String uid);
 	public List<MemberVO> selectMembers();

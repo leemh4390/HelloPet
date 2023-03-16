@@ -25,8 +25,17 @@ public interface CsDAO {
 	public CsVO getPrev(String rdate);
 	public CsVO getNext(String rdate);
 	
-    
-	public int insertQna();
+    /* qna */
+	public int insertQna(CsVO vo);
+	public List<CsVO> selectQnas(@Param("start") int start, int pageSize);
+	public int selectCountTotalQna();
+	
+	/* qna - reply*/
+	public int insertReply(CsVO vo);
+	public List<CsVO> selectReply(int no);
+	public int deleteReply(int no);
+	public int updateReply(int no);
+	public int updateDelReply(int no);
 	
 	/* faq */
 	public int insertFaq(CsVO vo);

@@ -7,4 +7,11 @@ $(function(){
     $('.btnClose').click(function(){                
         $(this).closest('.popup').removeClass('on');                
     });
+    
+    $('.msg-div > .msg-list> li').click(function(e){
+		
+        e.preventDefault();
+        $('#popMsg').addClass('on');
+    });
+
 });

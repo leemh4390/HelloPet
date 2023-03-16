@@ -13,12 +13,13 @@
 		select * from `disease_cate2`;
 	</select>
 	 -->
-	<select id="selectDisease" resultMap="selectDiseaseResultMap">
+	 
+	<!--index-->
+	<select id="selectDiseases" resultMap="selectDiseaseResultMap">
 		select b.`c1Name`, c.* FROM `disease` AS a
 		JOIN `disease_cate1` AS b ON a.cate1 = b.cate1
-		JOIN `disease_cate2` AS c ON a.cate1 = c.cate1
-		WHERE a.`group` = #{group}
-		GROUP BY c.`cate1` , c.`cate2`;
+		JOIN `disease_cate2` AS c ON a.cate1 = c.cate1 and a.cate2 = c.cate2
+		WHERE a.`group` = #{group};
 	</select>
 	
 	<resultMap id="selectDiseaseResultMap" type="kr.co.hellopet.vo.DiseaseResultMapVO">
@@ -28,6 +29,25 @@
 			<result property="cate2" column="cate2"/>
 			<result property="c2Name" column="c2Name"/>
 		</collection>	
-	</resultMap>
+	</resultMap>	
 	
+	
+	<!-- view-->
+	<select id="selectDisease" resultType="kr.co.hellopet.vo.DiseaseVO">
+		select
+			a.*,
+			b.`c1Name`,
+			c.`c2Name`
+		from `disease` as a
+		join `disease_cate1` as b on a.cate1 = b.cate1
+		join `disease_cate2` as c on a.cate1 = c.cate1 and a.cate2 = c.cate2
+		where a.`cate1` = #{cate1} and a.`cate2` = #{cate2};
+	</select>
+
+
+
+
+
+
+
 </mapper>

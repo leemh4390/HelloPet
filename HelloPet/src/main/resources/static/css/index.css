@@ -55,6 +55,22 @@ header>.headerTop>div>a {
     color: #555;
     font-weight: 300;
 }
+header>.headerTop>div>label{
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+    cursor: pointer;
+}
+header>.headerTop>div>a:hover {
+	color: #10958b;
+}
+header>.headerTop>div>label:hover {
+	color: #10958b;
+}
 
 header>.menu {
     position: absolute;
@@ -68,6 +84,7 @@ header > .menu > div {
     width: 1200px;
     height: 100%;
     margin: 0 auto;
+    position: relative;
 }
 header > .menu > div > ul {
     display: inline-block;
@@ -78,12 +95,19 @@ header > .menu > div > ul > li {float: left;}
 header > .menu > div > ul > li > a {
     font-size: 20px;
     color: white;
-    padding: 0 64px;
+    padding: 0 60px;
 }
-header > .menu > div > ul > li img {width: 70px;}
+header > .menu > div > ul > li img {
+	position: absolute;
+	width: 120px;
+	z-index: 1;
+}
 header > .menu > div > ul > li:nth-child(3) {
     position: relative;
-    top: -22px;
+    top: -46px;
+}
+header > .menu > div > ul > li:nth-child(4) {
+	margin-left: 110px;
 }
 
 /* main */
@@ -117,12 +141,14 @@ main > section > .Slider {
     padding: 60px 0 0;
 }
 section > .container {
-    margin: auto;
+    margin: 0 auto;
     width: 1200px;
     padding: 0;
 }
 .topic-row {
     display: flex;
+    width: 1200px;
+    height: 400px;
     flex-wrap: wrap;
     margin: -12px;
 }
@@ -150,7 +176,6 @@ section > .container {
 .gradient-title.gradient-style3 {
     background-image: linear-gradient(90deg,#41e979,#0daa61,#1ead5e,#175722);
 }
-
 .chart-list>li {
     display: flex;
     flex-wrap: wrap;
@@ -186,6 +211,7 @@ section > .container {
     text-decoration: underline;
 }
 .chart-addr {
+	width: 40%;
     font-size: 16px;
     color: #777;
 }
@@ -687,4 +713,23 @@ footer {
     font-weight: 700;
     padding: 2px;
     margin: 0 2px 10px;
+}
+
+/*최상단으로 올라가는 버튼*/
+#top {
+    position: fixed;
+    left: 60%;
+    bottom: 10px;
+    margin-left: 600px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    color:#fff;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background: #39c9c0;
+    cursor: pointer;
 }

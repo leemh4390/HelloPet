@@ -86,6 +86,34 @@ header > .menu > div > ul > li:nth-child(3) {
     position: relative;
     top: -22px;
 }
+header > .menu > div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+header > .menu > div > ul {
+    display: inline-block;
+    margin-top: 20px;
+}
+header > .menu > div > ul > li {float: left;}
+header > .menu > div > ul > li > a {
+    font-size: 20px;
+    color: white;
+    padding: 0 60px;
+}
+header > .menu > div > ul > li img {
+position: absolute;
+width: 120px;
+z-index: 1;
+}
+header > .menu > div > ul > li:nth-child(3) {
+    position: relative;
+    top: -46px;
+}
+header > .menu > div > ul > li:nth-child(4) {
+margin-left: 110px;
+}
 main {
     width: 100%;
     min-width: 1200px;
@@ -323,7 +351,7 @@ height: 32px;
 width: 32px;
 margin: 0.3rem 10px;
 font-size: 20px;
-margin-bottom: 10px;
+margin-bottom: 60px;
 }
 
 .paging .on {
@@ -500,7 +528,17 @@ color: #fff;
     border-spacing: 0 40px;
 }
 
+.write_table .write_cateName{
+	padding-left: 20px;
+}
 
+.write_table .write_cateName > select{
+	width: 230px;
+	height: 40px;
+	font-size: 15px;
+	font-weight: 400;
+	padding-left: 10px;
+}
 
 .write_table .write_title > input{
     width: 1060px;
@@ -553,6 +591,7 @@ color: #fff;
     font-weight: bold;
     text-align: center;
 }
+
 
 
 
@@ -1243,8 +1282,31 @@ color: #fff;
 
 #modal > .modal_active > .modal_gallery_view > .modal_body  .gallery_modal_left {
     width: 50%;
+    height: 437.5px;
+    margin-top: 0px;
     overflow: hidden;
+    margin: 0 auto;
     box-sizing: inherit!important;
+}
+
+.bx-wrapper{
+	border: 0;
+	height: 370.5px;
+	width: 600px;
+}
+
+.bx-wrapper .gallery_slide_img{
+	max-width: 600px;
+	
+}
+
+.bx-wrapper img {
+    width: 600px;
+    height: 437.5px;
+}
+
+.bx-clone {
+	display:none;
 }
 
 #modal > .modal_active > .modal_gallery_view > .modal_body  .gallery_modal_left > .gallery_slide_wrap{
@@ -1290,15 +1352,7 @@ color: #fff;
     list-style: none;
 }
 
-#modal > .modal_active > .modal_gallery_view > .modal_body .gallery_slide_img{
-    position: relative;
-    width: 100%;
-    padding-top: 72.91667%;
-    background-color: #eee;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: cover;
-}
+
 
 #modal > .modal_active > .modal_gallery_view > .modal_body .button_prev{
     left: 25px;
@@ -1823,7 +1877,7 @@ color: #fff;
     display: flex;
 }
 
-.input_box > input{
+.input_box > .input{
     min-height: auto;
     height: 46px;
     font-size: 16px;
@@ -1833,13 +1887,15 @@ color: #fff;
     padding-left: 10px;
 }
 
-.input_box > button{
+.input_box > .button{
     width: 70px;
     font-size: 16px;
     color: #fff;
     margin-left: 10px;
     background-image: linear-gradient(45deg,#1dc6f7,#00e5c2);
     cursor: pointer;
+    outline: none; 
+    border: none;
 }
 
 .v-overlay{

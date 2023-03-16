@@ -13,7 +13,7 @@
 	<insert id="insertNotice">
 		insert into `cs_article` set 
 		    `group`='notice', 
-		    `uid`='admin',
+		    `uid`=#{uid},
 		    `title`=#{title}, 
 		    `content`=#{content},
 		    `img`=#{img},
@@ -33,14 +33,14 @@
     <select id="getNext" resultType="kr.co.hellopet.vo.CsVO">
     	SELECT *
 		  FROM `cs_article`
-		  WHERE `rdate` &lt; #{rdate}
+		  WHERE `rdate` &lt; #{rdate} and `group`='notice'
 		  ORDER BY `rdate` desc
 		  LIMIT 1;
     </select>
     <select id="getPrev" resultType="kr.co.hellopet.vo.CsVO">
     	SELECT *
 		  FROM `cs_article`
-		  WHERE `rdate` &gt; #{rdate}
+		  WHERE `rdate` &gt; #{rdate} and `group`='notice'
 		  ORDER BY `rdate` asc
 		  LIMIT 1;
     </select>
@@ -49,7 +49,7 @@
 	<insert id="insertFaq">
 		insert into `cs_article` set 
 		    `group`='faq', 
-		    `uid`='admin',
+		    `uid`=#{uid},
 		    `title`=#{title}, 
 		    `content`=#{content},
 		    `regip`=#{regip},
@@ -63,8 +63,61 @@
             limit 0,5;
 	</select>
 	<select id="selectCountTotalFaq" resultType="int" parameterType="map">
-        select count(`no`) from `cs_article` where `parent`=0 and `group`='notice';
+        select count(`no`) from `cs_article` where `parent`=0 and `group`='faq';
     </select>
+    
+    <!-- qna -->
+    <insert id="insertQna">
+		insert into `cs_article` set 
+		    `group`='qna', 
+		    `uid`=#{uid},
+		    `title`=#{title}, 
+		    `content`=#{content},
+		    `regip`=#{regip},
+		    `rdate`=NOW();
+	</insert>
+	<select id="selectQnas" resultType="kr.co.hellopet.vo.CsVO">
+		 select a.*, b.`nick` from `cs_article` as a
+            join `pet_owner` as b on a.uid=b.uid
+            where `parent`=0 and `group`='qna'
+            order by `no` desc
+            limit #{start},10;
+	</select>
+	<select id="selectCountTotalQna" resultType="int" parameterType="map">
+        select count(`no`) from `cs_article` where `parent`=0 and `group`='qna';
+    </select>
+    
+    <!-- qna 답변 -->
+    <insert id="insertReply">
+    	insert into `cs_article` set 
+		    `parent`=#{no},
+		    `group`='qna', 
+		    `uid`=#{uid},
+		    `content`=#{content},
+		    `regip`=#{regip},
+		    `rdate`=NOW();
+    </insert>
+    <select id="selectReply" resultType="kr.co.hellopet.vo.CsVO">
+	    select a.*, b.`nick` from `cs_article` as a
+	            join `pet_owner` as b on a.uid=b.uid
+	            where `parent`=#{no} and `group`='qna'
+	            order by `no` desc
+	            limit 0,1;
+    </select>
+    <update id="updateReply">
+    	update `cs_article` set
+    		`reply`=1 where `no`=#{no};
+    </update>
+    <update id="updateDelReply">
+    	update `cs_article` set
+    		`reply`=0 where `no`=#{no};
+    </update>
+    
+    <delete id="deleteReply">
+        delete from `cs_article` where `parent`=#{no};
+    </delete>
+    
+    
     
     <!-- 공통 -->
     <select id="selectArticle" resultType="kr.co.hellopet.vo.CsVO">

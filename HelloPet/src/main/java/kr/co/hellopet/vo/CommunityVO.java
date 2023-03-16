@@ -18,6 +18,7 @@ public class CommunityVO {
 	private String uid;
 	private int parent;
 	private String group;
+	private String cate;
 	private String title;
 	private String content;
 	private String img1;
@@ -25,6 +26,7 @@ public class CommunityVO {
 	private String img3;
 	private int hit;
 	private int heart;
+	private int reply;
 	private String regip;
 	private String rdate;
 	

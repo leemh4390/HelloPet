@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>헬로펫</title>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link async="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/popup.js"></script>
-</head>
-<body>
-    <div id="wrapper">
-        <header class="header">
-            <div class="headerTop">
-                <div>
-                    <a href="#">관리자</a>
-                    <a href="#">로그아웃</a>
-                </div>
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li class="logo"><a href="#"><img src="../img/admin_logo.png" alt="logo"></a></li>
-                        <li><a href="#">정보관리</a></li>
-                        <li><a href="#">예약내역확인</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
+<th:block th:include="@{admin/_header.html}"/>
         <main>
             <div class="top">
                 <h3>예약내역확인</h3>
@@ -127,31 +91,7 @@
                 </div>
             </div>
         </main>
-        <footer>
-           <div class="footer">
-                <div class="container">
-                    <div class="footer-col">
-                        <ul class="info">
-                            <li>GREEN ACADEMY</li>
-                            <li>대표이사 김헬로</li>
-                            <li>사업자 등록번호 230-12-15432</li>
-                            <li>통신판매업신고번호 제 2023-부산-00213호</li>
-                            <li>부산광역시 남구 수영로 299</li>
-                            <li>TEL 051-000-0000</li>
-                            <li>Email HelloPet@email.com</li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <ul class="link">
-                            <li><a href="#">회사소개</a></li>
-                            <li><a href="#">이용약관</a></li>
-                            <li><a href="#">문의하기</a></li>
-                            <li><a href="#">고객센터</a></li>
-                        </ul>
-                    </div>
-                </div>
-           </div>
-        </footer>
+<th:block th:include="@{admin/_footer.html}"/>
 
         <!-- 예약 거절 팝업 -->
         <div id="popReject" class="popup">

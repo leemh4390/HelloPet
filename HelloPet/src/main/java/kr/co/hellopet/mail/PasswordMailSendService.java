@@ -14,34 +14,30 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import kr.co.hellopet.service.MemberService;
+
 @Service
 public class PasswordMailSendService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	private int authNumber;
+	@Autowired
+	private MemberService service;
 	
-	public void makeRandomNumber() {
-		Random r = new Random();
-		int checkNum = r.nextInt(888888) + 111111;
-		authNumber = checkNum;
-	}
-	
-	public String SendPasswordEmail(String email) {
-		makeRandomNumber();
+	public String SendPasswordEmail(String email, String code) {
 		String setFrom = "HelloPet@gmail.com";
 		String toMail = email;
 		String title = "임시 비밀번호입니다.";
 		String content = 
 						"HelloPet Password." + 	//html 형식으로 작성 ! 
 		                "<br>" + 
-					    "인증 번호는 " + authNumber + "입니다." + 
+					    "인증 번호는 " + code + "입니다." + 
 					    "<br>" + 
 					    "임시 비밀번호로 로그인 후 비밀번호 변경 부탁드립니다.."; //이메일 내용 삽입
 		
 		
 		mailSend(setFrom, toMail, title, content);
-		return Integer.toString(authNumber);
+		return code;
 	}
 	
 	//이메일 전송 메소드

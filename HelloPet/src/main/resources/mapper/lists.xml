@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+ 	날짜 : 2023/03/14 ~
+ 	이름 : 김채영
+ 	내용 : HelloPet Lists 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.ListsDAO">
+	
+	<select id="selectHit" resultType="kr.co.hellopet.vo.ListsVO">
+		select a.*, b.* from `pet_hospital_pharmacy` as a
+		join `api_hospital` as b on a.medNo = b.hosNo
+		where `level`=2 order by `hit` desc limit #{start},10;
+	</select>
+	<select id="selectNew" resultType="kr.co.hellopet.vo.ListsVO">
+		select a.*, b.* from `pet_hospital_pharmacy` as a
+		join `api_hospital` as b on a.medNo = b.hosNo
+		where `level`=2 order by `rdate` desc limit #{start},10;
+	</select>
+	<select id="selectReserve" resultType="kr.co.hellopet.vo.ListsVO">
+		select a.*, b.* from `pet_hospital_pharmacy` as a
+		join `api_hospital` as b on a.medNo = b.hosNo
+		where `level`=2 order by `reserve` desc limit #{start},10;
+	</select>
+	<select id="selectCountTotal" resultType="int" parameterType="map">
+        select count(`medNo`) from `pet_hospital_pharmacy` where `level`=2;
+    </select>
+
+
+
+</mapper>

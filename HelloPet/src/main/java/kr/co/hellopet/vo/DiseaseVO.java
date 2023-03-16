@@ -24,4 +24,8 @@ public class DiseaseVO {
 	private String disName;
 	private String description;
 	private String department;
+	
+	// 추가필드
+	private String c1Name;
+	private String c2Name;
 }

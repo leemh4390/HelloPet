@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloPet</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/my.css}">
+
+</head>
+<body>
+    <div id="wrapper">
+         <header class="header">
+            <div class="headerTop">
+                <div>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_1')"><span class="level" sec:authentication="principal.member.level"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_7')"><span class="level" sec:authentication="principal.member.level"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="level" sec:authentication="principal.medical.level"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="level" sec:authentication="principal.medical.level"></span></label>
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/member/join}">회원가입</a>
+                    <label sec:authorize="hasAuthority('ROLE_1')"><span class="name" sec:authentication="principal.member.nick">길동</span>님</label>
+                    <label sec:authorize="hasAuthority('ROLE_2')"><span th:onclick="location.href='/HelloPet/admin/info'">내 병원관리</span></label></a>
+	                <label sec:authorize="hasAuthority('ROLE_3')"><span th:onclick="location.href='/Hellopet/admin/info'">내 약국관리</span></label></a>
+	                <label sec:authorize="hasAuthority('ROLE_7')"><span>웹관리자님</span></label></a>
+                	<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+                    <a sec:authorize="hasAuthority('ROLE_1')" href="#">마이페이지</a>
+                    <a th:href="@{/message/message}" class="socket">알림</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a th:href="@{/disease/index}">증상별질병찾기</a></li>
+                        <li><a th:href="@{/search/index}">병원/약국찾기</a></li>
+                        <li class="logo"><a th:href="@{/}"><img th:src="@{/img/ci.png}" alt="logo"></a></li>
+                        <li><a th:href="@{/community/tip/list}">커뮤니티</a></li>
+                        <li><a th:href="@{/cs/notice/list}">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+         <div id="sub-wrap">
+            <div class="sub-contents">
+                <div class="container">
+                    <div class="mypage-container">
+                        <nav class="mypage-navigation">
+                            <ul class="mypage-nav">
+                                <li class="mypage-nav_list">
+                                    <a href="./info.html" class="mypage-nav__list-link_active">
+                                        <span>보호자 정보관리</span>
+                                    </a>
+                                </li>
+                                <li class="mypage-nav_list">
+                                    <a href="./myReserve.html" class="mypage-nav__list-link">
+                                        <span>예약관리</span>
+                                    </a>
+                                </li>
+                                <li class="mypage-nav_list">
+                                    <a href="./myArticle.html" class="mypage-nav__list-link">
+                                        <span>게시글 관리</span>
+                                    </a>
+                                </li>
+                                <li class="mypage-nav_list">
+                                    <a href="./myQna.html" class="mypage-nav__list-link">
+                                        <span>1:1 문의</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>

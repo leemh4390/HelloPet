@@ -317,9 +317,9 @@ $(document).ready(function(){
 		return true;
 	});
 	
-	
-	
-	
+	$('.register_cancel').click(function(){
+		location.href="/HelloPet/member/terms?type=owner"		
+	});
 });
 
 
@@ -404,7 +404,7 @@ $(document).ready(function(){
                         </table>
                         <div class="register_button">
                             <ul>
-                                <li><input type="button" value="취소"></li>
+                                <li><input type="button" class="register_cancel"value="취소"></li>
                                 <li><input type="submit" class="register_submit" value="가입하기"></li>
                             </ul>
                         </div>

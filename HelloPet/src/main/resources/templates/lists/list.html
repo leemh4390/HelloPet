@@ -1,48 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HelloPet</title>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/style.css">
-    <style>
-
-    </style>
-</head>
-<body>
-    <div id="wrapper">
-        <header class="header">
-            <div class="headerTop">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                    <a href="#">마이페이지</a>
-                </div>
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li><a href="#">증상별질병찾기</a></li>
-                        <li><a href="#">병원/약국찾기</a></li>
-                        <li class="logo"><a href="/index.html"><img src="../img/ci.png" alt="logo"></a></li>
-                        <li><a href="#">커뮤니티</a></li>
-                        <li><a href="#">고객센터</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
+<th:block th:include="@{_header.html}"/>
+<script>
+	$(function(){
+		var urlParams = new URL(location.href).searchParams;
+		var type= urlParams.get('type');
+		console.log(type);
+		
+		
+	});
+</script>
         <div class="List">
           <div class="contents">
             <div class="search-top">
-                <h3 class="title">최다 조회 목록</h3>
+            	<h3 class="title" th:if="${type == 'hit'}">&nbsp;&nbsp;최다 방문 목록</h3>
+            	<h3 class="title" th:if="${type == 'new'}">&nbsp;&nbsp;최근 등록 목록</h3>
+            	<h3 class="title" th:if="${type == 'reserve'}">&nbsp;&nbsp;최다 예약 목록</h3>
             </div>
-
             <section id="section2">
                 <div class="mapContainer">
                     <ul>
@@ -52,76 +24,65 @@
                     </ul>
                 </div>
                 <div class="lists">
-                    <ul>
-                        <li>
-                            <span class="titleHs"><a href="#">부산가루병원</a></span>
-                            <span class="infoHs">
-                                <span>부산 연제구</span>
-                                <span>051-111-1234</span>
-                            </span>
-                            <span class="button-wrap">
-                                <a href="../search/view.html"><button type="button" id="btnDt">자세히</button></a>
-                                <a href="../search/reserve.html"><button type="button" id="btnga">예약가능</button></a>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="titleHs"><a href="">부산이나병원</a></span>
-                            <span class="infoHs">
-                                <span>부산 금정구</span>
-                                <span>051-222-1234</span>
-                            </span>
-                            <span class="button-wrap">
-                                <a href="../search/view.html"><button type="button" id="btnDt">자세히</button></a>
-                                <a href="../search/reserve.html"><button type="button" id="btnga">예약가능</button></a>
-                            </span>
-                        </li>
-                    </ul>
+	                    <ul th:if="${type == 'hit'}">
+	                        <li th:each="hitItem:${hits}">
+	                            <span class="titleHs"><a th:href="@{/search/view(hosNo=${hitItem.medNo})}">[[${hitItem.medicalName}]]</a></span>
+	                            <span class="infoHs">
+	                                <span>[[${hitItem.addr1}]]</span>
+	                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[${hitItem.tel}]]</span>
+	                            </span>
+	                            <span class="button-wrap">
+	                                <a th:href="@{/search/view(hosNo=${hitItem.medNo})}"><button type="button" id="btnDt">자세히</button></a>
+	                                <a th:href="@{/search/reserve(hosNo=${hitItem.medNo})}"><button type="button" id="btnga">예약가능</button></a>
+	                            </span>
+	                        </li>
+	                    </ul>
+	                    <ul th:if="${type == 'new'}">
+	                        <li th:each="newItem:${news}">
+	                            <span class="titleHs"><a th:href="@{/search/view(hosNo=${newItem.medNo})}">[[${newItem.medicalName}]]</a></span>
+	                            <span class="infoHs">
+	                                <span>[[${newItem.addr1}]]</span>
+	                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[${newItem.tel}]]</span>
+	                            </span>
+	                            <span class="button-wrap">
+	                                <a th:href="@{/search/view(hosNo=${newItem.medNo})}"><button type="button" id="btnDt">자세히</button></a>
+	                                <a th:href="@{/search/reserve(hosNo=${newItem.medNo})}"><button type="button" id="btnga">예약가능</button></a>
+	                            </span>
+	                        </li>
+	                    </ul>
+	                    <ul th:if="${type == 'reserve'}">
+	                        <li th:each="reItem:${news}">
+	                            <span class="titleHs"><a th:href="@{/search/view(hosNo=${reItem.medNo})}">[[${reItem.medicalName}]]</a></span>
+	                            <span class="infoHs">
+	                                <span>[[${reItem.addr1}]]</span>
+	                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[${reItem.tel}]]</span>
+	                            </span>
+	                            <span class="button-wrap">
+	                                <a th:href="@{/search/view(hosNo=${reItem.medNo})}"><button type="button" id="btnDt">자세히</button></a>
+	                                <a th:href="@{/search/reserve(hosNo=${reItem.medNo})}"><button type="button" id="btnga">예약가능</button></a>
+	                            </span>
+	                        </li>
+	                    </ul>
                 </div>
                 <!-- 검색목록 페이지 번호 -->
                 <div class="paging">
-                    <span class="prev">
-                        <a href="#"><&nbsp;이전</a>
-                    </span>
-                    <span class="num">
-                        <a href="#" class="on">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                    </span>
-                    <span class="next">
-                        <a href="#">다음&nbsp;></a>
-                    </span>
-                </div>
+	                <ul>
+	                <th:block th:if="${groups[0]>1}">
+	                    <li><a th:href="@{/lists/list(type=${type},pg=${groups[0]-1})}" class="prev">←</a></li>
+	                </th:block>
+	                <th:block th:if="${groups[1] != 0}">
+	                <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+	                    <li><a th:href="@{/lists/list(type=${type},pg=${num})}" th:class="${num == currentPage?'num on':'num'}">[[${num}]]</a></li>
+	                </th:block>
+	                </th:block>
+	                <th:block th:if="${groups[1]<lastPageNum}">
+	                    <li><a th:href="@{/lists/list(type=${type},pg=${groups[1]+1})}" class="next">→</a></li>
+	                </th:block>
+	                </ul>
+	            </div>
 
             </section>
 
          </div>
         </div>
-        <footer>
-            <div>
-                <div class="footer_info">
-                    <p>
-                        <strong>HELLOPET</strong>
-                        <br>
-                        부산시 남구 수영로 299 10층
-                        <br>
-                        대표이사 : 김헬로
-                        <br>
-                        사업자등록번호 : 220-81-83676 사업자정보확인
-                        <br>
-                        통신판매업신고 : 부산 10630호 Fax : 051-589-8842
-                    </p>
-                </div>
-                <div class="footer_link">
-                    <ul>
-                        <li><a href="#">회사소개</a></li>
-                        <li><a href="#">서비스이용약관</a></li>
-                        <li><a href="#">개인정보처리방침</a></li>
-                        <li><a href="#">고객센터</a></li>
-                    </ul>
-                </div>
-            </div>
-
-        </footer>
-    </div>
-</body>
-</html>
+<th:block th:include="@{_footer.html}"/>

@@ -14,19 +14,21 @@
                     <tbody>
                         <tr>
                             <th>병원</th>
-                            <td>부산가루병원</td>
+                            <td>[[${rv.medicalName}]]</td>
                         </tr>
                         <tr>
                             <th>날짜</th>
-                            <td>23.03.05 16시 00분</td>
+                            <td>[[${rv.rdate}]]</td>
                         </tr>
                         <tr>
                             <th>보호자 이름</th>
-                            <td>장인화</td>
+                            <td>[[${rv.oName}]]</td>
                         </tr>
                         <tr>
                             <th>반려동물 이름</th>
-                            <td>가루</td>
+                            <td>[[${rv.petName1}]]<br>
+                             	[[${rv.petName2}]]
+                             </td>
                         </tr>
                     </tbody>
                 </table>
@@ -36,7 +38,6 @@
                     · 병원에서 예약 승인 후 예약 대기중에서 예약 확정이 됩니다.<br>
                     · 예약 확정 후 취소 및 변경은 병원 문의 바랍니다.<br>
                 </div>
-
                 
                 <a th:href="@{/my/myReserve}"><button type="button" id="button">마이페이지 이동</button></a>
                 

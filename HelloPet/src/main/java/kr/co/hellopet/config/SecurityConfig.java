@@ -16,21 +16,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception{
 		// 접근권한
 		http.authorizeRequests().antMatchers("/").permitAll();
+		http.authorizeRequests().antMatchers("/member/**").permitAll();
+		/*
+		 * http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("7");
+		 * */
 		//추후 수정 예정 2023/03/08
 		
 		//위조 방지
 		http.csrf().disable();
 		
 		//로그인 설정
-		http.formLogin().loginPage("/member/login").defaultSuccessUrl("/member/login").failureUrl("/member/login?success=100")
+		http.formLogin().loginPage("/member/login").defaultSuccessUrl("/").failureUrl("/member/login?success=100")
 		.usernameParameter("uid").passwordParameter("pass");
 		
 		//로그아웃 설정
 		http.logout().invalidateHttpSession(true)
 		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-		.logoutSuccessUrl("/member/login?success=200");
-		
-		
+		.logoutSuccessUrl("/");
+       
 	}
 	
 	@Autowired

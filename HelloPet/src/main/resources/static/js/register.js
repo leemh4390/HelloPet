@@ -1,4 +1,4 @@
-let regUid    = /^[a-z]+[a-z0-9]{4,19}$/g;
+let regUid    = /^[a-zA-Z0-9]{3,12}$/;
 let regName   = /^[가-힣]{2,4}$/;
 let regNick   = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
 let regEmail  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -38,7 +38,7 @@ $(document).ready(function(){
 			});
 		}else{
 			isUidOk = false;
-			alert('아이디는 영어 또는  영어,숫자 포함 4글자 이상 부탁드립니다.');
+			alert('아이디는 영어 또는  영어,숫자 포함 3글자 이상 부탁드립니다.');
 		}
 	});
 	
@@ -194,16 +194,6 @@ $(document).ready(function(){
 			isEmailOk = false;
 		}
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 $('input[name=register_submit]').click(function(){
 

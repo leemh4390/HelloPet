@@ -2,28 +2,49 @@
 <script th:src="@{/js/terms.js}"></script>
 <script>
 	$(document).ready(function(){
-		$('#terms_next').click(function(e){
+	    $('input[id=terms_next]').click(function(e){
 			e.preventDefault();
 			
-			let check = $('input[name=all]').prop('checked');
-			if(check){
+	        let check1 = $('input[name=terms_check]').is(':checked');
+	        let check2 = $('input[name=privacy_check]').is(':checked');
+	        let check  = $('input[name=all]').prop('checked'); 
+	        
+	        if(check1 && check2){
+	        	
+				let type = $('input[name=type]').val();
 				
-				let jsonData = {'check' : check};
-				
-				$.ajax({
-					url : '/HelloPet/member/authority',
-					method : 'POST',
-					data : jsonData,
-					dataType : 'json',
-					success : function(data){
-						
+				if(type == 'owner'){
+					
+					if(check){
+						let jsonData = {'check' : check};
+						$.ajax({
+							url : '/HelloPet/member/authority',
+							method : 'POST',
+							data : jsonData,
+							dataType : 'json',
+						});
 					}
-				});
+					
+					location.href="/HelloPet/member/register";
 				
-			}else{
-				alert('약관에 동의해주세요.');
-			}
-		});
+				}else if(type == 'medical'){
+					
+					if(check){
+						let jsonData = {'check' : check};
+						$.ajax({
+							url : '/HelloPet/member/authority',
+							method : 'POST',
+							data : jsonData,
+							dataType : 'json',
+						});
+					}
+					
+					location.href="/HelloPet/member/registerMedical";
+				}
+	        }else{
+	            alert('동의체크 확인!');
+	        }
+	    });
 	});
 
 </script>
@@ -38,28 +59,28 @@
                 </div>
             </div>
         </div>
-        <div class="terms_content">
+        <div class="terms_content" th:each="vo:${vo}">
             <div class="content">
                 <span>이용약관</span>
-                <p>
-                    여기에는 약관 내용이 들어갑니다.
+                <p style="overflow: auto; line-height: 200%;">
+                    [[${vo.terms}]]
                 </p>
             </div>
             <div class="terms_check">
             	<input type="hidden" name="type" th:value="${type}">
-                <input type="checkbox" name="terms_check" id="member_check">
+                <input type="checkbox" name="terms_check" class="member_check">
                 <span>이용약관에 동의합니다.</span>
             </div>
         </div>
-        <div class="terms_content">
+        <div class="terms_content" th:each="vo:${vo}">
             <div class="content">
                 <span>개인정보처리방침</span>
-                <p>
-                    여기에는 약관 내용이 들어갑니다.
+                <p style="overflow: auto; line-height: 200%;">
+                    [[${vo.privacy}]]
                 </p>
             </div>
             <div class="terms_check">
-                    <input type="checkbox" name="privacy_check" id="member_check">
+                    <input type="checkbox" name="privacy_check" class="member_check">
                     <span>이용약관에 동의합니다.</span>
                     <div>
                         <input type="checkbox" name="all">

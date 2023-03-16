@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.hellopet.dao.DiseaseDAO;
 import kr.co.hellopet.vo.DiseaseResultMapVO;
+import kr.co.hellopet.vo.DiseaseVO;
 
 /*
  * 날짜 : 2023/03/09
@@ -19,8 +20,13 @@ public class DiseaseService {
 	@Autowired
 	private DiseaseDAO dao;
 	
-	public List<DiseaseResultMapVO> selectDisease(String group) {
-		return dao.selectDisease(group);
+	public List<DiseaseResultMapVO> selectDiseases(String group) {
+		return dao.selectDiseases(group);
 	}
+	
+	public DiseaseVO selectDisease(int cate1, int cate2) {
+		return dao.selectDisease(cate1, cate2);
+	}
+	
 	
 }

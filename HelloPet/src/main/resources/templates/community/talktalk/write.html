@@ -7,6 +7,12 @@
         <script>
             $(function(){
             $('form').submit(function(){
+            	
+           	if($('select[name=cate]').val() == 0){
+   				alert('카테고리를 지정하세요.');
+   				return false;
+   			}	
+            
             if($('input[name=title]').val() == ''){
     				alert('제목을 입력하십시요.');
     				return false;
@@ -15,8 +21,32 @@
     				alert('내용을 입력하십시요.');
     				return false;
     			}
-    			return true;
+    			
+			
+   			if($('input[name=fileImg1]').val() == ''){
+   				alert('이미지파일 3개는 필수입니다.');
+   				return false;
+   			}
+   				
+   			
+   			if($('input[name=fileImg2]').val() == ''){
+   				alert('이미지파일 3개는 필수입니다.');
+   				return false;
+   			}
+   				
+   			
+   			if($('input[name=fileImg3]').val() == ''){
+   				alert('이미지파일 3개는 필수입니다.');
+   				return false;
+   			}
+   			
+   			
+   			return true;	
     		});
+            
+            
+			
+		
     		
     	    });
         </script>
@@ -28,8 +58,21 @@
                 <h3 class="write_talktalk">반려동물 톡톡 작성</h3>
             </div>
             <div>
-                <form action="#" class="write_form">
+                <form action="#" class="write_form" method="post" enctype="multipart/form-data">
                     <table class="write_table">
+                    	<input type="hidden" name="uid" value="admin">
+                    	<input type="hidden" name="group" value="talktalk">
+                    	<tr>
+                    		<td class="write_font">카테고리 선택</td>
+                    		<td class="write_cateName">
+                    			<select name="cate">
+                    				<option value="0"> 카테고리 선택</option>
+                    				<option value="contest2">헬로펫 제 2기 모델 콘테스트</option>
+                    				<option value="contest1">헬로펫 제 1기 모델 콘테스트</option>
+                    				<option value="daily">일상공유</option>
+                    			</select> 
+                    		</td>
+                    	</tr>
                         <tr>
                             <td class="write_font">제목</td>
                             <td class="write_title"><input type="text" name="title" placeholder="제목을 입력하세요."></td>
@@ -41,9 +84,9 @@
                         <tr>
                             <td class="write_font" style="border-bottom: none;">파일선택</td>
                             <td  class="write_file" style="border-bottom: none;">
-	                            <span>첫번째 이미지</span> <input type="file" name="img1">
-	                            <span>두번째 이미지</span> <input type="file" name="img2">
-	                            <span>세번째 이미지</span> <input type="file" name="img3">
+	                            <span>첫번째 이미지</span> <input type="file" name="fileImg1">
+	                            <span>두번째 이미지</span> <input type="file" name="fileImg2">
+	                            <span>세번째 이미지</span> <input type="file" name="fileImg3">
                             </td>
                         </tr>
                     </table>

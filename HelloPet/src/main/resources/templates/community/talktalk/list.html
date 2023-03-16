@@ -5,21 +5,61 @@
 -->
 <th:block th:include="@{community/_header.html}"/>
     <script>
+        
         $(function(){
-                $('.gallery_delete').click(function(){
-                    if(!confirm('정말 삭제하시겠습니까?')){
-                        return false;
-                    }
-                    alert('삭제되었습니다.');
-                });
-            });
-
-        $(function(){
-        		
+        	
+        	
+        	
+        	
         	// 모달 창 열림
                 $('.gallery_item').click(function(){
-                    $('#modal').css('display','flex');
+                	
+                	
+                	let no = $('div[name=rank_no]').attr("value");
+                	
+                	
+                	
+                	//location.href = "/HelloPet/community/talktalk/list?no="+no;
+                    
+                	let jsonData = {'no' : no};
+                	
+                	$.ajax({
+						url : "/HelloPet/community/talktalk/view",
+				    	method : 'GET',
+				    	data : jsonData,
+				    	dataType : 'json',
+				    	success : function(data){
+				    		
+				    		$('.writer_nick').html('<strong>'+data.result.nick+'</strong>');
+				    		$('.content_info_item span').html('<strong>'+data.result.reply+'</strong>');
+				    		$('.like_aria').html('<strong>소풍이</strong>님 외 <strong>'+data.result.heart+'명</strong>이 좋아합니다.');
+				    		$('.gallery_content_tit').html(data.result.title);
+				    		$('.gallery_content_txt').html(data.result.content);
+				    		$('.gallery_content_date').html(data.result.rdate.substring(0, 10));
+				    		$('.gallery_modify').click(function(){
+				    			location.href = "/HelloPet/community/talktalk/modify?no="+no;
+				    		});
+				    		$('.modal_img1 a').html('<img th:src="@{'+data.result.img1+'}" alt="img1">');
+				    		
+				    		
+				    		
+				    		
+				    		
+				    		
+				    		
+				    		
+				    	}
+					});
+                	
+                	$('#modal').css('display','flex');
                     $('.v-overlay').css('display','flex');
+                    
+                    var slider = $('.gallery_modal_left').bxSlider({
+                    	mode: 'horizontal'
+                    	
+                      });
+                    
+                    
                 });
         	// x를 누르면 모달 창 닫힘
                 $('.modal_close').click(function(){
@@ -38,27 +78,38 @@
                 	}
                 });
         	
-        		$('.button_prev').click(function(){
-        			
-        			
-        			
-        			$('.gallery_slide_img').css('margin-right',600);
-        			
-        			
-        		});
-        		
-				$('.button_next').click(function(){
-        			
-        			
-        			
-        			$('.gallery_slide_img').css('margin-left',600);
-        			
-        			
-        		});
-        		
-        		
+        	// 글 삭제
+                $('.gallery_delete').click(function(){
+                    if(!confirm('정말 삭제하시겠습니까?')){
+                        return false;
+                    }
+                    alert('삭제되었습니다.');
+                });
+                
+             // 유형별 게시물 불러오기
+             	$('select[name=sort]').on("change",function() {
+            		let sort = $(this).val();
+            		let cate = $('select[name=cate]').val();
+            		
+            		location.href = "/HelloPet/community/talktalk/list?pg=1&sort="+sort+"&cate="+cate;
+            	});
+             
+            	$('select[name=cate]').on("change",function() {
+            		let sort = $('select[name=sort]').val();
+            		let cate = $(this).val();
+            		
+            		location.href = "/HelloPet/community/talktalk/list?pg=1&sort="+sort+"&cate="+cate;
+            	});
+        	
+            	
+            	
+            	
             });
+        		
+        		
+           
     </script>
+    
         <main>
             <div class="top">
                 <h3>커뮤니티</h3>
@@ -66,7 +117,7 @@
             <div class="tab">
                 <ul>
                     <li><a th:href="@{/community/tip/list}">반려동물 꿀팁</a></li>
-                    <li class="on"><a href="#">반려동물 톡톡</a></li>
+                    <li class="on"><a th:href="@{/community/talktalk/list}">반려동물 톡톡</a></li>
                 </ul>
             </div>
             <section id="talkMain">
@@ -79,16 +130,15 @@
                     </div>
                     <div class="talk_head">
                         <div class="select">
-                            <select class="c1Name">
-                                <option value="0">최신순</option>
-                                <option>좋아요순</option>
-                                <option>댓글순</option>
+                            <select class="c1Name" name="sort">
+                                <option value="1" th:selected="${sort} eq 1">최신순</option>
+                                <option value="2" th:selected="${sort} eq 2">좋아요순</option>
+                                <option value="3" th:selected="${sort} eq 3">댓글순</option>
                             </select>
-                            <select class="c2Name">
-                                <option value="0">마이펫 제 2기 모델 콘테스트</option>
-                                <option>마이펫 제 1기 모델 콘테스트</option>
-                                <option>일상공유</option>
-                                <option>건강일기</option>
+                            <select class="c2Name" name="cate">
+                                <option value="contest2" th:selected="${cate} eq 'contest2'">헬로펫 제 2기 모델 콘테스트</option>
+                                <option value="contest1" th:selected="${cate} eq 'contest1'">헬로펫 제 1기 모델 콘테스트</option>
+                                <option value="daily" th:selected="${cate} eq 'daily'">일상공유</option>
                             </select>
                         </div>
                     </div>
@@ -97,301 +147,67 @@
                             <img th:src="@{/img/congratulate_img.png}" alt="랭킹이미지">
                         </div>
                         <div class="gallery_items">
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/talk_rank_thumb1.jpg}+');'"></div>
+                        	<th:block th:each="rank : ${ranks}">
+                            <div class="gallery_item" name="rank_no" th:value="${rank.no}">
+                                <div class="gallery_item_con1" th:style="'background-image: url('+@{__${rank.img1.substring(9)}__}+');'"></div>
                                 <div class="gallery_item_con2">
                                     <div class="gallery_info1">
-                                        <div class="gallery_title">마이펫 제2기 모델(로이 밍밍 2살)</div>
+                                        <div class="gallery_title">[[${rank.title}]]</div>
                                         <div class="gallery_like_comment">
-                                            <div class="gallery_like"><span class="gallery_like_icon" th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>23</div>
-                                            <div class="gallery_comment"><span class="gallery_comment_icon" th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>21</div>
+                                            <div class="gallery_like"><span class="gallery_like_icon" th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>[[${rank.heart}]]</div>
+                                            <div class="gallery_comment"><span class="gallery_comment_icon" th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>[[${rank.reply}]]</div>
                                         </div>
                                     </div>
                                     <div class="gallery_info2">
                                         <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/로이밍밍프사.jpg}+');'"></span>로이밍밍</div>
+                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/로이밍밍프사.jpg}+');'"></span>[[${rank.nick}]]</div>
                                         </div>    
-                                        <div class="rank_date">2023-03-05</div>
+                                        <div class="rank_date">[[${rank.rdate.substring(2, 10)}]]</div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/talk_rank_thumb2.jpg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">2기 모델 지원합니다</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon" th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>18</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon" th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>10</div>
-                                    </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/봉팔공주엄뉘프사.jpg}+');'"></span>동동</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/talk_rank_thumb3.jpg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">마이펫 2기모델 4살 반달과 3살 포비</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon" th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>14</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon" th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>6</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/반달포비맘프사.jpg}+');'"></span>반달포비맘</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
+                            </th:block>
                         </div>
                     </div>
                     <div class="talk_normal">
                         <div class="gallery_items">
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
+                            <div class="gallery_item" th:each="article : ${articles}">
+                                <div class="gallery_item_con1" th:style="'background-image: url('+@{__${article.img1.substring(9)}__}+');'"></div>
                                 <div class="gallery_item_con2">
                                     <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
+                                        <div class="gallery_title">[[${article.title}]]</div>
                                         <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
+                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>[[${article.heart}]]</div>
+                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>[[${article.reply}]]</div>
                                         </div>
                                     </div>
                                     <div class="gallery_info2">
                                         <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
+                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>[[${article.nick}]]</div>
                                         </div>    
-                                        <div class="rank_date">2023-03-05</div>
+                                        <div class="rank_date">[[${article.rdate.substring(2, 10)}]]</div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="gallery_item">
-                                <div class="gallery_item_con1" th:style="'background-image: url('+@{/img/normal_thumb.jpeg}+');'"></div>
-                                <div class="gallery_item_con2">
-                                    <div class="gallery_info1">
-                                        <div class="gallery_title">소 풍 이</div>
-                                        <div class="gallery_like_comment">
-                                        <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>5</div>
-                                        <div class="gallery_comment"><span class="gallery_comment_icon"  th:style="'background-image: url('+@{/img/icon-talk.png}+');'"></span>0</div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery_info2">
-                                        <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>소풍이</div>
-                                        </div>    
-                                        <div class="rank_date">2023-03-05</div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="paging">
-                            <a href="#" class="prev">←</a>
-                            <a href="#" class="num on">1</a>
-                            <a href="#" class="num">2</a>
-                            <a href="#" class="num">3</a>
-                            <a href="#" class="next">→</a>
-                        </div>
+                    	<th:block th:if="${pageGroupStart > 1}">
+                        	<a th:href="@{/community/talktalk/list(pg=${pageGroupStart - 1})}" class="prev">←</a>
+                        </th:block>
+                        <th:block th:each="num,iterStat : ${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
+                       		<th:block th:if="${cate} eq null">
+                        		<a th:href="@{/community/talktalk/list(pg=${num},group='talktalk',sort=1, cate='contest2')}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
+                        	</th:block>
+                        	<th:block th:if="${cate} ne null">
+                        		<a th:href="@{/community/talktalk/list(pg=${num},group='talktalk',sort=${sort}, cate=${cate})}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
+                        	</th:block>
+                        </th:block>
+                        <th:block th:if="${pageGroupEnd < lastPageNum}">
+                        	<a th:href="@{/community/talktalk/list(pg=${pageGroupEnd + 1})}" class="next">→</a>
+                        </th:block>
+                    </div>
                     </div>
                     
                 </div>
@@ -406,6 +222,7 @@
     		<div class="v-overlay_scrim" style="opacity: 0.46; background-color: rgb(33, 33, 33); border-color: rgb(33, 33, 33);"></div>
     		<div class="v-overlay_content"></div>
     	</div>
+    	
          <div role="document" id="modal" tabindex="0" style="z-index: 202;">
             <div class="modal_active" style="transform-origin: center center; max-width: 1200px;">
                 <div class="modal_gallery_view">
@@ -415,30 +232,9 @@
                     <div class="modal_body">
                         <div class="gallery_modal">
                             <div class="gallery_modal_left">
-                                <div class="gallery_slide_wrap">
-                                    <div class="gallery_slide">
-                                        <div class="swiper_container">
-                                            <div class="swiper_wrapper">
-                                            	<div class="swiper_slide" style="width: 600px;">
-                                                    <div class="gallery_slide_img" th:style="'background-image: url('+@{/img/talk_rank_thumb2.jpg}+');'"></div>
-                                                </div>
-                                                <div class="swiper_slide" style="width: 600px;">
-                                                    <div class="gallery_slide_img" th:style="'background-image: url('+@{/img/talk_rank_thumb1.jpg}+');'"></div>
-                                                </div>
-                                                <div class="swiper_slide" style="width: 600px;">
-                                                    <div class="gallery_slide_img" th:style="'background-image: url('+@{/img/talk_rank_thumb3.jpg}+');'"></div>
-                                                </div>
-                                            </div>
-                                            <div class="button_prev"></div>
-                                            <div class="button_next"></div>
-                                            <div class="swiper_pagination">
-                                                <span class="swiper_pagination_bullet bullet_active"></span>
-                                                <span class="swiper_pagination_bullet"></span>
-                                                <span class="swiper_pagination_bullet"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            	<div class="gallery_slide_img modal_img1"><a href="#"><img th:src="@{/img/talk_rank_thumb1.jpg}" alt="img1"></a></div>
+                                            	<div class="gallery_slide_img modal_img2"><a href="#"><img th:src="@{/img/talk_rank_thumb2.jpg}" alt="img2"></a></div>
+                                            	<div class="gallery_slide_img modal_img3"><a href="#"><img th:src="@{/img/talk_rank_thumb3.jpg}" alt="img3"></a></div>
                             </div>
                             <div class="gallery_modal_right">
                                 <div class="gallery_content">
@@ -448,7 +244,7 @@
                                                 <div class="content_item_inner">
                                                     <div class="content_item_img" th:style="'background-image: url('+@{/img/content_item.jpg}+');'"></div>
                                                     <div class="content_item_con">
-                                                        <div class="content_item_txt">
+                                                        <div class="content_item_txt writer_nick">
                                                             <strong>동동</strong>
                                                         </div>
                                                     </div>
@@ -488,7 +284,7 @@
                                             </div>
                                             <div class="gallery_content_txt">지원합니다.</div>
                                             <div class="gallery_modify_delete">
-                                                <div class="gallery_modify"><a th:href="@{/community/talktalk/modify}">수정</a></div>ㅣ
+                                                <div class="gallery_modify"><a href="#">수정</a></div>ㅣ
                                                 <div class="gallery_delete"><a href="#">삭제</a></div>
                                             </div>
                                         </div>
@@ -545,14 +341,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <form action="#" method="post">
                                     <div class="gallery_content_foot">
                                         <div class="content_write">
                                             <div class="input_box">
                                                 <input type="text" placeholder="댓글을 입력해주세요." class="input">
-                                                <button class="button"> 확인 </button>
+                                                <input type="submit" class="button" value="확인">
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

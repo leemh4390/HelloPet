@@ -1,0 +1,205 @@
+<th:block th:include="@{search/_header.html}"/>
+<!-- 
+날짜 : 2023-03-14
+이름 : 장인화
+내용 : 약국 검색하고 결과를 목록 ajax로 구현하기
+ -->
+<script>
+$(function(){
+	
+ 	$('input[name=search]').keypress(function(event) {
+        if (event.which == 13) { // Enter 키 누름
+            $('#btnSh').click(); // 검색 버튼 클릭 이벤트 실행
+        }
+    });
+ 	
+ 	$(document).on('click', '#btnSh, .pageNum', function(e){
+		e.preventDefault();
+
+		let searchType = $('select[name=searchType]').val(); // 유형 선택	
+		let search = $('input[name=search]').val();// 검색 내용 뭐 썼는지
+		let pg = $(this).find('input[name=pg]').val(); // 클릭한 a 태그의 input 요소의 값
+		
+		if (!pg) {
+	        pg = "1"; // pg 값이 없는 경우(null, undefined, NaN, "") null 값을 할당
+	    } else {
+	        pg = parseInt(pg, 10); // pg 값이 있는 경우 정수로 변환 후 할당
+	    }
+
+		
+		
+		console.log(search);
+		console.log(pg);
+  	   
+  	   if(search){
+  		   
+  		 let jsonData = {
+  				 "search": search,
+	        	 "searchType":searchType,
+	        	 "pg": pg
+	        	 };
+  		 
+  		 getSearchData(makeSearchList, jsonData);
+  		 
+  	   }else{
+  		   alert('검색어를 입력하세요');
+  		   return false;
+  	   }
+	}); // end #btnSh event
+	
+	
+	function makeSearchList(data){
+	
+		if(data != null){
+   		  
+   		  // #section3 숨기기
+   		   $('#section3').hide();
+   		  
+   		  // #section2 보이기
+   		  $('#section2').show();
+		
+   		  console.log(data);
+   		  console.log(data.phs.length);
+   		  
+          var html = "";
+            if (data.phs.length > 0) {
+            	
+              $.each(data.phs, function(index, ph) {	  	            	  
+            	  var pharAddr = ph.pharAddr !== null ? ph.pharAddr : " "; // hosAddr가 null이면 공백 처리
+            	  var tel = ph.tel !== null ? ph.tel : " "; // null이면 공백 처리
+                  html += "<li><span class='titlePh'><a href='/HelloPet/search/view?pharNo="+ph.pharNo+"'>" + ph.pharName + "</a></span>"
+                  html += "<span class='infoPh'><span>" + pharAddr + "</span>"
+                  html += "<span id='tel'>" + tel + "</span></span>"
+                  html += "<span class='button-wrap'>"
+                  html += "<a href='/HelloPet/search/view?pharNo="+ph.pharNo+"'><img src='/HelloPet/img/search-자세히.png'></a>";
+                  
+              });
+            } else {//검색결과 없을 때 ㅠㅜ
+             // #section2 보이기
+             $('#section2').hide();
+           	 console.log("없어요");
+ 	         // #section3 내용 변경
+ 	         $('#section3').html('검색결과가 없습니다.').show();
+           }
+            
+          } 
+   	  
+          $('.lists ul').empty();
+          $('.lists ul').append(html);
+          
+       		// 페이지 출력
+            let start = data.start;
+            let currentPage = data.currentPage;
+            let lastPageNum = data.lastPageNum;
+            let groupStart = data.groups[0];
+            let groupEnd = data.groups[1];
+            
+            let groupSize = 10; // 한 그룹에 포함될 페이지 버튼 수
+            let currentGroup = Math.ceil(currentPage / groupSize); // 현재 페이지가 속한 그룹
+            groupStart = (currentGroup - 1) * groupSize + 1; // 현재 그룹의 시작 페이지
+            groupEnd = Math.min(groupStart + groupSize - 1, lastPageNum); // 현재 그룹의 끝 페이지
+            
+            console.log("start : " + start);
+            console.log("currentPage : " + currentPage);
+            console.log("lastPageNum : " + lastPageNum);
+            console.log("groupStart : " + groupStart);
+            console.log("groupEnd : " + groupEnd);
+            
+          	var pag = "";
+          	pag +="<span class='prev'>"
+				pag +="<a class='pageNum P' href ='/HelloPet/search/Searchph'><input type='hidden' name='pg' value='" +(groupStart-1) +"''><&nbsp;이전</a>"	            	
+            pag += "</span>"
+          	pag +="<span class='num'>"  
+
+          	for(let i = groupStart; i <= groupEnd; i++){
+ 	            	  
+ 	             	console.log("i : " + i);
+          		
+        		if (i === currentPage) {
+        		    pag += "<a class='pageNum on' href='/HelloPet/search/SearchPh'><input type='hidden' name='pg' value='" +i +"'>" + i + "</a>";
+        		} else {
+        		    pag += "<a class='pageNum' href='/HelloPet/search/SearchPh'><input type='hidden' name='pg' value='" +i +"'>" + i + "</a>";
+        		}
+          	}
+          	
+          	pag +="</span>"  
+    		pag +="<span class='next'>"
+				pag +="<a class='pageNum P' href ='/HelloPet/search/SearchPh'><input type='hidden' name='pg' value='" +(groupEnd+1) +"'>다음&nbsp;></a>"	            	
+	            pag += "</span>"
+         		
+        
+            
+	        $('.paging').empty();  
+          $('.paging').append(pag);
+	}
+		
+	function getSearchData(callback, jsonData){
+		
+		$.ajax({
+ 	          url : '/HelloPet/search/SearchPh',
+ 	          type : 'POST',
+ 	          data : jsonData,
+ 	          success : function(data) {
+ 	        	 callback(data);
+ 	          }
+		});
+		
+	}
+
+
+
+});
+
+</script>
+        <div class="SearchPh">
+          <div class="contents">
+            <div class="search-top">
+                <h3 class="title">약국 찾기</h3>
+            </div>
+            <section class="section1">
+                <div class="container">
+                   <div class="search-head">
+                     <div class="search-box-container">
+                     	 <div class="kt" style="display: inline-block">
+                            <select id="searchType" name="searchType" title="검색 유형 선택">
+                                <option value="all">전체 검색</option>
+                                <option value="name">약국이름</option>
+                                <option value="addr">주소</option>
+                            </select>
+                         </div>
+                        <div class="inner" style="display: inline-block">
+                            <input type="text" name="search">
+                            <button type="button" id="btnSh"></button>
+                        </div>    
+                     </div>      
+                  </div>  
+                </div>
+            </section>
+            <section id="section2" style="display: none;">
+                <div class="mapContainer">
+                    <ul>
+                        <li>
+                            <img th:src="@{/img/search-약국.jpg}" alt="btnHs">
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="lists">
+                    <ul>
+                       
+                    </ul>
+                </div>
+                <!-- 검색목록 페이지 번호 -->
+               <div id="paging" class="paging">
+         			
+         		</div>
+
+            </section>
+             <section id="section3">
+                동물의약품을 판매하는 약국의 이름, 주소를 선택해서 <br>검색해보세요!
+            </section>
+            
+
+         </div>
+        </div>
+<th:block th:include="@{search/_footer.html}"/>
