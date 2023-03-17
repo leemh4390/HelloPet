@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.hellopet.service.SearchService;
+import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.ReserveVO;
 import kr.co.hellopet.vo.SearchVO;
 
@@ -67,15 +68,29 @@ public class SearchController {
 		return "search/complete";
 	}
 	
-	@GetMapping("search/view")
-	public String view(Model model, String hosNo, String pharNo) {
+	@GetMapping("search/view2")
+	public String view() {
+		return "search/view2";
+	}
 	
+	
+	@GetMapping("search/view")
+	public String view(Model model, String hosNo, String pharNo, boolean isMds) {
+		
+		
 		if (hosNo != null) {
 			SearchVO a = service.selectViewHs(hosNo);
 			model.addAttribute("a", a);
+			model.addAttribute("isMds", isMds);
+			
+			// 회원 
+			List<MedicalVO> mds = service.searchHsJoin();	
+			model.addAttribute("mds",mds);
+			
 			} else if (pharNo != null) {
 			SearchVO b = service.selectViewPh(pharNo);
 			model.addAttribute("b", b);
+			
 			}
 			return "search/view";
 		
@@ -84,7 +99,7 @@ public class SearchController {
 	
 	@GetMapping("search/SearchHs")
 	public String SearchHs(Model model, HttpSession sess, String search) {
-		
+	
 		return "search/SearchHs";
 	}
 	
@@ -100,6 +115,11 @@ public class SearchController {
 		
 		Map<String, Object> map = new HashMap<>();
 		
+		// 회원 
+		List<MedicalVO> mds = service.searchHsJoin();
+		map.put("mds", mds);
+		
+		
 		 List<SearchVO> hss = null; // hss 변수 선언
 
 	    if ("name".equals(searchType)) {
@@ -112,9 +132,9 @@ public class SearchController {
 	        hss = service.SearchHs(search, start);
 	        map.put("hss", hss);
 	        
-	        
 	    }
-
+	    
+	    
 	    if (hss != null && !hss.isEmpty()) { // hss 변수가 존재할 경우에 세션에 추가
 	        sess.setAttribute("hss", hss);
 	    }

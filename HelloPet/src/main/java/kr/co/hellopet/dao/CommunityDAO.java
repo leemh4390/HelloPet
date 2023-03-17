@@ -60,5 +60,14 @@ public interface CommunityDAO {
 	// 글 조회수 
 	public int updateHit(int no);
 	
+	// 글 좋아요 여부
+	public int findHeart(int no, String uid);
+	
+	// 글 좋아요 안눌렀을때 +1
+	public int insertHeart(int no, String uid);
+	
+	// 글 좋아요 눌렀을때 -1
+	public int deleteHeart(int no, String uid);
+	
 	
 }

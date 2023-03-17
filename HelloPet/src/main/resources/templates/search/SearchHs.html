@@ -7,6 +7,9 @@
 <script>
 $(function(){
 	
+	
+	
+	
  	$('input[name=search]').keypress(function(event) {
         if (event.which == 13) { // Enter 키 누름
             $('#btnSh').click(); // 검색 버튼 클릭 이벤트 실행
@@ -59,6 +62,7 @@ $(function(){
    		  $('#section2').show();
 		
    		  console.log(data);
+   		  console.log(data.mds);
    		  console.log(data.hss.length);
    		  
           var html = "";
@@ -68,12 +72,25 @@ $(function(){
             	  //console.log("hs.hosName : " + hs.hosName);	  	            	  
             	  var hosAddr = hs.hosAddr !== null ? hs.hosAddr : " "; // hosAddr가 null이면 공백 처리
             	  var tel = hs.tel !== null ? hs.tel : " "; // teldl null이면 공백 처리
+            	  
+
+                  // 회원가입 병원 리스트(mds)에서 해당 병원
+                  var isMds = false;
+                  $.each(data.mds, function(index, mds) {
+                      if (hs.hosNo == mds.medNo) {
+                          isMds = true;
+                          return false;  // break
+                      }
+                  });
+            	  
                   html += "<li><span class='titleHs'><a href='/HelloPet/search/view?hosNo="+hs.hosNo+"'>" + hs.hosName + "</a></span>"
                   html += "<span class='infoHs'><span>" + hosAddr + "</span>"
                   html += "<span id='tel'>" + tel + "</span></span>"
                   html += "<span class='button-wrap'>"
-                  html += "<a href='/HelloPet/search/view?hosNo="+hs.hosNo+"'><img src='/HelloPet/img/search-자세히.png'></a>";
-                  html += "<a href='/HelloPet/search/reserve?hosNo="+hs.hosNo+"'><img src='/HelloPet/img/search-예약가능.png'></a></span></li>";
+                  html += "<a href='/HelloPet/search/view?hosNo="+hs.hosNo+"&isMds="+isMds+"'><img src='/HelloPet/img/search-자세히.png'></a>";
+                  if (isMds) {
+                      html += "<a href='/HelloPet/search/reserve?hosNo="+hs.hosNo+"'><img src='/HelloPet/img/search-예약가능.png'></a>";
+                  }
                   
               });
             }else {//검색결과 없을 때 ㅠㅜ

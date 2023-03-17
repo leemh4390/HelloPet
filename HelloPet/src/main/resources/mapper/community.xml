@@ -161,6 +161,25 @@
     		and `parent` = 0;
     </delete>
     
+    <select id="findHeart" resultType="int" parameterType="map">
+    	select count(*) from `community_heart` 
+    		where `no`=#{no}
+    		and `uid`=#{uid};
+    </select>
+    
+    
+    <insert id="insertHeart">
+    	insert into `community_heart` set
+    		`no` = #{no},
+    		`uid` = #{uid};
+    </insert>
+    
+    <delete id="deleteHeart">
+    	delete from `community_heart`
+    		where `no` = #{no}
+    		and `uid` = #{uid};
+    </delete>
+    
     
     
 

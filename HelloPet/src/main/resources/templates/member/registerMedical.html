@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="register_business">
-            <form th:action="@{/member/registerMedical}" method="post" class="register_business_form">
+            <form th:action="@{/member/registerMedical}" method="post" class="register_business_form" enctype="multipart/form-data">
             <input type="hidden" class="change_level" name="level" placeholder="level" value="2">
                 <table class="register_business_table">
 	                <tr>
@@ -114,7 +114,7 @@
                     <tr>
                         <td>사업자등록증</td>
                         <td>
-                            <input type="file" id="Business_Registration" name="business" placeholder="선택된 파일없음" required="required">
+                            <input type="file" id="Business_Registration" name="fileBiz" placeholder="선택된 파일없음" required="required">
                             <input type="button" class="btnFile" value="파일찾기">
                         </td>
                     </tr>

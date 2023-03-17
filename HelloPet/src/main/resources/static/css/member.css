@@ -267,7 +267,7 @@ input[id=apple]:hover {
     margin-top: 30px;
 }
 
-input[name=check] {
+input[name=remember-me] {
     float: left;
     width: 20px;
     height: 20px;

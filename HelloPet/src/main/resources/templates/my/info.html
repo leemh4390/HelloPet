@@ -1,73 +1,84 @@
 <th:block th:include="@{my/_header.html}"/>
+<script>
+
+	$(document).ready(function(){
+		$('button[name=btnInfoModfiy]').click(function(e){
+			e.preventDefault();
+		});
+	});
+
+</script>
+<style>
+
+.info_table tr:nth-child(1) > td > input {
+	display:block;
+	width: 400px;
+	text-align: center;
+}
+
+.info_table tr > td > input {
+	display:block;
+	width: 400px;
+	text-align: center;
+	padding: 10px;
+	margin-left: 70px;
+	border: none;
+}
+
+</style>
  <div class="mypage-contents">
      <div class="mypage-contents_head">
          <h2 class="mypage-contents__title">보호자정보관리</h2>
      </div>
      <!--게시물 목록-->
         <div class="info_div">
-            <table class="info_table">
-                <tr>
-                    <td>아이디</td>
-                    <td  th:if="${#authentication.principal.member != null}">
-						<span th:text="${#authentication.principal.member.uid}"></span>
-					</td>
-                    <td  th:if="${#authentication.principal.medical != null}">
-						<span th:text="${#authentication.principal.medical.uid}"></span>
-					</td>
-                </tr>
-                <tr>
-                    <td>이름</td>
-                    <td  th:if="${#authentication.principal.member != null}">
-						<span th:text="${#authentication.principal.member.name}"></span>
-					</td>
-                    <td  th:if="${#authentication.principal.medical != null}">
-						<span th:text="${#authentication.principal.medical.name}"></span>
-					</td>
-                </tr>
-                <tr>
-                    <td>이메일</td>
-                    <td  th:if="${#authentication.principal.member != null}">
-						<span th:text="${#authentication.principal.member.email}"></span>
-					</td>
-                    <td  th:if="${#authentication.principal.medical != null}">
-						<span th:text="${#authentication.principal.medical.email}"></span>
-					</td>
-                </tr>
-                <tr>
-                    <td>닉네임</td>
-                    <td  th:if="${#authentication.principal.member != null}">
-						<span></span>
-					</td>
-                    <td  th:if="${#authentication.principal.medical != null}">
-						<span></span>
-					</td>
-                </tr>
-                <tr>
-                    <td>휴대폰</td>
-                    <td  th:if="${#authentication.principal.member != null}">
-						<span th:text="${#authentication.principal.member.hp}"></span>
-					</td>
-                    <td  th:if="${#authentication.principal.medical != null}">
-						<span th:text="${#authentication.principal.medical.hp}"></span>
-					</td>
-                </tr>
-                <tr>
-                    <td>주소</td>
-                    <td  th:if="${#authentication.principal.member != null}">
-						<span></span>
-					</td>
-                    <td  th:if="${#authentication.principal.medical != null}">
-						<span></span>
-					</td>
-                </tr>
-                <tr>
-                    <td>회원탈퇴</td>
-                    <td><button>탈퇴하기</button></td>
-                </tr>
-            </table>
-            <div id="info_modify">
-                <button><span>수정하기</span></button>
-            </div>
+			<form th:action="@{/my/info}" method="post">
+	            <table class="info_table">
+	                <tr>
+	                    <td>아이디</td>
+	                    <td>
+							<input type="text" name="uid" th:value="${member.uid}">
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>이름</td>
+	                    <td>
+							<input type="text" name="name" th:value="${member.name}">
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>이메일</td>
+	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="text" name="email" th:value="${member.email}">
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>닉네임</td>
+	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="text" name="nick" th:value="${member.nick}">
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>휴대폰</td>
+	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="text" name="hp" th:value="${member.hp}">
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>주소</td>
+	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="text" name="zip"  th:value="${'(' + #authentication.principal.member.zip + ') '+ #authentication.principal.member.addr1 + '  ('+ #authentication.principal.member.addr2 + ')'}">
+						</td>
+	                </tr>
+	                <tr>
+	                    <td>회원탈퇴</td>
+	                    <td><button>탈퇴하기</button></td>
+	                </tr>
+	            </table>
+	            <div id="info_modify">
+	                <button name="btnInfoModify" type="submit"><span>수정하기</span></button>
+	            </div>
+			</form>
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.hellopet.dao.AdminDAO;
 import kr.co.hellopet.vo.AdminReserveVO;
@@ -27,8 +28,14 @@ public class AdminService {
 	public int updateAdmin(MedicalVO vo) {
 		return dao.updateAdmin(vo);
 	}
-	public List<AdminReserveVO> selectReserves(int start){
-		return dao.selectReserves(start);
+	public List<AdminReserveVO> selectReserves(int start, String medNo){
+		return dao.selectReserves(start, medNo);
+	}
+	public int selectCountTotal(String medNo) {
+		return dao.selectCountTotal(medNo);
+	}
+	public AdminReserveVO selectReserve(Integer revNo) {
+		return dao.selectReserve(revNo);
 	}
 	
 	/////////// 페이징 처리 ////////////

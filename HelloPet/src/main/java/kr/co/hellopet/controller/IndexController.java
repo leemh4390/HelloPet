@@ -23,7 +23,8 @@ public class IndexController {
 	private IndexService service;
 
 	@GetMapping(value = {"", "index"})
-	public String index(Model model, CsVO vo, String pg) {
+	public String index(Model model, CsVO vo, String pg, Principal principal) {
+		
 		
 		int currentPage = service.getCurrentPage(pg);
 		

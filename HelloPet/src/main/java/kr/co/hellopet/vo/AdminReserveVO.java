@@ -15,9 +15,10 @@ import lombok.ToString;
 @ToString
 public class AdminReserveVO {
 	
+	private int id;
 	private int revNo;
 	private String uid;
-	private int medNo;
+	private String medNo;
 	private String oPh;
 	private String oName;
 	private String petNum;

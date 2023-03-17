@@ -1,4 +1,10 @@
 <th:block th:include="@{admin/_header.html}"/>
+<script>
+	$(function(){
+		
+	});
+
+</script>
         <main>
             <div class="top">
                 <h3>예약내역확인</h3>
@@ -6,74 +12,39 @@
             <div class="reserve_div">
                 <table class="reserve_table">
                     <tr>
-                        <th>#</th>
                         <th>예약번호</th>
                         <th>보호자명</th>
                         <th>펫이름</th>
                         <th>예약일</th>
-                        <th>시간</th>
-                        <th>상태</th>
+                        <th>예약시간</th>
+                        <th>예약상태</th>
                         <th>상태변경</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>001234</td>
-                        <td>이민혁</td>
-                        <td>뽀삐</td>
-                        <td>2023.03.31</td>
-                        <td>14:30</td>
-                        <td>대기중</td>
+                    <tr th:each="item,i:${reserves}">
+                    <td style="display: none" name="revNo" class="revNo">[[${item.revNo}]]</td>
+                        <td>[[${pageStartNum - i.index}]]</td>
+                        <td>[[${item.oName}]]</td>
+                        <th:block th:if="${item.petNum == '1'}">
+                        	<td>[[${item.petName1}]]</td>
+                        </th:block>
+                        <th:block th:if="${item.petNum == '2'}">
+                        	<td>[[${item.petName1}]], [[${item.petName2}]]</td>
+                        </th:block>
+                        <td>[[${item.revDate}]]</td>
+                        <td>[[${item.revTime.substring(0, 5)}]]</td>
+                        <th:block th:if="${item.status == 0}">
+                        	<td>예약대기</td>
+                        </th:block>
+                        <th:block th:if="${item.status == 1}">
+                        	<td>예약수락</td>
+                        </th:block>
+                        <th:block th:if="${item.status == 2}">
+                        	<td>예약거절</td>
+                        </th:block>
+                        
                         <td>
                             <a href="#" class="btn btnConfirm">수락</a>
-                            <a href="#" class="btn btnReject">거절</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>001233</td>
-                        <td>김채영</td>
-                        <td>삐삐</td>
-                        <td>2023.03.24</td>
-                        <td>10:30</td>
-                        <td>대기중</td>
-                        <td>
-                            <a href="#" class="btn btnConfirm">수락</a>
-                            <a href="#" class="btn btnReject">거절</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>001232</td>
-                        <td>임민지</td>
-                        <td>다다</td>
-                        <td>2023.03.19</td>
-                        <td>15:30</td>
-                        <td>대기중</td>
-                        <td>
-                            <a href="#" class="btn btnConfirm">수락</a>
-                            <a href="#" class="btn btnReject">거절</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>001231</td>
-                        <td>장인화</td>
-                        <td>가루</td>
-                        <td>2023.03.21</td>
-                        <td>10:30</td>
-                        <td>거절</td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>001230</td>
-                        <td>김경준</td>
-                        <td>초코</td>
-                        <td>2023.03.21</td>
-                        <td>10:30</td>
-                        <td>수락</td>
-                        <td>
+                            <a class="btn btnReject">거절</a>
                         </td>
                     </tr>
                 </table>
@@ -81,11 +52,6 @@
                     <ul>
                         <li><a href="#" class="prev">←</a></li>
                         <li><a href="#" class="on">1</a></li>
-                        <li><a href="#" class="num">2</a></li>
-                        <li><a href="#" class="num">3</a></li>
-                        <li><a href="#" class="num">4</a></li>
-                        <li><a href="#" class="num">5</a></li>
-                        <li><a href="#" class="num">6</a></li>
                         <li><a href="#" class="next">→</a></li>
                     </ul>
                 </div>
@@ -101,7 +67,7 @@
                     <button class="btnClose">X</button>
                 </nav>
                 <section>
-                    <article class="reserve">
+                	<article class="reserve">
                         <h3>예약정보</h3>
                         <table class="popupTable">
                             <tr>
@@ -111,26 +77,26 @@
                                 <th>예약일</th>
                                 <th>시간</th>
                             </tr>
-                            <tr>
-                                <td>001231</td>
-                                <td>장인화</td>
-                                <td>가루</td>
-                                <td>2023.03.21</td>
-                                <td>10:30</td>
+                            <tr th:if="${reserve != null}">
+                                <td>[[${reserve.revNo}]]</td>
+		                        <td>[[${reserve.oName}]]</td>
+		                        <td>[[${reserve.petName1}]]</td>
+		                        <td>[[${reserve.revDate}]]</td>
+		                        <td>[[${reserve.revTime}]]</td>
                             </tr>
                         </table>
-                    </article>                    
+                    </article>
                     <form action="#">
-                        <table class="popup-contents">
-                            <tr>
-                                <th>거절사유</th>
-                                <td><textarea name="reject" placeholder="거절사유 입력"></textarea></td>
-                            </tr>
-                        </table>
-                        <div>
-                            <button class="btnCancel">취소</button>
-                            <input type="submit" class="btnSubmit" value="보내기">
-                        </div>
+	                    <table class="popup-contents">
+	                        <tr>
+	                            <th>거절사유</th>
+	                            <td><textarea name="reject" placeholder="거절사유 입력"></textarea></td>
+	                        </tr>
+	                    </table>
+	                    <div>
+	                        <button class="btnCancel">취소</button>
+	                        <input type="submit" class="btnSubmit" value="보내기">
+	                    </div>
                     </form>              
                 </section>                    
             </div>

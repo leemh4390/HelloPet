@@ -123,7 +123,6 @@
 		SELECT COUNT(`uid`) FROM `pet_hospital_pharmacy` WHERE `email`= #{email} AND `name` = #{name} AND `hp` = #{hp};
 	</select>
 	
-	
 	<update id="updatePetOwnerPasswordByCodeAndInfo">
 		update `pet_owner` set `pass` = #{pass} where `email` = #{email} AND `name` = #{name} AND `hp` = #{hp}; 
 	</update>

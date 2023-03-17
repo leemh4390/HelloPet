@@ -22,6 +22,7 @@ public class MyUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	private MemberEntity member;
+	
 	private MedicalEntity medical;
 	
 	@Override

@@ -30,7 +30,7 @@
             <div>
                 <form action="#" class="write_form" method="post" enctype="multipart/form-data">
                     <table class="write_table">
-                    	<input type="hidden" name="uid" value="admin">
+                    	<input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}">
                     	<input type="hidden" name="group" value="tip">
                         <tr>
                             <td class="write_font">제목</td>

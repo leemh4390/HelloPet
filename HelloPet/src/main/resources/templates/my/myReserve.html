@@ -1,78 +1,151 @@
 <th:block th:include="@{my/_header.html}"/>
+<script>
 
- <div class="mypage-contents">
-     <div class="mypage-contents_head">
-         <h2 class="mypage-contents__title">게시글관리</h2>
-   	</div>
-         <!--게시물 목록-->
-         <div class="reserve_div">
-             <table class="reserve_table">
-                 <tr>
-                     <th>#</th>
-                     <th>예약번호</th>
-                     <th>상태</th>
-                     <th>병원</th>
-                     <th>펫이름</th>
-                     <th>예약일</th>
-                     <th>시간</th>
-                 </tr>
-                 <tr>
-                     <td><input type="checkbox"></td>
-                     <td>1</td>
-                     <td>3</td>
-                     <td>4</td>
-                     <td>5</td>
-                     <td>6</td>
-                     <td>7</td>
-                 </tr>
-                 <tr>
-                     <td><input type="checkbox"></td>
-                     <td>2</td>
-                     <td>3</td>
-                     <td>4</td>
-                     <td>5</td>
-                     <td>6</td>
-                     <td>7</td>
-                 </tr>
-                 <tr>
-                     <td><input type="checkbox"></td>
-                     <td>3</td>
-                     <td>3</td>
-                     <td>4</td>
-                     <td>5</td>
-                     <td>6</td>
-                     <td>7</td>
-                 </tr>
-                 <tr>
-                     <td><input type="checkbox"></td>
-                     <td>4</td>
-                     <td>3</td>
-                     <td>4</td>
-                     <td>5</td>
-                     <td>6</td>
-                     <td>7</td>
-                 </tr>
-             </table>
-             <div class="reserve_cancel">
-                 <a href="#">취소</a>
-             </div>
-         </div>
-         <!-- 검색목록 페이지 번호 -->
-         <!-- 검색목록 페이지 번호 -->
-         <div class="paging">
-             <span class="prev">
-                 <a href="#"><&nbsp;이전</a>
-             </span>
-             <span class="num">
-                 <a href="#" class="on">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-             </span>
-             <span class="next">
-                 <a href="#">다음&nbsp;></a>
-             </span>
-         </div>
-      </div>
+	function list(){
+		$.ajax({
+			url : '/HelloPet/my/myReserve_List',
+			method : 'GET',
+			dataType : 'json',
+			success : function(data){
+				let total = data.total;
+				let i = 0;
+				$('.reserve-list').remove();
+				$('.paging').remove();
+	            $.each(data.list, function(index, article) {
+	            	i += 1;
+	                let tags = "<tr class='reserve-list'>";
+	                tags += "<td><input type='checkbox' class='rev_No' value='"+article.revNo+"'></td>";
+	                tags += "<td>"+(total - i + 1)+"</td>";
+	                tags += "<td>";
+	                if (article.status == 0) {
+	                  tags += "<span>예약대기중</span>";
+	                } else if (article.status == 1) {
+	                  tags += "<span>예약확정</span>";
+	                } else if (article.status == 2) {
+	                  tags += "<span>예약거절</span>";
+	                }
+	                tags += "</td>";
+	                tags += "<td>"+article.hosName+"</td>";
+	                tags += "<td>"+article.petName1+"</td>";
+	                tags += "<td>"+article.revDate+"</td>";
+	                tags += "<td>"+article.revTime+"</td>";
+	                tags += "</tr>";
+	                $('.reserve_table').append(tags);
+	                
+	            });
+			}
+		});
+	}
+	
+	
+	function paging(){
+		
+	}
+
+	$(document).ready(function(){
+		$('.reserve_cancel').click(function(){
+			
+			// 배열 생성
+			let arr_rev   = [];
+			
+			// 데이터를 배열에 넣기
+			$('.rev_No:checked').each(function(){
+				arr_rev.push($(this).val());
+			});
+			
+			// 크기 확인
+			let length = arr_rev.length;
+			
+			// test
+			alert(arr_rev);
+			
+			if(length > 0){
+				
+				let jsonData = {'rev_No' : arr_rev};
+				
+				// ajax 처리..
+				$.ajax({
+					url : '/HelloPet/my/myReserveCancel',
+					method : 'GET' ,
+					data : jsonData ,
+					dataType : 'json' ,
+					traditional : true ,
+					success : function(data) {
+						if(data.result > 0){
+							alert(data.result + " 건이 삭제되었습니다.");
+							list();
+						}
+					}
+				});
+				
+			}else{
+				alert('취소하고 싶은 게시글을 체크해주세요.');
+			}
+		});
+	});
+</script>
+ 	<div class="mypage-contents">
+	     <div class="mypage-contents_head">
+	         <h2 class="mypage-contents__title">게시글관리</h2>
+	   	</div>
+	         <!--게시물 목록-->
+	         <div class="reserve_div">
+	             <table class="reserve_table">
+	                 <tr>
+	                     <th>#</th>
+	                     <th>예약번호</th>
+	                     <th>상태</th>
+	                     <th>병원</th>
+	                     <th>펫이름</th>
+	                     <th>예약일</th>
+	                     <th>시간</th>
+	                 </tr>
+	                 <tr th:each="article,i:${articles}" class="reserve-list">
+	                     <td><input type="checkbox" class="rev_No" th:value="${article.revNo}"></td>
+	                     <td>[[${pageStartNum - i.index }]]</td>
+	                     <td>
+	                     	<span th:if="${article.status} == 0">
+	                     		예약대기중
+	                     	</span>
+	                     	<span th:if="${article.status} == 1">
+	                     		예약확정
+	                     	</span>
+	                     	<span th:if="${article.status} == 2">
+	                     		예약거절
+	                     	</span>
+	                     </td>
+	                     <td>[[${article.hosName}]]</td>
+	                     <td>[[${article.petName1}]]</td>
+	                     <td>[[${article.revDate}]]</td>
+	                     <td>[[${article.revTime}]]</td>
+	                 </tr>
+	             </table>
+	             <div class="reserve_cancel">
+	                 <a href="#">취소</a>
+	             </div>
+	         </div>
+        	 <!-- 검색목록 페이지 번호 -->
+         	<!-- 검색목록 페이지 번호 -->
+       		<div class="paging">
+				<span class="prev" th:if="${currentPageGroup == null or currentPageGroup[0] <= 5}">
+				    <a th:href="@{/my/myReserve(pg=1)}">
+				      &lt;&nbsp;이전
+				    </a>
+				</span>
+                    <span class="num">
+                    <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                        <a th:href="@{/my/myReserve(pg=${num})}" 
+                        th:class="${num==currentPage ? 'on':'off'}"+"${num==currentPage?'num current':'num'}">[[${num}]]</a>
+                    </th:block>
+                    </span>
+                    <span class="next" th:if="${groups[1] < lastPageNum}">
+                        <a th:href="@{/my/myReserve(pg=${groups[1]+1})}">다음&nbsp;></a>
+                    </span>
+				<span class="next" th:if="${groups[1] >= lastPageNum}">
+				    <a th:href="@{/my/myReserve(pg=${lastPageNum})}">다음&nbsp;></a>
+				</span>
+   			</div>
+      	</div>
   </div>
   </div>
   </div>

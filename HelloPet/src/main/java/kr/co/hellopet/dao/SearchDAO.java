@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.ReserveVO;
 import kr.co.hellopet.vo.SearchVO;
 /*
@@ -21,6 +22,10 @@ public interface SearchDAO {
 	public List<SearchVO> SearchHs(String search, int start);
 	public List<SearchVO> SearchHsName(String search, int start);
 	public List<SearchVO> SearchHsAddr(String search, int start);
+	
+	public List<MedicalVO> searchHsJoin();
+	
+	
 	public int selectSearchHsTotal(String search);
 	public int selectSearchHsTotalName(String search);
 	public int selectSearchHsTotalAddr(String search);

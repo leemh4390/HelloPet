@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -206,8 +207,20 @@ public class CommunityService {
 		return dao.updateTalkArticle(vo);
 	}
 	
+	// 글 좋아요 여부
+	public int findHeart(int no, String uid) {
+		return dao.findHeart(no, uid);
+	}
 	
+	// 글 좋아요 안눌렀을때 +1
+	public int insertHeart(int no, String uid) {
+		return dao.insertHeart(no, uid);
+	}
 	
+	// 글 좋아요 눌렀을때 -1
+	public int deleteHeart(int no, String uid) {
+		return dao.deleteHeart(no, uid);
+	}
 	
 	// 페이징(tip)
 	public int getLastPageNum(int total) {

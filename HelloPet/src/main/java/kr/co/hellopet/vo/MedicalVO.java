@@ -32,12 +32,15 @@ public class MedicalVO {
 	private String addr2;
 	private String ceo;
 	private String ceoHp;
-	private String business;
+	private String business;	
 	private String reserve;
 	private int reserveOk;
 	private int hit;
 	private String wdate;
 	private String rdate;
 	private String regip;
+	
+	// 추가 필드
+	private MultipartFile fileBiz;
 
 }

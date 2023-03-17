@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class ReserveVO {
 	
+	private int revNo;
 	private String uid;
 	private int medNo;
 	private String oPh;
@@ -31,6 +32,8 @@ public class ReserveVO {
 	private String rdate;
 	private String status;
 	
-	private String medicalName;
+	// 추가필드
+	private String medicalName; // <-- ??
+	private String hosName; // 2022/03/17 추가
 	
 }

@@ -30,4 +30,6 @@ public class SearchVO {
 	private int total;
 	private int pg;
 	private int currentPage;
+	
+	private String medNo;
 }

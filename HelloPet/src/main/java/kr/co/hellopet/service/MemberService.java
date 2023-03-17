@@ -1,11 +1,19 @@
 package kr.co.hellopet.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.hellopet.dao.MemberDAO;
 import kr.co.hellopet.vo.Api_HospitalVO;
@@ -13,6 +21,7 @@ import kr.co.hellopet.vo.Api_PharmacyVO;
 import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.MemberVO;
 import kr.co.hellopet.vo.TermsVO;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * 날짜 : 2023/03/08
@@ -21,6 +30,7 @@ import kr.co.hellopet.vo.TermsVO;
  * 
  */
 
+@Slf4j
 @Service
 public class MemberService {
 	
@@ -39,6 +49,9 @@ public class MemberService {
 	public void insertMedical(MedicalVO vo) {
 		
 		vo.setPass(passwordEncoder.encode(vo.getPass2()));
+		
+		fileUpload(vo);
+		
 		dao.insertMedical(vo);
 	};
 	
@@ -136,4 +149,39 @@ public class MemberService {
 		String pass = passwordEncoder.encode(code);
 		dao.updateMedicalPasswordByCodeAndInfo(pass, email, name, hp);
 	}
+	
+	// 파일 업로드
+	@Value("${spring.servlet.multipart.location}")
+	private String uploadPath;
+	
+	public void fileUpload(MedicalVO medical) {
+		
+		MultipartFile file = medical.getFileBiz();
+		
+		if(file != null && file.getOriginalFilename() != null) {
+			
+			System.out.println(file + "진입 확인");
+			//시스템 경로
+			String path = new File(uploadPath).getAbsolutePath();
+			
+			// 새 파일명 생성
+	        String oriName = file.getOriginalFilename();
+	        String ext = oriName.substring(oriName.lastIndexOf("."));
+	        String newName = UUID.randomUUID().toString() + ext;
+	        
+	        medical.setBusiness(newName);
+	        
+			//파일 저장
+			try {
+				System.out.println(file + "진입 확인1");
+				file.transferTo(new File(path, newName));
+			}catch (IllegalStateException e) {
+				log.error(e.getMessage());
+			}catch(IOException e) {
+				log.error(e.getMessage());
+			}
+		}
+	}
+	
+	
 }

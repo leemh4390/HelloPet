@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.hellopet.dao.SearchDAO;
+import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.ReserveVO;
 import kr.co.hellopet.vo.SearchVO;
 /*
@@ -31,6 +32,12 @@ public class SearchService {
 	public List<SearchVO> SearchHsName(String search, int start){
 		return dao.SearchHsName(search, start);
 	}
+	
+	
+	public List<MedicalVO> searchHsJoin(){
+		return dao.searchHsJoin();
+	}
+	
 	
 	public int selectSearchHsTotal(String search) {
 		return dao.selectSearchHsTotal(search);

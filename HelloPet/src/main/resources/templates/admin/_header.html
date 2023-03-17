@@ -22,7 +22,7 @@
         <header class="header">
             <div class="headerTop">
                 <div>
-                    <span>관리자</span>
+                    <span th:text="${vo.medicalName}+'님'"></span>
                     <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
                     <a th:href="@{/}">홈으로 가기</a>
                 </div>
@@ -30,9 +30,9 @@
             <div class="menu">
                 <div>
                     <ul>
-                        <li class="logo"><a th:href="@{/admin/info}"><img th:src="@{/img/admin_logo.png}" alt="logo"></a></li>
-                        <li><a th:href="@{/admin/info}">정보관리</a></li>
-                        <li><a th:href="@{/admin/confirm/list}">예약내역확인</a></li>
+                        <li class="logo"><a th:href="@{/admin/info(medNo=${vo.medNo})}"><img th:src="@{/img/admin_logo.png}" alt="logo"></a></li>
+                        <li><a th:href="@{/admin/info(medNo=${vo.medNo})}">정보관리</a></li>
+                        <li><a th:href="@{/admin/confirm/list(medNo=${vo.medNo})}">예약내역확인</a></li>
                     </ul>
                 </div>
             </div>

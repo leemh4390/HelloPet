@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.hellopet.service.CommunityService;
 import kr.co.hellopet.vo.Api_HospitalVO;
 import kr.co.hellopet.vo.CommunityVO;
+import kr.co.hellopet.vo.HeartVO;
 
 /*
  * 날짜 : 2023/03/09
@@ -64,14 +66,14 @@ public class CommunityController {
 	
 	// tip 글보기
 	@GetMapping("community/tip/view")
-	public String tipView(int no, Model model) {
+	public String tipView(int no, Model model, String uid) {
 		
 		CommunityVO article = service.selectTipView(no);
 		
-		
-
+		int find = service.findHeart(no, uid);
 		
 		model.addAttribute("article", article);
+		model.addAttribute("find",find);
 		
 		return "community/tip/view";
 	}
@@ -129,6 +131,7 @@ public class CommunityController {
 		@GetMapping("community/talktalk/list")
 		public String talkList(String pg, Model model, String cate, String sort) {
 			
+			
 			//페이징 
 	    	int currentPage = service.getCurrentPage2(pg); // 현재 페이지 번호
 			int total = 0;
@@ -154,7 +157,6 @@ public class CommunityController {
 			
 			
 			
-			
 			model.addAttribute("articles", articles);
 			model.addAttribute("ranks",ranks);
 			model.addAttribute("sort", sort);
@@ -172,6 +174,7 @@ public class CommunityController {
 			CommunityVO article = service.selectTalkArticle(no);
 			
 			Map<String, CommunityVO> map = new HashMap<>();
+			
 			
 			map.put("result", article);
 			return map;
@@ -212,6 +215,58 @@ public class CommunityController {
 		service.updateTalkArticle(vo);
 		return "redirect:/community/talktalk/list";
 	}
+	
+	// talktalk 글삭제
+	@GetMapping("community/talktalk/delete")
+	public String talkDelete(int no){
+		service.deleteArticle(no);
+		
+		return "redirect:/community/talktalk/list";
+	}
+	
+	// 글 좋아요 여부
+	@ResponseBody
+	@GetMapping("community/findHeart")
+	public Map<String, Integer> findHeart(@RequestParam("no") int no, @RequestParam("uid") String uid){
+		
+		int result = service.findHeart(no, uid);
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("result", result);
+		
+		
+		
+		return map;
+	}
+	
+	// 글 좋아요 안눌렀을때 +1
+	@ResponseBody
+	@PostMapping("community/HeartUp")
+	public void HeartUp(@RequestParam("no") int no, @RequestParam("uid") String uid){
+		
+		int up = service.insertHeart(no, uid);
+		
+		
+		
+		
+		
+	}
+	
+	// 글 좋아요 눌렀을때 -1
+	@ResponseBody
+	@PostMapping("community/HeartDown")
+	public void HeartDown(@RequestParam("no") int no, @RequestParam("uid") String uid){
+		
+		int down = service.deleteHeart(no, uid);
+		
+		
+		
+		
+		
+	}
+	
+	
 	
 	
 	

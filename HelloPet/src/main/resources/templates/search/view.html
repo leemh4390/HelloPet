@@ -4,27 +4,7 @@
 이름 : 장인화
 내용 : View에 병원,약국 자세히 결과, 지도 출력
  -->
- <script>
- 
- $(function(){
-		$('.uid').hide();
-		let hosNo = $('input[name=hosNo]').val();
-		let pharNo = $('input[name=pharNo]').val();
-		
-		 console.log("hosNo = "+ hosNo);
-		 let uid = $('.uid').text();
-		 console.log(uid)
-		 
-		 
-		 
- });
- 
- 
- 
- 
- 
- </script>
-            <main>
+<main>
                 <div class="view">
                     <div class="contents">
                     <input type="hidden" name="hosNo" th:if="${a != null}" th:value="${a.hosNo}">
@@ -37,11 +17,14 @@
                     <input type="hidden" name="Name" th:if="${b != null}" th:value="${b.pharName}">
                      
                       <div class="view-top" th:if="${a != null}">
-						  <h3 class="title" th:text="${a.hosName}"></h3>
-						  <a class="Are" th:href="@{/search/reserve(hosNo=${a.hosNo})}">
-						    <img id="GoRe" th:src="@{/img/search-예약하기.png}" alt="예약하기">
-						  </a>
-						  <label sec:authorize="isAuthenticated()"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
+						 <h3 class="title" th:text="${a.hosName}"></h3>
+						
+					    <th:block th:if="${isMds}">
+					        <a class="Are" th:href="@{/search/reserve(hosNo=${a.hosNo})}">
+					            <img id="GoRe" th:src="@{/img/search-예약하기.png}" alt="예약하기">
+					        </a>
+					    </th:block>
+												
 					  </div>
 						
 					  <div class="view-top" th:if="${b != null}">
@@ -64,9 +47,11 @@
                         </div>
                     </div>
                     
+                    <label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
+                    
             
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5f25185293d664bcd951443d8b8e4a67&libraries=services"></script>
-		<script>
+			<script>
 		let Addr = $('input[name=Addr]').val();
 		let Name = $('input[name=Name]').val();
 		console.log(Addr)

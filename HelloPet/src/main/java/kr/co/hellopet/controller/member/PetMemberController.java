@@ -9,7 +9,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ch.qos.logback.classic.Logger;
 import kr.co.hellopet.mail.MailSendService;
 import kr.co.hellopet.mail.PasswordMailSendService;
 import kr.co.hellopet.service.MemberService;
@@ -54,8 +52,7 @@ public class PetMemberController {
 	
 	// 로그인
 	@GetMapping("member/login")
-	public String login(HttpServletRequest requset) {
-		
+	public String login(Model model) {
 		return "member/login";
 	}
 	
@@ -83,9 +80,9 @@ public class PetMemberController {
 	@PostMapping("member/authority")
 	public void authority(@RequestParam("check") boolean check, HttpSession session) {
 		
-		System.out.println("check : " + check);
-		
-		session.setAttribute("termAgreed", check);	
+	    session.setAttribute("termAgreed", check);	
+	    
+	    System.out.println("termAgreed: " + session.getAttribute("termAgreed"));
 	}
 	
 	// 가입 (일반회원)
@@ -99,7 +96,7 @@ public class PetMemberController {
 		    
 		  }else {
 			  session.removeAttribute("termAgreed");
-			  return "/member/register";
+			  return "member/register";
 		  }
 		}
 	

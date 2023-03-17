@@ -22,9 +22,14 @@
 	</update>
 
 	<select id="selectReserves" resultType="kr.co.hellopet.vo.AdminReserveVO">
-		select a.*, b.`uid` from `reserve_list` as a
-			join `pet_hospital_pharmacy` as b on a.medNo=b.medNo
-		 	where `uid`=#{uid} order by `rdate` desc #{start}, 10;
+		select * from `reserve_list`
+		 	WHERE `medNo`=#{medNo} order BY `rdate` DESC limit #{start}, 10;
 	</select>
+	<select id="selectReserve" resultType="kr.co.hellopet.vo.AdminReserveVO">
+		select * from `reserve_list` WHERE `revNo`=#{revNo};
+	</select>
+	<select id="selectCountTotal" resultType="int" parameterType="map">
+        select count(`revNo`) from `reserve_list` WHERE `medNo`=#{medNo};
+    </select>
 
 </mapper>

@@ -13,38 +13,35 @@
                                         <th>등록일</th>
                                     </tr>
 
-                                    <tr>
-                                        <td>1</td>
-                                        <td><a href="#">모델 이름이 뭔가요?</a></td>
-                                        <td>23-03-06</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><a href="#">왜 예약이 취소된건가요?</a></td>
-                                        <td>23-03-06</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><a href="#">똑바로 운영안하세요?</a></td>
-                                        <td>23-03-06</td>
+                                    <tr th:each="article,i:${articles}">
+                                        <td>[[${pageStartNum - i.index }]]</td>
+                                        <td><a href="#">[[${article.title}]]</a></td>
+                                        <!-- 날짜를 어떤 형식으로 ?  -->
+                                        <td>[[${#strings.substring(article.rdate, 0, 19)}]]</td>
                                     </tr>
                                 </table>
                             </div>
                             <!-- 검색목록 페이지 번호 -->
                             <!-- 검색목록 페이지 번호 -->
-                            <div class="paging">
-                                <span class="prev">
-                                    <a href="#"><&nbsp;이전</a>
-                                </span>
-                                <span class="num">
-                                    <a href="#" class="on">1</a>
-                                    <a href="#">2</a>
-                                    <a href="#">3</a>
-                                </span>
-                                <span class="next">
-                                    <a href="#">다음&nbsp;></a>
-                                </span>
-                            </div>
+		                    <div class="paging">
+								<span class="prev" th:if="${currentPageGroup == null or currentPageGroup[0] <= 5}">
+								    <a th:href="@{/my/myQna(pg=1)}">
+								      &lt;&nbsp;이전
+								    </a>
+								</span>
+		                        <span class="num">
+		                        <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+		                            <a th:href="@{/my/myQna(pg=${num})}" 
+		                            th:class="${num==currentPage ? 'on':'off'}"+"${num==currentPage?'num current':'num'}">[[${num}]]</a>
+		                        </th:block>
+		                        </span>
+		                        <span class="next" th:if="${groups[1] < lastPageNum}">
+		                            <a th:href="@{/my/myQna(pg=${groups[1]+1})}">다음&nbsp;></a>
+		                        </span>
+								<span class="next" th:if="${groups[1] >= lastPageNum}">
+								    <a th:href="@{/my/myQna(pg=${lastPageNum})}">다음&nbsp;></a>
+								</span>
+		                    </div>
                         </div>
                     </div>
                 </div>

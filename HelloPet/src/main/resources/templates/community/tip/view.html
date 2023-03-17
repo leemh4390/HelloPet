@@ -6,6 +6,9 @@
 <th:block th:include="@{community/_header.html}"/>
         <script>
             $(function(){
+            	
+            	
+            	
                 $('.view_delete').click(function(){
                     if(!confirm('정말 삭제하시겠습니까?')){
                         return false;
@@ -15,10 +18,49 @@
                 
                 
                 
-                $('.heart_img').click(function(){
+                	let heartVal = $('input[name=find]').val(); 
+                	let uid = $('input[name=uid]').val();
+                	let no = $('input[name=no]').val();
                 	
-                });
-            });
+                	
+                	
+                	let jsonData = {'no' : no,
+        							'uid' : uid};
+        	
+                
+                	if(heartVal > 0){
+                		$('.heart_img').html('<img src="/HelloPet/img/icon-heart-mint.png">');
+                		
+                		// 클릭
+                		$.ajax({
+    						url : "/HelloPet/community/HeartDown",
+    				    	method : 'POST',
+    				    	data : jsonData,
+    				    	dataType : 'json',
+    				    	success : function(data){
+    				    		alert('down');
+    				    	}
+    				    		
+    				    	});
+                	}else{
+                		$('.heart_img').html('<img src="/HelloPet/img/icon-heart.png">');
+                		
+                		// 클릭
+                		$.ajax({
+    						url : "/HelloPet/community/HeartUp",
+    				    	method : 'POST',
+    				    	data : jsonData,
+    				    	dataType : 'json',
+    				    	success : function(data){
+    				    		alert('up');
+    				    	}
+    				    		
+    				    	});
+                		
+                	}
+                	
+        	
+         });
         </script>
         <main>
             <div class="top">
@@ -30,6 +72,8 @@
                     <li><a th:href="@{/community/talktalk/list}">반려동물 톡톡</a></li>
                 </ul>
             </div>
+            	<input type="hidden" name="no" th:value="${article.no}">
+            	<input type="hidden" name="find" th:value="${find}">
             <div class="tip_view_title">
                 <h3>[[${article.title}]]</h3>
                 <span class="tip_view_nick"><div class="tipIcon" th:style="'background: url('+ @{/img/favicon_x32.png}+');'"></div>&nbsp헬로펫</span>
@@ -46,9 +90,9 @@
 [[${article.content}]]
 
                 </div>
-                <div class="tip_view_heart">
+                <div class="tip_view_heart" sec:authorize="isAuthenticated()">
                 	<div class="heart_button">
-                		<div class="heart_img">
+                		<div class="heart_img" style="cursor : pointer;">
                 			<img th:src="@{/img/icon-heart.png}">
                 		</div>
                 		<div class="heart_text">
@@ -56,10 +100,13 @@
                 		</div>
                 	</div>
                 </div>
+                <th:block>
+		    		<input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}" sec:authorize="isAuthenticated()">
+		    	</th:block>
                 <div class="view_link">
                     <a th:href="@{/community/tip/list}"><button class="view_list">목록</button></a>
-                    <a th:href="@{/community/tip/modify(group='tip', no=${article.no})}"><button class="view_modify">수정</button></a>
-                    <a th:href="@{/community/tip/delete(group='tip', no=${article.no})}"><button class="view_delete">삭제</button></a>
+                    <a sec:authorize="hasAuthority('ROLE_7')" th:href="@{/community/tip/modify(group='tip', no=${article.no})}"><button class="view_modify">수정</button></a>
+                    <a sec:authorize="hasAuthority('ROLE_7')" th:href="@{/community/tip/delete(group='tip', no=${article.no})}"><button class="view_delete">삭제</button></a>
                 </div>
             </div>
         </main>

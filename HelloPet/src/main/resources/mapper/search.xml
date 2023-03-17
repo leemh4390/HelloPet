@@ -23,6 +23,10 @@
 		SELECT * FROM `api_hospital` WHERE `hosName` LIKE concat('%', #{search}, '%') or `hosAddr` LIKE concat('%', #{search}, '%') limit #{start},10;
 	</select>
 	
+	<select id= "searchHsJoin" resultType="kr.co.hellopet.vo.MedicalVO">
+		SELECT * FROM `pet_hospital_pharmacy`;	
+	</select>
+	
 	<select id="selectSearchHsTotal" resultType="int" parameterType="map">
 	 	Select Count(`hosName`) from `api_hospital` WHERE `hosName` Like concat('%', #{search}, '%') or `hosAddr` LIKE concat('%', #{search}, '%');
 	</select>
@@ -94,7 +98,7 @@
 					`petName2` 	= null ,
 				</when>
 				<when test="petNum == 2">
-					`petName2` 	= #{petName1} ,
+					`petName2` 	= #{petName2} ,
 				</when>	
 			</choose>
 			`petAge1` 	= #{petAge1} ,

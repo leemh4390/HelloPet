@@ -9,17 +9,11 @@
         $(function(){
         	
         	
-        	
-        	
         	// 모달 창 열림
                 $('.gallery_item').click(function(){
                 	
-                	
-                	let no = $('div[name=rank_no]').attr("value");
-                	
-                	
-                	
-                	//location.href = "/HelloPet/community/talktalk/list?no="+no;
+                	let no = $(this).attr("value");
+                	let uid = $('input[name=uid]').val();
                     
                 	let jsonData = {'no' : no};
                 	
@@ -39,18 +33,19 @@
 				    		$('.gallery_modify').click(function(){
 				    			location.href = "/HelloPet/community/talktalk/modify?no="+no;
 				    		});
-				    		$('.modal_img1 a').html('<img th:src="@{'+data.result.img1+'}" alt="img1">');
+				    		$('.modal_img1 a').html('<img src="'+data.result.img1+'" alt="img1">');
+				    		$('.modal_img2 a').html('<img src="'+data.result.img2+'" alt="img2">');
+				    		$('.modal_img3 a').html('<img src="'+data.result.img3+'" alt="img3">');
+				    		$('.gallery_delete').click(function(){
+				    			location.href = "/HelloPet/community/talktalk/delete?no="+no;
+				    		});
+				    		if(data.result.uid != uid){
+				    			$('.gallery_modify_delete').html('');
+				    		}
 				    		
-				    		
-				    		
-				    		
-				    		
-				    		
-				    		
-				    		
+				    		  
 				    	}
 					});
-                	
                 	$('#modal').css('display','flex');
                     $('.v-overlay').css('display','flex');
                     
@@ -58,6 +53,9 @@
                     	mode: 'horizontal'
                     	
                       });
+                    
+                    
+                    
                     
                     
                 });
@@ -78,7 +76,9 @@
                 	}
                 });
         	
-        	// 글 삭제
+        		
+        	
+        	// 글 삭제 alert
                 $('.gallery_delete').click(function(){
                     if(!confirm('정말 삭제하시겠습니까?')){
                         return false;
@@ -101,6 +101,19 @@
             		location.href = "/HelloPet/community/talktalk/list?pg=1&sort="+sort+"&cate="+cate;
             	});
         	
+            	
+            	let level = $('.level').text();
+            	
+            	$('.talk_write a').click(function(){
+            		
+            		if(level != null && $.trim(level) !== ''){
+            			return true;
+            		}else{
+            			alert('로그인이 필요합니다.');
+            			return false;
+            		}
+            			
+            	});
             	
             	
             	
@@ -148,7 +161,7 @@
                         </div>
                         <div class="gallery_items">
                         	<th:block th:each="rank : ${ranks}">
-                            <div class="gallery_item" name="rank_no" th:value="${rank.no}">
+                            <div class="gallery_item" th:value="${rank.no}">
                                 <div class="gallery_item_con1" th:style="'background-image: url('+@{__${rank.img1.substring(9)}__}+');'"></div>
                                 <div class="gallery_item_con2">
                                     <div class="gallery_info1">
@@ -171,7 +184,8 @@
                     </div>
                     <div class="talk_normal">
                         <div class="gallery_items">
-                            <div class="gallery_item" th:each="article : ${articles}">
+                        	<th:block th:each="article : ${articles}" >
+                            <div class="gallery_item" th:value="${article.no}">
                                 <div class="gallery_item_con1" th:style="'background-image: url('+@{__${article.img1.substring(9)}__}+');'"></div>
                                 <div class="gallery_item_con2">
                                     <div class="gallery_info1">
@@ -189,6 +203,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </th:block>
 
                             
                         </div>
@@ -218,6 +233,10 @@
             
         </main>
 <th:block th:include="@{community/_footer.html}"/>
+		<th:block>
+    	<input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}" sec:authorize="isAuthenticated()">
+    	</th:block>
+    	
          <div class="v-overlay" style="z-index:201; display:none;">
     		<div class="v-overlay_scrim" style="opacity: 0.46; background-color: rgb(33, 33, 33); border-color: rgb(33, 33, 33);"></div>
     		<div class="v-overlay_content"></div>
@@ -283,10 +302,12 @@
                                                 <div class="gallery_content_date">2022.05.14</div>
                                             </div>
                                             <div class="gallery_content_txt">지원합니다.</div>
+                                            
                                             <div class="gallery_modify_delete">
                                                 <div class="gallery_modify"><a href="#">수정</a></div>ㅣ
                                                 <div class="gallery_delete"><a href="#">삭제</a></div>
                                             </div>
+                                            
                                         </div>
                                         <div class="content_items">
                                             <div class="content_item">
