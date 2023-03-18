@@ -22,3 +22,12 @@ HelloPet/member/registerMedical
 
 HelloPet/member/find
 
+HelloPet/my/info
+
+HelloPet/my/myArticle
+
+HelloPet/my/myReserve
+
+HelloPet/my/myQna
+
+
