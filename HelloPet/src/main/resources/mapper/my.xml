@@ -4,6 +4,12 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.hellopet.dao.MyDAO">
 
+  <!-- 
+   날짜 : 2023/03/17
+   내용 : my 페이지 기능 구현
+   담당 : 이민혁
+   -->
+
 	<select id="selectUser" resultType="kr.co.hellopet.vo.MemberVO">
 		select * from `pet_owner` where `uid` = #{uid};	
 	</select>
@@ -36,12 +42,19 @@
 		SELECT COUNT('revNo') FROM `reserve_list` WHERE `uid` = 'leemh4390'
 	</select>	
 
+	<!-- 회원정보 update -->
 	<update id="updateInfoModify">
 	    UPDATE pet_owner
 	    SET `name` = #{name}, `email`= #{email}, `nick` = #{nick}, `hp` = #{hp}
 	    WHERE `uid` = #{uid};
 	</update>
 	
+	<!-- 회원 삭제는 하지않고 level 만 변경 -->
+	<update id="deleteWithdrawMember">
+		UPDATE `pet_owner` SET `level` = 0, `wdate` = NOW()  WHERE `uid` = #{uid};
+	</update>
+	
+	<!-- 예약 삭제 -->
 	<delete id="deleteMyReserve">
 		DELETE FROM `reserve_list` WHERE `revNo` = #{no};
 	</delete>

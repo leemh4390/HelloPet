@@ -1,9 +1,227 @@
 <th:block th:include="@{my/_header.html}"/>
 <script>
+let regName   = /^[가-힣]{2,4}$/;
+let regNick   = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+let regEmail  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+let regHp	  = /^\d{3}-\d{3,4}-\d{4}$/;
+let isNameOk  		= true;
+let isHpOk   		= true;
+let isEmailOk 		= true;
+let isNickOk 		= true;
 
 	$(document).ready(function(){
-		$('button[name=btnInfoModfiy]').click(function(e){
+		$('input[name=name]').focusout(function(){
+			
+			let orgName = $('input[name=ori-Name]').val();
+			let name 	= $('input[name=name]').val();
+			
+			// 기존 이름과 일치 여부 확인하기
+			if(orgName != name){
+				// 유효성 검사하기
+				if(!name.match(regName)){
+					isNameOk = false;
+					alert('이름은 한글 2글자 이상으로 해주세요.');
+				}else{
+					isNameOk = true;
+				}
+			}else{
+				isNameOk = true;
+			}
+		});
+		
+		
+		$('input[name=email]').focusout(function(){
+				
+			let email = $(this).val();
+			let orgEmail = $('input[name=ori-Email]').val();
+			
+			// 기존 이메일과 일치 여부 확인하기
+			if(email != orgEmail){
+				
+				// 유효성 검사
+				if(!email.match(regEmail)){
+					 isEmailOk = false;
+					 alert('유효하지 않은 이메일입니다.');
+				}else{
+					// 중복조회하기
+					
+					let jsonData = {'email' : email};
+					
+					 $.ajax({
+							url : '/HelloPet/member/countEmail',
+							method : 'GET',
+							data : jsonData,
+							dataType : 'json',
+							success : function(data){
+								if(data.result == 0){
+									isEmailOk = true;
+									// 이메일 인증까지 해야할까?
+								}else{
+									// 중복
+									isEmailOk = false;
+									alert('사용중인 이메일입니다.');
+								}
+							}
+					 });
+				}
+			}else{
+				isEmailOk = true;
+			}
+		});
+		
+		
+		$('input[name=nick]').focusout(function(){
+			
+			let nick = $(this).val();
+			let oriNick = $('input[name=ori-Nick]').val();
+			
+			// 기존 데이터와 일치여부 확인하기
+			if(nick != oriNick){
+				
+				// 유효성 검사하기
+				if(!nick.match(regNick)){
+					isNickOk = false;
+					alert('유효하지 않은 닉네임입니다.');
+				}else{
+					isNickOk = false;
+					
+					 let jsonData = {'nick' : nick};
+					 
+					 $.ajax({
+						url : '/HelloPet/member/countNick',
+						method : 'GET',
+						data : jsonData,
+						dataType : 'json',
+						success : function(data){
+							if(data.result == 0){
+								//중복 없음
+								isNickOk = true;
+							}else{
+								isNickOk = false;
+								alert('사용중인 닉네임입니다.');
+							}
+						}					
+					 });
+				}
+			}else{
+				isNickOk = true;
+			}
+		});
+		
+		
+		$('input[name=hp]').focusout(function(){
+			
+			let hp = $(this).val();
+			let oriHp = $('input[name=ori-Hp]').val();
+			
+			if(hp != oriHp){
+				
+				 if(!hp.match(regHp)){
+					 isHpOk = false;
+					 alert('- 포함 13자리 입력해주세요.');
+				 }else{
+					let jsonData = {'hp' : hp};
+					
+					 $.ajax({
+						 url : '/HelloPet/member/countHp',
+						 method : 'GET',
+						 data : jsonData,
+						 dataType : 'json',
+						 success : function(data){
+							if(data.result == 0){
+								isHpOk = true;
+							}else{
+								isHpOk = false;
+								alert('사용중인 전화번호입니다.');
+							}			 
+						 }
+					 });
+				 }
+				
+			}else{
+				isHpOk = true;
+			}
+		});
+		
+		// 회원 정보 update 기능 구현 완료
+		const form = document.querySelector('form');
+		
+		form.onsubmit = function(){
+			
+			let name 	 = $('input[name=name]').val();
+			let orgName  = $('input[name=ori-Name]').val();
+			let email 	 = $('input[name=email]').val();
+			let orgEmail = $('input[name=ori-Email]').val();
+			let nick 	 = $('input[name=nick]').val();
+			let oriNick  = $('input[name=ori-Nick]').val();
+			let hp 		 = $('input[name=hp]').val();	
+			let oriHp 	 = $('input[name=ori-Hp]').val();
+			
+			// 일치여부
+			if(name == orgName && email == orgEmail &&  nick == oriNick && hp == oriHp){
+				alert('기존 회원 정보와 동일합니다.');
+			}
+			
+			if(!isNameOk){
+				alert('이름 확인 하십시요.');
+				$('input[name=name]').focus();
+				return false;
+			}
+			
+			// 이메일 검증
+			if(!isEmailOk){
+				alert('이메일을 확인 하십시요.');
+				$('input[name=email]').focus();
+				return false;
+			}
+			
+			// 닉네임 검증
+			if(!isNickOk){
+				alert('닉네임을 확인해주세요.');
+				$('input[name=nick]').focus();
+				return false;
+			}
+			
+			// 연락처 검증
+			if(!isHpOk){
+				alert('전화번호를 확인 하십시요.');
+				$('input[name=hp]').focus();
+				return false;
+			}
+			
+			// 최종 전송
+			return true;
+		}
+		
+		// 회원 삭제 - 기능구현 완료
+		$('button[name=btnWithdrawMember]').click(function(e){
 			e.preventDefault();
+			
+			let uid = $('input[name=uid]').val();
+			
+			let jsonData = {'uid' : uid};
+			
+			let aws = confirm('탈퇴하시겠습니까?');
+			
+			if(aws){
+				
+				$.ajax({
+					url : '/HelloPet/my/withdrawMember',
+					method : 'GET',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						console.log(data);
+						if(data == 1){
+							alert('탈퇴 완료 되었습니다.');
+							location.href = '/HelloPet/';
+						}else{
+							// 실패
+							alert('실패하였습니다. 관리자에게 문의해주세요.');
+						}
+					}
+				});
+			}
 		});
 	});
 
@@ -37,30 +255,34 @@
 	                <tr>
 	                    <td>아이디</td>
 	                    <td>
-							<input type="text" name="uid" th:value="${member.uid}">
+							<input type="text" name="uid" th:value="${member.uid}" readonly="readonly">
 						</td>
 	                </tr>
 	                <tr>
 	                    <td>이름</td>
 	                    <td>
+							<input type="hidden" name="ori-Name" th:value="${member.name}">
 							<input type="text" name="name" th:value="${member.name}">
 						</td>
 	                </tr>
 	                <tr>
 	                    <td>이메일</td>
 	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="hidden" name="ori-Email" th:value="${member.email}">
 							<input type="text" name="email" th:value="${member.email}">
 						</td>
 	                </tr>
 	                <tr>
 	                    <td>닉네임</td>
 	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="hidden" name="ori-Nick" th:value="${member.nick}">
 							<input type="text" name="nick" th:value="${member.nick}">
 						</td>
 	                </tr>
 	                <tr>
 	                    <td>휴대폰</td>
 	                    <td  th:if="${#authentication.principal.member != null}">
+							<input type="hidden" name="ori-Hp" th:value="${member.hp}">
 							<input type="text" name="hp" th:value="${member.hp}">
 						</td>
 	                </tr>
@@ -72,11 +294,11 @@
 	                </tr>
 	                <tr>
 	                    <td>회원탈퇴</td>
-	                    <td><button>탈퇴하기</button></td>
+	                    <td><button name="btnWithdrawMember">탈퇴하기</button></td>
 	                </tr>
 	            </table>
 	            <div id="info_modify">
-	                <button name="btnInfoModify" type="submit"><span>수정하기</span></button>
+	                <input type="submit" name="infoModify" value="수정하기">
 	            </div>
 			</form>
         </div>

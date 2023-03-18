@@ -509,7 +509,7 @@ footer {
     text-align: center;
 }
 
-#info_modify > button {
+#info_modify > input {
     width: 250px;
     height: 65px;
     margin-top: 100px;

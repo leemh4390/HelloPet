@@ -210,18 +210,52 @@ public class MyController {
 	}
 	
 	@ResponseBody
+	@GetMapping("my/withdrawMember")
+	public int withdrawMember(@RequestParam("uid") String uid) {
+		
+		int result = service.deleteWithdrawMember(uid);
+		
+		System.out.println("uid : " + uid);
+		
+		System.out.println(result);
+		
+		return result;
+	}
+	
+	@ResponseBody
 	@GetMapping("my/myReserve_List")
-	public Map<String, Object> myReserveList(Authentication authentication, Model model) {
+	public Map<String, Object> myReserveList(Authentication authentication, String pg) {
 		
 		String uid = authentication.getName();
 		
-		List<ReserveVO> article = service.selectMyReserves(uid);
+		// 현재 페이지
+		int currentPage = service.getCurrentPage(pg);
 		
+		// 시작
+		int start = service.getLimitStart(currentPage);
+		
+		// total
 		int total = service.selectCountMyReserve(uid);
 		
+		// 마지막 페이지 번호
+		int lastPageNum = service.getLastPageNum(total);
+		
+		// 페이시 시작번호
+		int pageStartNum = service.getPageStartNum(total, start);
+		
+		// group 값
+		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		
+		// article list 정보
+		List<ReserveVO> articles = service.selectMyReserve(uid, start);
+		
 		Map<String, Object> map = new HashMap<>();
-		map.put("list", article);
+		map.put("articles", articles);
 		map.put("total", total);
+		map.put("currentPage", currentPage);
+		map.put("lastPageNum", lastPageNum);
+		map.put("pageStartNum", pageStartNum);
+		map.put("groups", groups);
 		
 		return map;
 	}

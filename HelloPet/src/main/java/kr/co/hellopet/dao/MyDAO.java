@@ -31,8 +31,9 @@ public interface MyDAO {
 	
 	public int selectCountMyReserve(String uid);
 	
-	public int deleteMyReserve(@Param("no") int no );
-	
 	public void updateInfoModify(@Param("name") String name, @Param("email") String email, @Param("nick") String nick, @Param("hp") String hp, @Param("uid") String uid);
-
+	
+	public int deleteWithdrawMember(@Param("uid") String uid);
+	
+	public int deleteMyReserve(@Param("no") int no );
 }

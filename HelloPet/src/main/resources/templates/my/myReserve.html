@@ -8,38 +8,69 @@
 			dataType : 'json',
 			success : function(data){
 				let total = data.total;
+				let currentPage = data.currentPage;
+				let lastPageNum = data.lastPageNum;
+				let pageStartNum =data.pageStartNum;
+				let groups = data.groups;
 				let i = 0;
+				
 				$('.reserve-list').remove();
-				$('.paging').remove();
-	            $.each(data.list, function(index, article) {
+				$('.prev a').remove();
+				$('.num a').remove();
+				$('.next a').remove();
+	            $.each(data.articles, function(index, articles) {
 	            	i += 1;
 	                let tags = "<tr class='reserve-list'>";
-	                tags += "<td><input type='checkbox' class='rev_No' value='"+article.revNo+"'></td>";
-	                tags += "<td>"+(total - i + 1)+"</td>";
-	                tags += "<td>";
-	                if (article.status == 0) {
-	                  tags += "<span>예약대기중</span>";
-	                } else if (article.status == 1) {
-	                  tags += "<span>예약확정</span>";
-	                } else if (article.status == 2) {
-	                  tags += "<span>예약거절</span>";
-	                }
-	                tags += "</td>";
-	                tags += "<td>"+article.hosName+"</td>";
-	                tags += "<td>"+article.petName1+"</td>";
-	                tags += "<td>"+article.revDate+"</td>";
-	                tags += "<td>"+article.revTime+"</td>";
-	                tags += "</tr>";
+		                tags += "<td><input type='checkbox' class='rev_No' value='"+articles.revNo+"'></td>";
+		                tags += "<td>"+(total - i + 1)+"</td>";
+		                tags += "<td>";
+		                if (articles.status == 0) {
+		                  tags += "<span>예약대기중</span>";
+		                } else if (articles.status == 1) {
+		                  tags += "<span>예약확정</span>";
+		                } else if (articles.status == 2) {
+		                  tags += "<span>예약거절</span>";
+		                }
+		                tags += "</td>";
+		                tags += "<td>"+articles.hosName+"</td>";
+		                tags += "<td>"+articles.petName1+"</td>";
+		                tags += "<td>"+articles.revDate+"</td>";
+		                tags += "<td>"+articles.revTime+"</td>";
+		                tags += "</tr>";
 	                $('.reserve_table').append(tags);
-	                
 	            });
+	            
+	            
+	            // prve 
+	            if(groups[0] == null || groups[0] <= 5) {
+            	  let prevHtml = "<span class='prev'><a href='/my/myReserve?pg=1'>&lt;&nbsp;이전</a></span>";
+            	  $('.paging').append(prevHtml);
+	            }
+	            
+	            // num
+	            let html  = "<span class='num'>";
+	            for(let num = groups[0]; num <= groups[1]; num++){
+	            	 html += "<a href='/HelloPet/my/myReserve?pg="+num+"' class='num" + (num == currentPage ? "current on" : "off") + "' style='margin-right: 5px;'>" + num + "</a>";
+            	}
+	            	html += "</span>";
+            	$('.paging').append(html);
+				
+            	// next
+            	let nextHtml = "";
+            	if (groups[1] < lastPageNum) {
+            	    nextHtml += "<span class='next'>";
+            	    nextHtml += "<a href='/HelloPet/my/myReserve?pg=" + (groups[1] + 1) + "'>다음&nbsp;&gt;</a>";
+            	    nextHtml += "</span>";
+            	    
+            	} else if (groups[1] >= lastPageNum) {
+            	    nextHtml += "<span class='next'>";
+            	    nextHtml += "<a href='/HelloPet/my/myReserve?pg=" + lastPageNum + "'>다음&nbsp;&gt;</a>";
+            	    nextHtml += "</span>";
+            	}
+            	
+            	$('.paging').append(nextHtml);
 			}
 		});
-	}
-	
-	
-	function paging(){
-		
 	}
 
 	$(document).ready(function(){
@@ -55,9 +86,6 @@
 			
 			// 크기 확인
 			let length = arr_rev.length;
-			
-			// test
-			alert(arr_rev);
 			
 			if(length > 0){
 				
@@ -83,6 +111,7 @@
 			}
 		});
 	});
+		
 </script>
  	<div class="mypage-contents">
 	     <div class="mypage-contents_head">

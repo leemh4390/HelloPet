@@ -48,16 +48,6 @@ public class MyService {
 		return dao.selectMyReserves(uid);
 	};
 	
-	// 예약목록 삭제하기
-	public int deleteMyReserve(int no) {
-		return dao.deleteMyReserve(no);
-	}
-	
-	// 회원 수정
-	public void updateInfoModify(String name, String email, String nick, String hp, String uid) {
-		dao.updateInfoModify(name, email, nick, hp, uid);
-	}
-	
 	// myArticle total 구하기 
 	public int selectCountMyArticle(String uid) {
 		return dao.selectCountMyArticle(uid);
@@ -72,6 +62,20 @@ public class MyService {
 		return dao.selectCountMyReserve(uid);
 	}
 	
+	// 회원 수정
+	public void updateInfoModify(String name, String email, String nick, String hp, String uid) {
+		dao.updateInfoModify(name, email, nick, hp, uid);
+	}
+	
+	public int deleteWithdrawMember(String uid) {
+		int result = dao.deleteWithdrawMember(uid);
+		return result;
+	}
+	
+	// 예약목록 삭제하기
+	public int deleteMyReserve(int no) {
+		return dao.deleteMyReserve(no);
+	}
 	
 	// pagin 작업
 	
