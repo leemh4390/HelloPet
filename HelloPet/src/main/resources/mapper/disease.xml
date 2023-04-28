@@ -44,7 +44,9 @@
 		where a.`cate1` = #{cate1} and a.`cate2` = #{cate2};
 	</select>
 
-
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
 
 
 

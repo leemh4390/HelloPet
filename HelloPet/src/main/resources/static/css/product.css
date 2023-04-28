@@ -1,0 +1,994 @@
+/* 공통 */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR","Apple SD Gothic Neo",Helvetica,sans-serif,Arial;
+}
+a {
+    text-decoration: none;
+    color: #555;
+   	cursor: pointer;
+}
+ul, ol {list-style: none;}
+input, textarea {
+    outline: none;
+}
+img {border-style: none; max-width: 100%;}
+button {outline: none; border: none;}
+#wrapper {
+    width: 100%;
+    min-width: 1200px;
+}
+
+/* header */
+header {
+    min-width: 1200px;
+    width: 100%;
+    height: 105px;
+    position: relative;
+}
+
+header>div {
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+header>.headerTop {
+    position: absolute;
+    height: 35px;
+    background: #e1f3f3;
+}
+
+header>.headerTop>div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+header>.headerTop>div>a {
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+}
+header>.headerTop>div>label{
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+    cursor: pointer;
+}
+header>.headerTop>div>a:hover {
+	color: #10958b;
+}
+header>.headerTop>div>label:hover {
+	color: #10958b;
+}
+header>.headerTop>div>.message {
+	color: #3c83dc;
+}
+header>.menu {
+    position: absolute;
+    top: 35px;
+    height: 70px;
+    background: #32a69f;
+    box-sizing: border-box;
+}
+
+header > .menu > div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+header > .menu > div > ul {
+    display: inline-block;
+    margin-top: 20px;
+
+}
+header > .menu > div > ul > li {float: left;}
+header > .menu > div > ul > li > a {
+    font-size: 20px;
+    color: white;
+    padding: 0 60px;
+}
+header > .menu > div > ul > li img {
+	position: absolute;
+	width: 120px;
+	z-index: 1;
+}
+header > .menu > div > ul > li:nth-child(3) {
+    position: relative;
+    top: -46px;
+}
+header > .menu > div > ul > li:nth-child(4) {
+	margin-left: 110px;
+}
+main {
+    width: 100%;
+    min-width: 1200px;
+    min-height: 800px;
+    margin: 0 auto;
+}
+.top {
+    overflow: hidden;
+    height: 200px;
+    background-color: #e1f4f3;
+    text-align: center;
+}
+
+.top > h3 {
+    color: #555;
+    font-size: 38px;
+    font-weight: bold;
+    padding-top: 60px;
+}
+
+.tab {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    margin-top: -40px;
+}
+.tab > ul {
+    width: 700px;
+    height: 100%;
+    background: white;
+}
+
+.tab > ul > li {
+    text-align: center;
+    float: left;
+    width: 33.3%;
+    align-items: center;
+    line-height: 70px;
+    border-bottom: 1px solid #10958b;
+}
+.tab > ul > li > a {
+    font-weight: bold;
+    font-size: 20px;
+    color: #10958b;
+}
+.tab > ul > .on {
+    background: #32a69f;
+}
+.tab > ul > .on a {
+    color: #fff;
+}
+
+/* footer */
+footer {
+    margin-top: 100px;
+    height: 180px;
+    background: #b4e8e3;
+    padding: 43px 0 75px;
+}
+.footer-col:first-child {
+    max-width: 524px;
+}
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+}
+.info {margin: 0 50px;}
+.info li {
+    float: left;
+    padding: 8px;
+    line-height: .8;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 300;
+}
+.info li:first-child {
+    font-weight: bold;
+    font-weight: 700;
+}
+.link {
+    margin-right: 100px;
+}
+.link li {
+    float: left;
+    padding: 0 2px;
+}
+.link li a {
+    display: block;
+    line-height: 1;
+    font-family: bold;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 700;
+    padding: 2px;
+    margin: 0 2px 10px;
+}
+
+
+
+/*list*/
+#productList {
+	min-height: 600px;
+		
+}
+#productList > .none:nth-child(1) {
+	margin-top: 100px;
+    margin-left: 520px;
+    font-size: 25px;
+}
+#productList > .none:nth-child(2){
+	margin-top: 10px;
+    margin-left: 480px;
+    font-size: 25px;
+}
+
+
+
+#container {
+  	padding: 0px 0px 160px;
+    margin: 0 auto;
+}
+
+#productList > #container > .div1 {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 215px;
+    background: #e1f4f3;
+}
+
+#productList > #container > .div1 > .title {
+	line-height: 1.4;
+    font-size: 35px;
+    color: #555;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 15px;
+}
+
+
+
+#productList .wid1200 {
+    width: 1200px;
+    border-bottom: 2px solid rgb(225, 243, 243);
+	margin: 0 auto;
+}
+
+#productList .lodcation{ 
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding: 15px 0;
+    font-size: 17px;
+}
+
+
+#productList .lodcation span {
+    position: relative;
+    display: inline-block;
+    color: #999;
+    font-weight: 400;
+}
+
+
+
+#productList .cate-tit {
+    margin: 55px 0 20px;
+}
+#productList .cate-tit .tit {
+    line-height: 1;
+    color: #000;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+}
+#productList h2{
+    display: block;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+#productList .sub-cate {
+    position: relative;
+    margin: 0 auto;
+    width: 1200px;
+}
+
+#productList .sub-cate .depth1 {
+    border-bottom: 1px;
+    padding: 15px 0;
+    border-top: #e0e0e0 2px solid;
+}
+
+#productList .sub-cate .depth2 {
+    border: #e0e0e0 1px solid;
+
+}
+#productList .sub-cate .depth4 {
+    margin: 50px 0 0 0;
+}
+#productList ul {
+    list-style: none;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1.5em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+#productList .sub-cate .depth1 > li {
+    position: relative;
+    padding: 0 10px;
+    float: left;
+    margin-left:12px;
+    margin-right: 70px;
+}
+#productList .sub-cate .depth2 > li {
+    padding: 15px 30px;
+    float: left;
+   
+}
+#productList .sub-cate .depth4 > li {
+   display: table;
+   width: 100%;
+   table-layout: fixed;
+   border-top: #e0e0e0 2px solid;
+   border-bottom: #e0e0e0 2px solid;
+}
+#productList .sub-cate .depth2 > li a{
+    color: #333;
+    margin: 10px;
+    margin-left: -10px;
+}
+#productList li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+#productList .sub-cate .depth1 > li.active a {
+    display: block;
+    text-align: center;
+    height: 32px;
+    line-height: 32px;
+    width: 200px;
+}
+#productList .sub-cate .depth1 > li.active a {
+    color: #000;
+    text-decoration: underline;
+}
+
+#productList .sub-cate .depth4 > li .tit {
+    border-right: #e0e0e0 1px solid;
+    width: 124px;
+    color: #000;
+    font-weight: 400px;
+    padding: 15px;
+    background-color: #f8f8f8;
+}
+#productList .sub-cate .depth4 > li > * {
+    display: table-cell;
+    vertical-align: middle;
+}
+#productList .sub-cate .depth4 > li > .con {
+    position:relative;
+    padding: 10px 20px;
+}
+
+#productList .sub-cate .depth4 > li > .con label{
+    display: inline-block;
+    margin: -5px 10px 5px 24px;
+}
+
+#productList a {
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+#productList a
+
+#productList a:hover{
+	
+}
+
+#productList label{
+    box-sizing: border-box;
+    vertical-align: middle;
+    outline: 0;
+    cursor: default;
+    color: #535a70;
+}
+
+#productList .sub-cate .depth4 > li + li {
+    border-top:  #e0e0e0 1px solid;
+}
+#productList .sub-cate .depth4 > li > .tit {
+    border-right: #e0e0e0 1px solid;
+    width: 124px;
+    color: #000;
+    padding: 15px;
+    background-color: #f8f8f8;
+}
+#productList input[type=checkbox]{
+    position: absolute;
+    top: 4px;
+    overflow: hidden;
+    width: 18px;
+    height: 19px;
+    margin-top: 10px;
+    margin-bottom: 9px;
+}
+
+
+#productList .sub-cate .bt-open.active {
+    background:  #50545a url(/product/img/sp_img.png) 9px -386px no-repeat;
+}
+#productList .sub-cate .bt-open {
+    position: absolute;
+    bottom: -32px;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+#productList .sub-cate .depth1 .on {
+    color: #3c83dc;
+}
+
+#productList .sub-cate .depth2 > li .on {
+   color: #3c83dc;
+}
+
+#productList a:hover{
+    color: #3c83dc;
+}
+#productList .pro-lst{
+    overflow: hidden;
+	max-width: 1200px;
+	margin: 50px auto;   
+}
+#productList .pro-lst .probx{
+    position: relative;
+    float: left;
+    width: 315px;
+    margin: 20px 0 0 70px;
+    height: 620px;
+    margin-bottom: 5px;
+}
+#productList .pro-lst .probx .thumb {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+#productList .pro-lst .probx .thumb img {
+	transition: all 0.2s linear;
+	overflow: hidden;    
+}
+
+#productList .pro-lst .probx .thumb img:hover {
+	transform: scale(1.2);
+}
+
+#productList img{
+    vertical-align: top;
+    border: 0;
+    max-width: 100%;
+    overflow: clip;
+}
+#productList .pro-lst .probx .thumb .loc {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    min-width: 73px;
+    font-size: 11px;
+    line-height: 30px;
+    padding: 0 5px;
+}
+#productList i {
+    font-style: normal;
+}
+#productList .pro-lst .probx .desc {
+    background-color: #fcfcfc;
+    height: 145px;
+    border: #efefef 1px solid;
+    padding: 15px 12px 0;
+}
+#productList .pro-lst .probx .desc .org {
+    font-size: 15px;
+    color: #333;
+}
+#productList .pro-lst .probx .desc .prd {
+    margin-top: 5px;
+    font-size: 17px;
+    color: #333;
+    font-weight: 500;
+}
+#productList .pro-lst .probx .desc .txt {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #666;
+    font-weight: 200;
+    overflow: hidden;
+    word-wrap: break-word;
+    display: -webkit-box;
+    height: 75px;
+    white-space: normal;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+#productList .pro-lst .probx .price {
+    position: relative;
+    height: 70px;
+    width: 90%;
+    border: #efefef 1px solid;
+    border-top: none;
+    border-bottom: #cbcbcb 1px solid;
+    padding: 5px 15px 0;
+    display: table;
+    font-family: 'Montserrat','Noto Sans KR';
+}
+#productList .pro-lst .probx .price > * {
+    display: table-cell;
+    vertical-align: top;
+}
+#productList .pro-lst .probx .price .sm {
+    color: #818491;
+    font-size: 15px;
+}
+#productList .pro-lst .probx .price .won {
+    color: #000;
+}
+#productList .pro-lst .probx .price .won strong {
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 400;
+}
+#productList .pro-lst .probx .price .bt-opt {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    background-color: #616371;
+    color: #fff;
+    font-size: 11px;
+    line-height: 27px;
+    padding: 0 9px;
+    height: 27px;
+    margin-top: -13px;
+}
+#productList .pro-lst .probx .price .bt-opt::after {
+    content: '';
+    display: inline-block;
+    border-top: #fff 1px solid;
+    border-right: #fff 1px solid;
+    width: 8px;
+    height: 8px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    vertical-align: -4px;
+    margin-left: 10px;
+}
+
+#productList .oriPrice{
+	font-size: 18px;
+    max-width: 200px;
+    display: inline-block;
+    margin: 6px auto;
+}
+
+#productList .ori{
+	color: rgb(170, 170, 170);
+	text-decoration: line-through;
+	
+}
+
+#productList .discount{
+	margin-left: 2px;
+    margin-right: 6px;
+    color: red;
+
+}
+
+#productList .disPrice{
+	display: inline-block;
+    font-size: 23px;
+    font-weight: 600;
+    margin-left: 0px;
+}
+
+#productList .disPrice span:after{
+	content: "원";
+}
+
+#productList .oriPrice .ori:after{
+	content: "원";
+}
+#productList div{
+    
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+}
+#productList a{
+    color: #666;
+    text-decoration: none;
+    
+}
+
+
+#productList .sub-cate .depth2 > li a:hover {
+        color: #3c83dc;
+    }
+
+
+#productList .paging {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+}
+
+#productList .paging > span > a {
+    color: #777;
+    font-size: 11px;
+    letter-spacing: -1px;
+}
+
+#productList .paging > .num > a {
+    display: inline-block;
+    min-width: 14px;
+    margin: 0 2px;
+    padding: 8px 9px;
+    border: 1px solid #c4c4c4;
+    background: url() 0 0 repeat-x;
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#productList .paging > .num > a.on {
+    color: #39d9c8;
+     font-weight: bold;
+     border: 1px solid #39d9c8;
+}
+
+#productList .paging > span > a:hover{
+    color: #39d9c8;
+}
+
+#productList .paging > .num > a:hover {
+    border: 1px solid #39d9c8;
+    text-decoration: none;
+}
+
+
+
+
+
+/*view*/
+
+#productView {
+	    min-height: 600px;
+		
+}
+
+
+#container {
+	position: relative;
+  	padding: 0px 0px 160px;
+    margin: 0 auto;
+}
+
+
+#productView > #container > .div1 {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 215px;
+    background: #e1f4f3;
+}
+
+#productView > #container > .div1 > .title {
+	line-height: 1.4;
+    font-size: 35px;
+    color: #555;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 15px;
+}
+
+
+
+#productView .wid1200 {
+	position: relative;
+   	width: 1200px;
+    border-bottom: 2px solid rgb(225, 243, 243);
+	margin: 0 auto;
+}
+
+#productView .lodcation{
+	position: absolute;
+    width: 1200px;
+    margin: 0 auto; 
+    padding: 15px 0;
+    font-size: 13px;
+    border-bottom: 4px solid rgb(225, 243, 243);
+}
+
+
+#productView .lodcation span {
+    display: inline-block;
+    color: #999;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+#productView .hhh{
+	position: relative;
+	width: 1200px;
+	height: 500px;
+	margin: 0 auto;
+	
+}
+
+#productView .prod-hd{
+	position: absolute;
+	width: 45%;
+	left: 0;
+	top: 50px;
+	padding-top: 35px;
+	padding-bottom: 80px;
+	padding-left: 20px;
+	box-sizing: border-box;
+}
+
+#productView .prod-hd .prod-thumb {
+	width: 700px;
+	margin-top: 50px;
+	margin-left: 180px;
+	height: 50px;
+	box-sizing: border-box;
+}
+
+#productView .prod-hd .prod-thumb .thumb{
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+
+#productView .prod-hd .prod-thumb .thumb img{
+    display: block;
+    width: 100%;
+}
+
+#productView .explain {
+	position: absolute;
+	width: 55%;
+	right: 0;
+	padding-top: 20px;
+	padding-bottom: 80px;
+	padding-left: 20px;
+	box-sizing: border-box;
+	top: 60px;
+}
+
+
+#productView .prod-inf{
+	margin: 0 auto;
+    padding: 0 0 20px 0;
+    border-bottom: #6a6b6c 2px solid;
+}
+
+#productView .prod-hd .prod-gud{
+	position: relative;
+	top: 800px;
+	right: 180px;
+    width: 550px;
+}
+#productView .prod-hd .prod-inf .dv-tit{
+    border-bottom: #f0f1f2 1px solid;
+    padding: 0 0 10px 0;
+}
+#productView .prod-hd .prod-inf .dv-tit .tit{
+    color-scheme: #000;
+    font-size: 35px;
+    font-weight: 400px;
+    margin-bottom: 15px;
+}
+#productView .prod-gud dl{
+    padding: 20px 0;
+    display: table;
+    width: 100%;
+    font-size: 14px;
+    border-bottom: #f0f1f2 1px solid;
+    text-align: left;
+}
+#productView .prod-gud dl > dt{
+    width: 100px;
+    color: #000;
+    font-weight: 600;
+    font-size: 20px;
+}
+#productView .prod-gud dl > * {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 18px;
+}
+#productView .prod-gud dl > dd.price {
+    font-size: 20px;
+    color: #000;
+}
+#productView .oriPrice{
+	margin-left: 20px
+}
+
+#productView .ori{
+   color: rgb(170, 170, 170);
+   text-decoration: line-through;
+}
+
+#productView .discount{
+	color: red;
+}
+
+#productView .disPrice{
+    font-size: 30px;
+    font-weight: 600;
+	margin-left: 20px
+}
+
+
+#productView .prod-gud dl > dd.hospital {
+    font-size: 20px;
+    color: #000;
+}
+#productView .prod-gud dl > dd.hospital strong{
+    font-size: 37px;
+    font-weight: 'Montserrat';
+    font-size: 20px;
+    margin-left: 20px
+}
+#productView .prod-gud dl > dd.description {
+    font-size: 20px;
+    color: #000;
+}
+#productView .prod-gud dl > dd.description strong{
+    font-size: 37px;
+    font-weight: 'Montserrat';
+    font-size: 20px;
+    margin-left: 20px
+}
+
+
+
+
+#productView .prod-hd .button-box{
+    margin: 10px 0 0 0;
+}
+#productView .prod-hd .button-box > a{
+    width: 49%;
+    float: left;
+}
+#productView .btn.btn-lg{
+    height: 60px;
+    line-height: 58px;
+    font-size: 20px;
+}
+#productView .btn.blue{
+    color: #fff;
+    border-color:#39d9c8;
+    background-color: #39d9c8;
+}
+
+#productView .btn.blue:hover{
+    box-shadow: 2px 2px 20px #ddd;
+}
+
+
+
+#productView .btn{
+    min-width: 350px;
+    padding-inline-start: 0 30px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    border: #333 1px solid;
+    text-align: center;
+    background-color: #fff;
+    margin-top: -120px
+}
+
+
+#productView .button-box{
+	position: absolute;
+    display: block;
+    margin: 0px auto;
+    left: 160px;
+    top: 508px
+}
+#productView .prod-bx{
+	width: 1200px;
+	position: relative;
+    display: table;
+    margin: 0 auto;
+    margin-top: -80px;
+    border-top: #e1f3f3 5px solid;
+}
+#productView .prod-bx .detail-left{
+	margin: 0 auto;
+    padding: 0 30px 0 50px;
+}
+#productView .prod-bx .d101{
+    padding: 35px 0 0 0;
+    text-align: center;
+}
+#productView .detail1 {
+}
+#productView .detail{
+	max-width: 1400px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+#productView .detail h3 {
+    font-size: 20px;
+    color: #000;
+    font-weight: 400;
+}
+
+#productView #map{
+	
+	
+	width:960px;
+	height: 500px;
+	margin: 30px auto;
+
+}
+
+#productView .prod-inf .tit{
+    font-size: 38px;
+}
+#productView a:hover {
+color: #3c83dc;
+}
+#productView .disPrice span:after{
+	content: "원";
+}
+
+
+#productView #coupon {
+	color: #808182;
+}
+
+#productView .MaxDc {
+	font-size: 20px;
+    color: #000;	
+}
+
+#productView .MaxDc strong {
+	margin-left: 20px;
+}
+
+#productView .MaxDc span {
+	font-size: 20px;
+	color: black;
+	margin-left: 5px;
+}
+
+#productView .MaxDc .nono {
+	font-size: 15px;
+	color: #808182;
+}
+
+#productView .MaxDc #MaxDcRE:after{
+	content: "원";
+}

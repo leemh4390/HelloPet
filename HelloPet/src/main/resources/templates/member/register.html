@@ -1,4 +1,4 @@
-<th:block th:include="/member/_header.html"/>
+<th:block th:include="@{member/_header.html}"/>
 <script>
 let regUid    = /^[a-z]+[a-z0-9]{4,19}$/g;
 let regName   = /^[가-힣]{2,4}$/;
@@ -412,4 +412,4 @@ $(document).ready(function(){
                 </div>
             </div>
         </main>
-<th:block th:include="/member/_footer.html"/>
+<th:block th:include="@{member/_footer.html}"/>

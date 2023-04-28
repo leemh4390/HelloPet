@@ -16,6 +16,7 @@ import lombok.ToString;
 public class MedicalVO {
 	
 	private int medNo;
+	private int pharNo;
 	private String uid;
 	private String pass;
 	private String pass1;

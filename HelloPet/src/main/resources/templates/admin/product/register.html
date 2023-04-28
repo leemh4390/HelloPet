@@ -1,0 +1,186 @@
+<th:block th:include="@{admin/_header.html}"/>
+<link rel="stylesheet" th:href="@{/css/admin_product.css}">
+<script>
+	$(function(){
+		$(function(){
+    		$("select[name=prodCate1]").change(function(){
+    			optChange();
+    		});
+    		
+    		function optChange(){
+    			let optName1 = ["2차 분류선택", "비뇨산부의학과", "정형외과", "종양의학과", "치과", "안과", "일반외과", "일반내과", "이비인후과", "심장의학과", "감염내과"];
+        		let optName2 = ["2차 분류선택", "예방의학과", "감염내과"];
+        		let optName3 = ["2차 분류선택", "진단검사의학과", "알레르기내과", "심장의학과", "영상의학과", "감염내과", "안과", "치과", "종양의학과", "피부과"];
+        		let optName4 = ["2차 분류선택", "동물등록"];
+        		
+        		let optValue1 = [0, "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"];
+        		let optValue2 = [0, "10", "11"];
+        		let optValue3 = [0, "10", "11", "12", "13", "14", "15", "16", "17", "18"];
+        		let optValue4 = [0, "10"];
+        		
+        		
+    			let selectOpt = $('select[name=prodCate1]').val();
+    			let changeOptName;
+    			let changeOptValue;
+    			
+    			
+    			if(selectOpt == "10"){
+    				changeOptName = optName1;
+    				changeOptValue = optValue1;
+    			}else if(selectOpt == "11") {
+    				changeOptName = optName2;
+    				changeOptValue = optValue2;
+    			}else if(selectOpt == "12") {
+    				changeOptName = optName3;
+    				changeOptValue = optValue3;
+    			}else if(selectOpt == "13") {
+    				changeOptName = optName4;
+    				changeOptValue = optValue4;
+    			}
+
+    			
+    			$('select[name=prodCate2]').empty();
+    			for(let i=0; i<changeOptName.length; i++){
+    				let tag = "<option value='"+changeOptValue[i]+"'>"+changeOptName[i]+"</option>";
+    				$('select[name=prodCate2]').append(tag);
+    			}
+    		}
+    		
+    		$('form').submit(function(){
+    			if($('select[name=prodCate1]').val() == '0'){
+    				alert('1차 분류를 선택하세요.');
+    				return false;
+    			}
+    			if($('select[name=prodCate2]').val() == '0'){
+    				alert('2차 분류를 선택하세요.');
+    				return false;
+    			}
+    			if($('input[name=group]:checked').length < 1){
+    				alert('반려견/반려묘를 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-name').val() == ''){
+    				alert('상품명을 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-ex').val() == ''){
+    				alert('상품설명을 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-hospital').val() == ''){
+    				alert('판매병원을 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-price').val() == ''){
+    				alert('삼품금액을 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-sale').val() == ''){
+    				alert('할인율을 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-img1').val() == ''){
+    				alert('상품이미지를 입력하세요.');
+    				return false;
+    			}
+    			if($('.p-img2').val() == ''){
+    				alert('상세이미지를 입력하세요.');
+    				return false;
+    			}
+    			return true;
+    		});
+    		
+    	});
+	});
+	let 
+</script>
+        <main>
+            <div class="top">
+                <h3>진료상품등록</h3>
+            </div>
+            <div class="product_register">
+                <form action="#" method="post" enctype="multipart/form-data">
+                    <h3>상품분류</h3>
+                    <table class="register_table1">
+                        <tr>
+                            <td>1차 분류</td>
+                            <td>
+                                <select name="prodCate1">
+                                    <option value="0">1차 분류선택</option>
+                                    <option value="10">수술/치료</option>
+                                    <option value="11">예방접종</option>
+                                    <option value="12">검진/검사</option>
+                                    <option value="13">기타</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2차 분류</td>
+                            <td> 
+                                <select name="prodCate2">
+                                    <option value="0">2차 분류선택</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>반려견/반려묘</td>
+                            <td>
+                                    <input type="radio" name="group" value="dog"><span>반려견</span>
+                                    <input type="radio" name="group" value="cat"><span>반려묘</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h3>기본정보</h3>
+                    <table class="register_table2">
+                        <tr>
+                            <td>상품명</td>
+                            <td>
+                                <input type="text" class="p-name" name="prodName" placeholder="상품명을 입력하세요.">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상품설명</td>
+                            <td> 
+                                <input type="text" class="p-ex" name="descript" placeholder="상품설명을 입력하세요.">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>판매병원</td>
+                            <td> 
+                                <input type="text" class="p-hospital" name="medicalName" placeholder="판매병원을 입력하세요.">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상품금액</td>
+                            <td> 
+                                <input type="text" class="p-price" name="price" placeholder="상품금액을 입력하세요."> 원
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>할인율</td>
+                            <td> 
+                                <input type="text" class="p-sale" name="discount" placeholder="할인율을 입력하세요."> %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상품이미지</td>
+                            <td> 
+                                <input type="file" class="p-img1" name="fileImg1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상세이미지</td>
+                            <td> 
+                                <input type="file" class="p-img2" name="fileImg2">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="register_btn">
+                        <a th:href="@{list}">취소</a>
+                        <input type="submit" class="btn_delete" value="등록하기">
+                    </div>
+                </form>
+            </div>
+        </main>
+<th:block th:include="@{admin/_footer.html}"/>

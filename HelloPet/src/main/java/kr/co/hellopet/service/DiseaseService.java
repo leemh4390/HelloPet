@@ -27,6 +27,8 @@ public class DiseaseService {
 	public DiseaseVO selectDisease(int cate1, int cate2) {
 		return dao.selectDisease(cate1, cate2);
 	}
-	
+	public int selectMsg(String uid) {
+		return dao.selectMsg(uid);
+	}
 	
 }

@@ -5,7 +5,7 @@
 내용 : View에 병원,약국 자세히 결과, 지도 출력
  -->
 <main>
-                <div class="view">
+               <div class="view">
                     <div class="contents">
                     <input type="hidden" name="hosNo" th:if="${a != null}" th:value="${a.hosNo}">
                     <input type="hidden" name="pharNo" th:if="${b != null}" th:value="${b.pharNo}">
@@ -47,14 +47,19 @@
                         </div>
                     </div>
                     
-                    <label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
-                    
+                    <label sec:authorize="hasAuthority('ROLE_1')" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
+				<label sec:authorize="hasAuthority('ROLE_7')" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
+				<label sec:authorize="hasAuthority('ROLE_2')"  style="display: none;"><span class="uid" name="uid" sec:authentication="principal.medical.uid">길동</span></label>
+				<label sec:authorize="hasAuthority('ROLE_3')" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.medical.uid">길동</span></label>
+                <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}">    
             
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5f25185293d664bcd951443d8b8e4a67&libraries=services"></script>
 			<script>
 		let Addr = $('input[name=Addr]').val();
 		let Name = $('input[name=Name]').val();
+		let uid = $('input[name=uid]').val();
 		console.log(Addr)
+		console.log(uid)
 		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {

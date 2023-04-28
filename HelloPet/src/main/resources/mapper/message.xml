@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+ 	날짜 : 2023/03/14 ~
+ 	이름 : 김채영
+ 	내용 : HelloPet Message 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.MessageDAO">
+	
+	<select id="selectMsgs" resultType="kr.co.hellopet.vo.MessageVO">
+		select * from `message` where `uid`=#{uid} order by `msgRdate` desc limit #{start},10;
+	</select>
+	<select id="selectCountTotal" resultType="int" parameterType="map">
+        select count(`msgNo`) from `message` where `uid`=#{uid};
+    </select>
+	
+	<select id="selectMsg" resultType="kr.co.hellopet.vo.MessageVO">
+		select * from `message` where `msgNo`=#{msgNo};
+	</select>
+	<update id="updateMsg">
+		update `message` set `msgStatus` = 1 where `msgNo`=#{msgNo};
+	</update>
+	
+	<select id="selectMsgTotal" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
+	
+	
+</mapper>

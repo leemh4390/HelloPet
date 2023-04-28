@@ -11,8 +11,39 @@
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" th:href="@{/css/my.css}">
-
+    <script th:src="@{/js/my.js}"></script>
+    <script th:src="@{/js/myPwChange.js}"></script>
+    <script th:src="@{/js/postcode.js}"></script>
+    <script>
+	    $(function(){
+	    	var level = $('.level').text();
+	    	console.log(level);
+	    	
+	    	$('.cs').click(function(){
+				if(level !=  null && $.trim(level) !== ''){
+	    			if(level == 1 || level == 7){
+	    				return true;
+	    			}else{
+	    				alert('일반회원만 가능합니다.')
+	    				return false;
+	    			}
+	    			
+	    		}else{
+	    			alert('로그인이 필요합니다.');
+	    			return false;
+	    		}
+	    	});
+	    });
+	    
+	    function goMsg (){
+        	var uid = $('.uid').text();
+        	console.log(uid);
+        	
+        	location.href="/HelloPet/message/message";
+        }
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -23,25 +54,28 @@
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_7')"><span class="level" sec:authentication="principal.member.level"></span></label>
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="level" sec:authentication="principal.medical.level"></span></label>
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="level" sec:authentication="principal.medical.level"></span></label>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/member/join}">회원가입</a>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="medNo" sec:authentication="principal.medical.medNo"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="pharNo" sec:authentication="principal.medical.pharNo"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="medNo" sec:authentication="principal.medical.medNo"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_1')"><span class="uid" sec:authentication="principal.member.uid"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_7')"><span class="uid" sec:authentication="principal.member.uid"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="uid" sec:authentication="principal.medical.uid"></span></label>
+                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="uid" sec:authentication="principal.medical.uid"></span></label>
                     <label sec:authorize="hasAuthority('ROLE_1')"><span class="name" sec:authentication="principal.member.nick">길동</span>님</label>
-                    <label sec:authorize="hasAuthority('ROLE_2')"><span th:onclick="location.href='/HelloPet/admin/info'">내 병원관리</span></label></a>
-	                <label sec:authorize="hasAuthority('ROLE_3')"><span th:onclick="location.href='/Hellopet/admin/info'">내 약국관리</span></label></a>
-	                <label sec:authorize="hasAuthority('ROLE_7')"><span>웹관리자님</span></label></a>
                 	<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
-                    <a sec:authorize="hasAuthority('ROLE_1')" href="#">마이페이지</a>
-                    <a th:href="@{/message/message}" class="socket">알림</a>
+                    <a sec:authorize="hasAuthority('ROLE_1')" th:href="@{/my/info}">마이페이지</a>
+                    <a sec:authorize="isAuthenticated()" onclick="goMsg()" class="message">알림 ([[${msg2}]])</a>
+                    <a th:href="@{/cs/notice/list}">고객센터</a>	
                 </div>
             </div>
             <div class="menu">
-                <div>
+                <div class="menu2">
                     <ul>
                         <li><a th:href="@{/disease/index}">증상별질병찾기</a></li>
                         <li><a th:href="@{/search/index}">병원/약국찾기</a></li>
                         <li class="logo"><a th:href="@{/}"><img th:src="@{/img/ci.png}" alt="logo"></a></li>
                         <li><a th:href="@{/community/tip/list}">커뮤니티</a></li>
-                        <li><a th:href="@{/cs/notice/list}">고객센터</a></li>
+                        <li><a th:href="@{/product/list(cate1=10, cate2=10)}">진료상품</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,23 +87,28 @@
                         <nav class="mypage-navigation">
                             <ul class="mypage-nav">
                                 <li class="mypage-nav_list">
-                                    <a href="./info.html" class="mypage-nav__list-link_active">
+                                    <a th:href="@{/my/info}" name="mypage-nav__list-link">
                                         <span>보호자 정보관리</span>
                                     </a>
                                 </li>
                                 <li class="mypage-nav_list">
-                                    <a href="./myReserve.html" class="mypage-nav__list-link">
+                                    <a th:href="@{/my/myReserve}" name="mypage-nav__list-link">
                                         <span>예약관리</span>
                                     </a>
                                 </li>
                                 <li class="mypage-nav_list">
-                                    <a href="./myArticle.html" class="mypage-nav__list-link">
+                                    <a th:href="@{/my/myArticle}" name="mypage-nav__list-link">
                                         <span>게시글 관리</span>
                                     </a>
                                 </li>
                                 <li class="mypage-nav_list">
-                                    <a href="./myQna.html" class="mypage-nav__list-link">
+                                    <a th:href="@{/my/myQna}" name="mypage-nav__list-link">
                                         <span>1:1 문의</span>
+                                    </a>
+                                </li>
+                                <li class="mypage-nav_list">
+                                    <a th:href="@{/my/coupon}" name="mypage-nav__list-link">
+                                        <span>나의 쿠폰</span>
                                     </a>
                                 </li>
                             </ul>

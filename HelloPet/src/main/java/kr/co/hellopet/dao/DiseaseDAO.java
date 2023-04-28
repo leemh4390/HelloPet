@@ -19,5 +19,7 @@ import kr.co.hellopet.vo.DiseaseVO;
 public interface DiseaseDAO {
 	public List<DiseaseResultMapVO> selectDiseases(@Param("group") String group);
 	public DiseaseVO selectDisease(@Param("cate1") int cate1, @Param("cate2") int cate2);
+	
+	public int selectMsg(String uid);
 
 }

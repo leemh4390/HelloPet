@@ -75,13 +75,45 @@
         			return false;
         		}
         	});
+    		$('.cs').click(function(){
+    			if(level !=  null && $.trim(level) !== ''){
+        			if(level == 1 || level == 7){
+        				return true;
+        			}else{
+        				alert('일반회원만 가능합니다.')
+        				return false;
+        			}
+        			
+        		}else{
+        			alert('로그인이 필요합니다.');
+        			return false;
+        		}
+        	});
         });
         
         function goHos (){
         	var medNo = $('.medNo').text();
         	console.log(medNo);
         	
-        	location.href="/HelloPet/admin/info?medNo="+medNo;
+        	location.href="/HelloPet/admin/info";
+        }
+        function goPm (){
+        	var pharNo = $('.pharNo').text();
+        	console.log(pharNo);
+        	
+        	location.href="/HelloPet/admin/info";
+        }
+        function goMsg (){
+        	var uid = $('.uid').text();
+        	console.log(uid);
+        	
+        	location.href="/HelloPet/message/message";
+        }
+        function goTop(){
+        	var uid = $('.uid').text();
+        	console.log(uid);
+        	
+        	location.href="/HelloPet/admin/info";
         }
         
     </script>
@@ -94,17 +126,17 @@
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_1')"><span class="level" sec:authentication="principal.member.level"></span></label>
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_7')"><span class="level" sec:authentication="principal.member.level"></span></label>
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="level" sec:authentication="principal.medical.level"></span></label>
-                	<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="medNo" sec:authentication="principal.medical.medNo"></span></label>
                 	<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="level" sec:authentication="principal.medical.level"></span></label>
                     <a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
                     <a sec:authorize="!isAuthenticated()" th:href="@{/member/join}">회원가입</a>
                     <label sec:authorize="hasAuthority('ROLE_1')"><span class="name" sec:authentication="principal.member.nick">길동</span>님</label>
                     <label sec:authorize="hasAuthority('ROLE_2')" onclick="goHos()">내 병원관리</label>
-	                <label sec:authorize="hasAuthority('ROLE_3')"><span th:onclick="location.href='/Hellopet/admin/info'">내 약국관리</span></label></a>
-	                <label sec:authorize="hasAuthority('ROLE_7')"><span>웹관리자님</span></label></a>
+	                <label sec:authorize="hasAuthority('ROLE_3')" onclick="goPm()">내 약국관리</label>
+	                <label sec:authorize="hasAuthority('ROLE_7')" onclick="goTop()">웹관리자님</label>
                 	<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
                     <a sec:authorize="hasAuthority('ROLE_1')" th:href="@{/my/info}">마이페이지</a>
-                    <a th:href="@{/message/message}" class="socket">알림</a>
+                    <a sec:authorize="isAuthenticated()" onclick="goMsg()" class="message">알림 ([[${result}]])</a>
+                	<a th:href="@{/cs/notice/list}">고객센터</a>
                 </div>
             </div>
             <div class="menu">
@@ -114,7 +146,7 @@
                         <li><a th:href="@{/search/index}">병원/약국찾기</a></li>
                         <li class="logo"><a th:href="@{/}"><img th:src="@{/img/ci.png}" alt="logo"></a></li>
                         <li><a th:href="@{/community/tip/list}">커뮤니티</a></li>
-                        <li class="cs"><a th:href="@{/cs/notice/list}">고객센터</a></li>
+                        <li><a th:href="@{/product/list(cate1=10, cate2=10)}">진료상품</a></li>
                     </ul>
                 </div>
             </div>

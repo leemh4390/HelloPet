@@ -1,0 +1,88 @@
+<th:block th:include="@{admin/_header.html}"/>
+<link rel="stylesheet" th:href="@{/css/admin_product.css}">
+<script>
+	$(function(){
+			$('.c-price').on('input', function(){
+		        $('input[name=discount]').val(0);
+		    });
+	
+		    $('.c-discount').on('input', function(){
+		        $('input[name=disprice]').val(0);
+		    });
+		
+		
+		
+		
+    		$('form').submit(function(){
+    			if($('.c-name').val() == ''){
+    				alert('쿠폰명을 입력하세요.');
+    				return false;
+    			}
+    			if($('.c-price').val() == ''){
+    				alert('할인금액을 입력하세요.');
+    				return false;
+    			}
+    			if($('.c-discount').val() == ''){
+    				alert('할인율을 입력하세요.');
+    				return false;
+    			}
+    			if($('.c-req').val() == ''){
+    				alert('적용조건를 입력하세요.');
+    				return false;
+    			}
+    			if($('.c-vaild').val() == ''){
+    				alert('유효기간을 입력하세요.');
+    				return false;
+    			}
+    			return true;
+    		});
+    		
+    	});
+</script>
+        <main>
+            <div class="top">
+                <h3>쿠폰등록</h3>
+            </div>
+            <div class="product_register">
+                <form action="#" method="post">
+                    <h3>기본정보</h3>
+                    <table class="register_table2">
+                        <tr>
+                            <td>쿠폰명</td>
+                            <td>
+                                <input type="text" class="c-name" name="cpName" placeholder="쿠폰명을 입력하세요.">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>할인금액</td>
+                            <td> 
+                                <input type="text" class="c-price" name="disprice" placeholder="할인금액을 입력하세요."> 원
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>할인율</td>
+                            <td> 
+                                <input type="text" class="c-discount" name="discount" placeholder="할인율을 입력하세요."> % &nbsp;   할인금액과 할인율 중 하나만 입력 가능합니다.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>적용조건</td>
+                            <td> 
+                                <input type="text" class="c-req" name="require" placeholder="적용조건을 입력하세요." style="width: 350px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>유효기간</td>
+                            <td> 
+                                <input type="date" class="c-vaild" name="vaild">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="register_btn">
+                        <a th:href="@{list}">취소</a>
+                        <input type="submit" class="btn_delete" value="등록하기">
+                    </div>
+                </form>
+            </div>
+        </main>
+<th:block th:include="@{admin/_footer.html}"/>

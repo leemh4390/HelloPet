@@ -21,6 +21,6 @@ public interface ListsDAO {
 	public List<ListsVO> selectNew(@Param("start") int start);
 	public List<ListsVO> selectReserve(@Param("start") int start);
 	public int selectCountTotal();
-
+	public int selectMsg(String uid);
 	
 }

@@ -78,10 +78,18 @@ public class MyUserDetails implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 	    // 계정 활성화 여부(true: 활성화, false:비활성화)
-	   
-		int level = Integer.parseInt(member.getLevel());
-		boolean isEnabled = level != 0;
 		
-	    return isEnabled;
+		boolean isEnabled = false;
+		
+		if(member != null) {
+			int memberLevel = Integer.parseInt(member.getLevel());
+			isEnabled = memberLevel > 0;
+			
+		}else if(medical != null) {
+			int medicalLevel = Integer.parseInt(medical.getLevel());
+			isEnabled = medicalLevel > 0;
+		}
+		
+		return isEnabled;
 	}
 }

@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.hellopet.dao.CsDAO;
 import kr.co.hellopet.vo.CsVO;
+import kr.co.hellopet.vo.MemberCouponVO;
+import kr.co.hellopet.vo.MessageVO;
 
 /* 
  *  날짜 : 2023/03/09
@@ -42,7 +44,9 @@ public class CsService {
 		result = dao.insertNotice(vo);
 		return result;
 	}
-	
+	public CsVO selectNotice(int no) {
+		return dao.selectNotice(no);
+	}
 	public List<CsVO> selectNotices(int start, int pageSize){
 		return dao.selectNotices(start, pageSize);
 	}
@@ -55,6 +59,21 @@ public class CsService {
 	}
 	public CsVO getNext( String rdate) {
 		return dao.getNext(rdate);
+	}
+	public int insertCoupon(MemberCouponVO vo) {
+		return dao.insertCoupon(vo);
+	}
+	
+	public int countCoupon(String cpNo, String uid) {
+		return dao.countCoupon(cpNo, uid);
+	}
+	
+	public int updateDownload(int cpNo) {
+		return dao.updateDownload(cpNo);
+	}
+	
+	public int updateCouponOwner(String uid) {
+		return dao.updateCouponOwner(uid);
 	}
 	
 	/* qna */
@@ -110,6 +129,14 @@ public class CsService {
     public int deleteArticle(int no) {
     	return dao.deleteArticle(no);
     }
+    
+    /* message */
+    public int insertMsg(MessageVO vo) {
+    	return dao.insertMsg(vo);
+    }
+    public int selectMsg(String uid) {
+		return dao.selectMsg(uid);
+	}
 	
 	// 파일 이미지
 	@Value("${spring.servlet.multipart.location}")

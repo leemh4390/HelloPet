@@ -12,6 +12,10 @@ $(function(){
 	
 	let uid = $('span[name=uid]').text();
 	
+	console.log(uid);
+	
+	let medicalUid = $('input[name=medicalUid]').val();
+	
 	$('#num').change(function() {
 	    var selectedValue = $(this).val(); // 현재 선택된 select option의 값을 확인합니다.
 	    console.log(selectedValue);
@@ -42,6 +46,7 @@ $(function(){
 		let memo = $('input[name=memo]').val();
 		let revDate = $('input[name=revDate]').val();
 		let revTime = $('input[name=revTime]').val();
+		let coupon = $('input[name=coupon]').val();
 		
 		
 		
@@ -60,6 +65,7 @@ $(function(){
 		console.log("memo : " + memo);
 		console.log("revDate : " + revDate);
 		console.log("revTime : " + revTime);
+		console.log("coupon : " + coupon);
 		
 		return true;
 		
@@ -141,14 +147,35 @@ $(function(){
                                         <th>반려동물 나이 (2)</th>
                                         <td><input type="text" name="petAge2" placeholder="ex)17"><span>숫자만 입력해주세요.</span></td>
                                     </tr>
+                                    <th:block th:if="${prodNo == null}">
                                     <tr>
                                         <th>진료항목</th>
                                         <td><input type="text" name="department" placeholder="ex)예방접종"><span></span></td>
                                     </tr>
+                                    </th:block>
+                                     <th:block th:if="${prodNo != null}">
+                                    <tr>
+                                        <th>진료항목</th>
+                                        <td><input type="hidden" name="department" th:value="${product.prodName}">[[${product.prodName}]]</td>
+                                    </tr>
+                                    </th:block>
                                     <tr>
                                         <th>특이사항</th>
                                         <td><input type="text" name="memo" placeholder="ex) oo 알러지 보유"><span>수의사가 알아야 하는 반려동물의 특이사항을 기재해 주세요.</span></td>
                                     </tr>
+                                    <th:block th:if="${mc != null}">
+                                    <tr>
+                                    	<th>쿠폰</th>
+                                    	<td>
+                                            <select id="coupon" name="coupon">
+											    <option value="" selected="selected">쿠폰선택</option>
+											    <option th:each="cp : ${cps}" th:value="${cp.cpNo}">
+											        [[${cp.cpName}]]
+											    </option>
+											</select>
+                                        </td>
+                                    </tr>
+                                    </th:block>
                                 </div>           
                             </tbody>
                         </table>
@@ -161,8 +188,10 @@ $(function(){
                     <label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
                     <label sec:authorize="isAuthenticated()" style="display: none;"><span class="oName" name="oName" sec:authentication="principal.member.name">길동</span></label>
                     <input type="hidden" name="medNo" th:value="${hs.hosNo}">
+                    <input type="hidden" name="medicalUid" th:value="${md.uid}">
                     <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}">
                     <input type="hidden" name="oName" th:value="${#authentication.principal.member.name}">
+                    
                     <div>
                         <input type="submit" class="reSubmit" value="예약신청">
                     </div>

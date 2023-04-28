@@ -1,0 +1,53 @@
+<th:block th:include="@{admin/_header.html}"/>
+<link rel="stylesheet" th:href="@{/css/admin_product.css}">
+<script>
+	
+</script>
+        <main>
+            <div class="top">
+                <h3>상품 기본정보수정</h3>
+            </div>
+            <div class="product_register">
+                <form action="#" method="post">
+                    
+                    <h3>기본정보</h3>
+                    <table class="register_table2">
+                        <tr>
+                            <td>상품명</td>
+                            <td>
+                                <input type="text" class="p-name" name="prodName" th:value="${product.prodName}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상품설명</td>
+                            <td> 
+                                <input type="text" class="p-ex" name="descript" th:value="${product.descript}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>판매병원</td>
+                            <td> 
+                                <input type="text" class="p-hospital" name="medicalName" th:value="${product.medicalName}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상품금액</td>
+                            <td> 
+                                <input type="text" class="p-price" name="price" th:value="${product.price}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>할인율</td>
+                            <td> 
+                                <input type="text" class="p-sale" name="discount" th:value="${product.discount}">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="register_btn">
+                        <a th:href="@{list}">취소</a>
+                        <input type="submit" class="btn_delete" value="수정하기">
+                    </div>
+                </form>
+            </div>
+        </main>
+<th:block th:include="@{admin/_footer.html}"/>

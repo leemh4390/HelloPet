@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.hellopet.service.IndexService;
 import kr.co.hellopet.vo.CsVO;
@@ -24,8 +25,11 @@ public class IndexController {
 
 	@GetMapping(value = {"", "index"})
 	public String index(Model model, CsVO vo, String pg, Principal principal) {
+		String uid = null;
 		
-		
+		if(principal != null) {
+			uid = principal.getName();
+		}
 		int currentPage = service.getCurrentPage(pg);
 		
 		/* 최다방문 최근등록 최다예약 5개씩 */
@@ -44,6 +48,8 @@ public class IndexController {
 		model.addAttribute("faqs", faqs);
 		model.addAttribute("currentPage", currentPage);
 		
+		int result = service.selectMsg(uid);
+		model.addAttribute("result", result);
 		
 		return "index";
 	}

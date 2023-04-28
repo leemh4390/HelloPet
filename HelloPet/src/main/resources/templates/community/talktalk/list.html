@@ -7,14 +7,47 @@
     <script>
         
         $(function(){
+        	/*<![CDATA[*/
         	
         	
         	// 모달 창 열림
-                $('.gallery_item').click(function(){
+                $('.gallery_item').on('click',function(){
                 	
-                	let no = $(this).attr("value");
+                	let no = $(this).attr("value1");
                 	let uid = $('input[name=uid]').val();
-                    
+                	let nick = $('input[name=nick]').val();
+                	let heartVal = 0;
+                	let heartUser = "";
+                	let writerUid = $(this).find('.gallery_info1').find('.writerUid').text().trim();
+                	console.log('writer :' +writerUid);
+                	
+					// 모달창 제일 최근 좋아요 누른 별명출력 
+                	$.ajax({
+						url : "/HelloPet/community/selectHeartUser",
+				    	method : 'GET',
+				    	data : {'no':no},
+				    	dataType : 'json',
+				    	async:false,
+				    	success : function(data){
+				    		heartUser = data.result.nick;
+				    	}
+                	});
+                	
+                	
+                	// 좋아요 눌렀는지 여부
+                	$.ajax({
+						url : "/HelloPet/community/findHeart",
+				    	method : 'GET',
+				    	data : {'no':no,'uid':uid},
+				    	dataType : 'json',
+				    	async:false,
+				    	success : function(data){
+				    		heartVal = data.result;
+				    	}
+                	});
+                	
+                	
+                	
                 	let jsonData = {'no' : no};
                 	
                 	$.ajax({
@@ -23,25 +56,45 @@
 				    	data : jsonData,
 				    	dataType : 'json',
 				    	success : function(data){
-				    		
 				    		$('.writer_nick').html('<strong>'+data.result.nick+'</strong>');
 				    		$('.content_info_item span').html('<strong>'+data.result.reply+'</strong>');
-				    		$('.like_aria').html('<strong>소풍이</strong>님 외 <strong>'+data.result.heart+'명</strong>이 좋아합니다.');
+				    		if(data.result.heart > 1){
+				    			$('.v_img').append('<div class="v_responsive" style="padding-bottom: 100%;"></div>');
+				    			$('.v_img').append(' <div class="v_img_img"></div>');
+				    			$('.v_img').append('<div class="v_responsive_content" style="width: 260px;"></div>');
+				    			$('.like_aria').html('<strong>'+heartUser+'</strong>님 외 <strong>'+(data.result.heart-1)+'명</strong>이 좋아합니다.');
+				    		}else if(data.result.heart == 1){
+				    			$('.v_img').append('<div class="v_responsive" style="padding-bottom: 100%;"></div>');
+				    			$('.v_img').append(' <div class="v_img_img"></div>');
+				    			$('.v_img').append('<div class="v_responsive_content" style="width: 260px;"></div>');
+				    			$('.like_aria').html('<strong>'+heartUser+'</strong>님이 좋아합니다.');
+				    		}else{
+				    			$('.v_img').html('');
+			    				$('.like_aria').html('<strong>'+data.result.heart+'명</strong>이 좋아합니다.');
+				    		}
 				    		$('.gallery_content_tit').html(data.result.title);
 				    		$('.gallery_content_txt').html(data.result.content);
 				    		$('.gallery_content_date').html(data.result.rdate.substring(0, 10));
-				    		$('.gallery_modify').click(function(){
-				    			location.href = "/HelloPet/community/talktalk/modify?no="+no;
-				    		});
 				    		$('.modal_img1 a').html('<img src="'+data.result.img1+'" alt="img1">');
 				    		$('.modal_img2 a').html('<img src="'+data.result.img2+'" alt="img2">');
 				    		$('.modal_img3 a').html('<img src="'+data.result.img3+'" alt="img3">');
-				    		$('.gallery_delete').click(function(){
-				    			location.href = "/HelloPet/community/talktalk/delete?no="+no;
-				    		});
 				    		if(data.result.uid != uid){
 				    			$('.gallery_modify_delete').html('');
+				    		}else{
+				    			$('.gallery_modify_delete').html('<div class="gallery_modify"><a href="#">수정</a></div>ㅣ<div class="gallery_delete"><a href="#">삭제</a></div>');
+				    			$('.gallery_modify').click(function(){
+					    			location.href = "/HelloPet/community/talktalk/modify?no="+no;
+					    		});
+				    			$('.gallery_delete').click(function(){
+				    				if(!confirm('정말 삭제하시겠습니까?')){
+				                        return false;
+				                    }
+				                    alert('삭제되었습니다.');
+					    			location.href = "/HelloPet/community/talktalk/delete?no="+no;
+					    		});
+				    			
 				    		}
+				    		
 				    		
 				    		  
 				    	}
@@ -56,35 +109,183 @@
                     
                     
                     
-                    
-                    
+                	let jsonData2 = {'no' : no,
+									'uid' : uid,
+									'writerUid': writerUid,
+									'nick': nick};
+                	
+                	
+                	// 좋아요 여부
+                	if(heartVal > 0){
+                		$('.heart-icon').html('<button class="icon-heart-mint"></button>');
+                		
+                		$('.heart-icon').off('click').on('click',function(){
+                			$.ajax({
+        						url : "/HelloPet/community/HeartDown",
+        				    	method : 'GET',
+        				    	data : jsonData2,
+        				    	dataType : 'json',
+        				    	async:false,
+        				    	success : function(data){
+        				    			$('.heart-icon').html('<button class="icon-heart"></button>');
+        				    			alert("좋아요를 취소했습니다.");
+        				    			window.location.reload();
+        				    	}
+        				    	
+        				    		
+        				    	});
+                		});
+                		
+                	}else{
+                		
+                		$('.heart-icon').html('<button class="icon-heart"></button>');
+                		
+                		$('.heart-icon').off('click').on('click',function(){
+                			$.ajax({
+        						url : "/HelloPet/community/HeartUp",
+        				    	method : 'GET',
+        				    	data : jsonData2,
+        				    	dataType : 'json',
+        				    	async:false,
+        				    	success : function(data){
+        				    		$('.heart-icon').html('<button class="icon-heart-mint"></button>');
+        				    		alert("좋아요를 눌렀습니다.");
+        				    		window.location.reload();
+        				    	}
+        				    	
+        				    		
+        				    	});
+                		});
+                		
+                	}
+                	
+                	function getReplyList() {
+                	// 댓글출력
+                	$.ajax({
+						url : "/HelloPet/community/selectReplys",
+				    	method : 'GET',
+				    	data : {'no' : no},
+				    	dataType : 'json',
+				    	success : function(data){
+				    		for(let i=0; i < data.result.length; i++){
+				    		if(uid == data.result[i].uid){
+				    			$('.content_reply').append('<div class="content_item_inner" value10="'+data.result[i].reply_no+'"><div class="content_item_img"></div><div class="content_item_con"><div class="content_item_con_head"><div class="content_item_txt"><strong>'+data.result[i].nick+'</strong></div><div class="content_item_date">'+data.result[i].rdate.substring(0,10)+'</div></div><div class="content_item_con_body"><div class="content_item_txt">'+data.result[i].content+'</div><div class="content_item_btn_wrap"><div class="info_item"><div role="dialog" class="v_dialog_container"></div><span style="cursor: pointer;"></span></div><button class="reply_btn" value1="'+data.result[i].reply_no+'" value2="'+data.result[i].uid+'">삭제</button></div></div></div></div>');
+				    		}else if(uid != data.result[i].uid){
+				    			$('.content_reply').append('<div class="content_item_inner"><div class="content_item_img"></div><div class="content_item_con"><div class="content_item_con_head"><div class="content_item_txt"><strong>'+data.result[i].nick+'</strong></div><div class="content_item_date">'+data.result[i].rdate.substring(0,10)+'</div></div><div class="content_item_con_body"><div class="content_item_txt">'+data.result[i].content+'</div><div class="content_item_btn_wrap"><div class="info_item"><div role="dialog" class="v_dialog_container"></div></div></div></div></div></div>');
+				    		}
+				    		console.log(data.result[i]);	
+				    		}
+				    	}
+				    	
+                	});
+                	$('.content_reply').empty();
+                	}
+                	getReplyList();
+                	
+                	
+                	
+                	
+                	
+                	 // 댓글달기
+            		$('#modal .button').off('click').on('click',function(){
+            			
+            			let content = $('input[name=content]').val();
+            			let replyTotal = $('.content_item_img').length;
+            			
+                    	jsonData3 = {'uid':uid,
+                				'no':no,
+                				'nick':nick,
+                				'writerUid': writerUid,
+                				'content':content,
+                    	}
+						
+                    	
+                    	
+                    	
+                    	$.ajax({
+    						url : "/HelloPet/community/insertReplys",
+    				    	method : 'POST',
+    				    	data : jsonData3,
+    				    	dataType : 'json',
+    				    	async:false,
+    				    	success : function(data){
+    				    		
+    				    		
+    				    		alert("댓글이 입력되었습니다.");
+    				    		$('.input').val('');
+    				    		getReplyList();
+    				    		$('.content_info_item span').html('<strong>'+replyTotal+'</strong>');
+    				    		console.log(data.result);
+    				    		
+    				    	}
+                    		
+                    	});
+                    	
+            		});
+            		
+                	// 댓글 삭제하기
+            		$('.content_reply').off('click').on('click','button',function(){
+            			
+            			let reply_no = $(this).attr("value1");
+            			let reply_id = $(this).attr("value2");
+            			let replyTotal = $('.content_item_img').length-2;
+            			
+            			
+            			$.ajax({
+    						url : "/HelloPet/community/deleteReplys",
+    				    	method : 'GET',
+    				    	data : {'no':no, 'uid':uid, 'reply_no':reply_no},
+    				    	dataType : 'json',
+    				    	async:false,
+    				    	success : function(data){
+    				    		
+    				    			alert("댓글이 삭제되었습니다.");
+    				    			$('div[value10='+reply_no+']').remove();
+    				    			$('.content_info_item span').html('<strong>'+replyTotal+'</strong>');
+    				    			console.log(replyTotal);
+    				    	},
+    				    	error : function(){
+    				    		alert("로그인을 하세요.");
+    				    	}
+                    		
+                    	});
+            			
+            		});
+                	 
+            		
+            		
+            /*]]>*/
+        			
+                	
                 });
+        	
+        	
+            
+        	
+        	
         	// x를 누르면 모달 창 닫힘
                 $('.modal_close').click(function(){
-                	$('#modal').css('display','none');
-                	$('.v-overlay').css('display','none');
+                	/*$('#modal').css('display','none');
+                	$('.v-overlay').css('display','none');*/
+                	window.location.reload();
+                	
                 });
                 
         	// 모달화면 밖 클릭시 모달 창 닫힘
-                $(document).mouseup(function (e){
+                /*$(document).mouseup(function (e){
 
                 	let container = $('#modal');
 					let overlay = $('.v-overlay');
+					
                 	if( container.has(e.target).length === 0){
                 	container.css('display','none');
                 	overlay.css('display','none');
                 	}
-                });
+                });*/
         	
         		
         	
-        	// 글 삭제 alert
-                $('.gallery_delete').click(function(){
-                    if(!confirm('정말 삭제하시겠습니까?')){
-                        return false;
-                    }
-                    alert('삭제되었습니다.');
-                });
+        	
                 
              // 유형별 게시물 불러오기
              	$('select[name=sort]').on("change",function() {
@@ -117,6 +318,9 @@
             	
             	
             	
+            
+            	        	
+            	
             });
         		
         		
@@ -130,7 +334,7 @@
             <div class="tab">
                 <ul>
                     <li><a th:href="@{/community/tip/list}">반려동물 꿀팁</a></li>
-                    <li class="on"><a th:href="@{/community/talktalk/list}">반려동물 톡톡</a></li>
+                    <li class="on"><a href="#">반려동물 톡톡</a></li>
                 </ul>
             </div>
             <section id="talkMain">
@@ -161,10 +365,11 @@
                         </div>
                         <div class="gallery_items">
                         	<th:block th:each="rank : ${ranks}">
-                            <div class="gallery_item" th:value="${rank.no}">
+                            <div class="gallery_item" th:value1="${rank.no}" th:value2="${rank.heart}">
                                 <div class="gallery_item_con1" th:style="'background-image: url('+@{__${rank.img1.substring(9)}__}+');'"></div>
                                 <div class="gallery_item_con2">
                                     <div class="gallery_info1">
+                                    <div class="writerUid" style="display: none">[[${rank.uid}]]</div>
                                         <div class="gallery_title">[[${rank.title}]]</div>
                                         <div class="gallery_like_comment">
                                             <div class="gallery_like"><span class="gallery_like_icon" th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>[[${rank.heart}]]</div>
@@ -173,7 +378,7 @@
                                     </div>
                                     <div class="gallery_info2">
                                         <div class="rank_nick_inner">
-                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/로이밍밍프사.jpg}+');'"></span>[[${rank.nick}]]</div>
+                                            <div class="rank_nick"><span class="rank_nick_icon" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></span>[[${rank.nick}]]</div>
                                         </div>    
                                         <div class="rank_date">[[${rank.rdate.substring(2, 10)}]]</div>
                                     </div>
@@ -185,10 +390,11 @@
                     <div class="talk_normal">
                         <div class="gallery_items">
                         	<th:block th:each="article : ${articles}" >
-                            <div class="gallery_item" th:value="${article.no}">
+                            <div class="gallery_item" th:value1="${article.no}" th:value2="${article.heart}">
                                 <div class="gallery_item_con1" th:style="'background-image: url('+@{__${article.img1.substring(9)}__}+');'"></div>
                                 <div class="gallery_item_con2">
                                     <div class="gallery_info1">
+                                        <div class="writerUid" style="display: none">[[${article.uid}]]</div>
                                         <div class="gallery_title">[[${article.title}]]</div>
                                         <div class="gallery_like_comment">
                                         <div class="gallery_like"><span class="gallery_like_icon"  th:style="'background-image: url('+@{/img/icon-heart.png}+');'"></span>[[${article.heart}]]</div>
@@ -261,7 +467,7 @@
                                         <div class="gallery_content_head_top">
                                             <div class="content_item">
                                                 <div class="content_item_inner">
-                                                    <div class="content_item_img" th:style="'background-image: url('+@{/img/content_item.jpg}+');'"></div>
+                                                    <div class="content_item_img" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></div>
                                                     <div class="content_item_con">
                                                         <div class="content_item_txt writer_nick">
                                                             <strong>동동</strong>
@@ -270,7 +476,7 @@
                                                 </div>
                                             </div>
                                             <div class="content_info_items">
-                                                <div class="content_info_item">
+                                                <div class="content_info_item heart-icon">
                                                     <button class="icon-heart"></button>
                                                 </div>
                                                 <div class="content_info_item">
@@ -283,9 +489,7 @@
                                             <div role="button" aria-haspopup="true" aria-expanded="false" class="like_con">
                                                 <div class="like_con_img">
                                                     <div class="v_img" style="height: 20px; width: 20px;">
-                                                        <div class="v_responsive" style="padding-bottom: 100%;"></div>
-                                                        <div class="v_img_img" th:style="'background-image: url('+@{/img/favicon_x32.png}+'); background-position: center center;'"></div>
-                                                        <div class="v_responsive_content" style="width: 260px;"></div>
+                                                       
                                                     </div>
                                                 </div>
                                                 <div class="like_aria">
@@ -310,68 +514,25 @@
                                             
                                         </div>
                                         <div class="content_items">
-                                            <div class="content_item">
+                                            <div class="content_item content_reply">
                                                 <div class="content_item_inner">
-                                                    <div class="content_item_img" th:style="'background-image: url('+@{/img/favicon_x32.png}+');'"></div>
-                                                    <div class="content_item_con">
-                                                        <div class="content_item_con_head">
-                                                            <div class="content_item_txt">
-                                                                <strong>소풍이</strong>
-                                                            </div>
-                                                            <div class="content_item_date">2023.03.05</div>
-                                                        </div>
-                                                        <div class="content_item_con_body">
-                                                            <div class="content_item_txt">귀여워요</div>
-                                                            <div class="content_item_btn_wrap">
-                                                                <div class="info_item">
-                                                                    <button class="icon-heart"></button>
-                                                                    <div role="dialog" class="v_dialog_container"></div>
-                                                                    <span style="cursor: pointer;">좋아요 2</span>
-                                                                </div>
-                                                                <button class="reply_btn">답글</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="reply_items">
-                                                    <div class="reply_item">
-                                                        <div class="reply_item_inner">
-                                                            <div class="reply_item_img" th:style="'background-image: url('+@{/img/봉팔공주엄뉘프사.jpg}+');'"></div>
-                                                            <div class="reply_item_con">
-                                                                <div class="reply_item_con_head">
-                                                                    <div class="reply_item_txt">
-                                                                        <strong>동동</strong>
-                                                                    </div>
-                                                                    <div class="reply_item_date">2023.03.05</div>
-                                                                </div>
-                                                                <div class="reply_item_con_body">
-                                                                    <div class="reply_item_txt">감사합니다!</div>
-                                                                    <div class="reply_item_btn_wrap">
-                                                                        <div class="reply_info_item">
-                                                                            <button class="icon-heart"></button>
-                                                                            <div role="dialog" class="v_dialog_container"></div>
-                                                                            <span style="cursor: pointer;"> 좋아요 0 </span>
-                                                                        </div>
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="#" method="post">
+                                    
                                     <div class="gallery_content_foot">
                                         <div class="content_write">
                                             <div class="input_box">
-                                                <input type="text" placeholder="댓글을 입력해주세요." class="input">
-                                                <input type="submit" class="button" value="확인">
+                                            	<input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}" sec:authorize="isAuthenticated()">
+                                            	<input type="hidden" name="nick" th:value="${#authentication.principal.member.nick}" sec:authorize="isAuthenticated()">
+                                                <input type="text" placeholder="댓글을 입력해주세요." class="input" name="content">
+                                                <input type="button" class="button" value="확인">
                                             </div>
                                         </div>
                                     </div>
-                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>

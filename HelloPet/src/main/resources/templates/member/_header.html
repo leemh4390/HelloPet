@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>헬로펫</title>
@@ -9,40 +10,152 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" th:href="@{/css/member.css}">
     <script th:src="@{/js/modal.js}"></script>
     <script th:src="@{/js/postcode.js}"></script>
 </head>
+<script>
+	
+$(document).ready(function(){
+    $('.slider').bxSlider({
+    easing:'linear'
+  });
+});
+
+$(function(){
+	$('#top').click(function(){
+        $(window).scrollTop(0);
+    });
+	
+	var level = $('.level').text();
+	console.log(level);
+	
+	
+	$('#btnDt').click(function(){
+		if(level != null && $.trim(level) !== ''){
+			return true;
+		}else{
+			alert('로그인이 필요합니다.');
+			return false;
+		}
+	});
+	$('#btnga').click(function(){
+		if(level != null && $.trim(level) !== ''){
+			return true;
+		}else{
+			alert('로그인이 필요합니다.');
+			return false;
+		}
+	});
+	$('.btnchart').click(function(){
+		if(level != null && $.trim(level) !== ''){
+			return true;
+		}else{
+			alert('로그인이 필요합니다.');
+			return false;
+		}
+	});
+	$('#sh').click(function(){
+		if(level != null && $.trim(level) !== ''){
+			return true;
+		}else{
+			alert('로그인이 필요합니다.');
+			return false;
+		}
+	});
+	$('#sh2').click(function(){
+		if(level != null && $.trim(level) !== ''){
+			return true;
+		}else{
+			alert('로그인이 필요합니다.');
+			return false;
+		}
+	});
+	
+	$('.cs').click(function(){
+		if(level !=  null && $.trim(level) !== ''){
+			if(level == 1 || level == 7){
+				return true;
+			}else{
+				alert('일반회원만 가능합니다.')
+				return false;
+			}
+			
+		}else{
+			alert('로그인이 필요합니다.');
+			return false;
+		}
+	});
+});
+
+	function goHos (){
+		var medNo = $('.medNo').text();
+		console.log(medNo);
+		
+		location.href="/HelloPet/admin/info";
+	}
+	function goPm (){
+		var pharNo = $('.pharNo').text();
+		console.log(pharNo);
+		
+		location.href="/HelloPet/admin/info";
+	}
+	function goMsg (){
+		var uid = $('.uid').text();
+		console.log(uid);
+		
+		location.href="/HelloPet/message/message";
+	}
+	function goTop(){
+		var uid = $('.uid').text();
+		console.log(uid);
+		
+		location.href="/HelloPet/admin/info";
+	}
+
+</script>
 <body>
 <div id="wrapper">
    <header class="header">
-       <div class="headerTop">
-			<div th:if="${#authentication.principal == null or #authentication.principal == 'anonymousUser'}">
-			    <a th:href="@{/member/login}" >로그인</a>
-			    <a th:href="@{/member/join}">회원가입</a>
-			    <a href="#">마이페이지</a>
-			</div>
-			<div th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser' and #authentication.principal.member != null}">
-			    <span class="nick" th:text="${#authentication.principal.member.name}" ></span>님 반갑습니다.
-			    <a th:href="@{/member/logout}">로그아웃</a>
-			    <a th:href="@{/my/info}">마이페이지</a>
-			</div>
-			<div th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser' and #authentication.principal.medical != null}">
-			    <span class="nick" th:text="${#authentication.principal.medical.name}" ></span>님 반갑습니다.
-			    <a th:href="@{/member/logout}">로그아웃</a>
-			    <a href="#">마이페이지</a>
-			</div>
-       </div>
+		<div class="headerTop">
+    		<div>
+    			<label style="display: none;" sec:authorize="hasAuthority('ROLE_1')"><span class="level" sec:authentication="principal.member.level"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_7')"><span class="level" sec:authentication="principal.member.level"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="level" sec:authentication="principal.medical.level"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="level" sec:authentication="principal.medical.level"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="medNo" sec:authentication="principal.medical.medNo"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="pharNo" sec:authentication="principal.medical.pharNo"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="medNo" sec:authentication="principal.medical.medNo"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_1')"><span class="uid" sec:authentication="principal.member.uid"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_7')"><span class="uid" sec:authentication="principal.member.uid"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_2')"><span class="uid" sec:authentication="principal.medical.uid"></span></label>
+				<label style="display: none;" sec:authorize="hasAuthority('ROLE_3')"><span class="uid" sec:authentication="principal.medical.uid"></span></label>
+				<a sec:authorize="!isAuthenticated()" th:href="@{/member/login}">로그인</a>
+				<a sec:authorize="!isAuthenticated()" th:href="@{/member/join}">회원가입</a>
+				<label sec:authorize="hasAuthority('ROLE_1')"><span class="name" sec:authentication="principal.member.nick">길동</span>님</label>
+				<label sec:authorize="hasAuthority('ROLE_2')" onclick="goHos()">내 병원관리</label>
+				<label sec:authorize="hasAuthority('ROLE_3')" onclick="goPm()">내 약국관리</label>
+				<label sec:authorize="hasAuthority('ROLE_7')" onclick="goTop()">웹관리자님</label>
+				<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}" class="logout">로그아웃</a>
+   				<a sec:authorize="hasAuthority('ROLE_1')" th:href="@{/my/info}">마이페이지</a>
+   				<a th:href="@{/cs/notice/list}">고객센터</a>
+    		</div>
+		</div>
        <div class="menu">
-           <div>
+           <div class="menu2">
                <ul>
-                   <li><a href="#">증상별질병찾기</a></li>
-                   <li><a href="#">병원/약국찾기</a></li>
-                   <li class="logo"><a th:href="@{/}"><img src="../img/ci.png" alt="logo"></a></li>
-                   <li><a href="#">커뮤니티</a></li>
-                   <li><a href="#">고객센터</a></li>
+                   <li><a th:href="@{/disease/index}">증상별질병찾기</a></li>
+                   <li><a th:href="@{/search/index}">병원/약국찾기</a></li>
+                   <li class="logo"><a th:href="@{/}"><img th:src="@{/img/ci.png}" alt="logo"></a></li>
+                   <li><a th:href="@{/community/tip/list}">커뮤니티</a></li>
+                   <li><a th:href="@{/product/list(cate1=10, cate2=10)}">진료상품</a></li>
                </ul>
            </div>
        </div>

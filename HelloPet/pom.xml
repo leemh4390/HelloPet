@@ -50,7 +50,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -65,17 +64,50 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+		<!-- WebSocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+		</dependency>
+		
+		<!-- Simple JSON -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+	         <groupId>org.json</groupId>
+	         <artifactId>json</artifactId>
+	         <version>20180813</version>
+	      </dependency>
+		<dependency>
+	         <groupId>org.codehaus.jackson</groupId>
+	         <artifactId>jackson-mapper-asl</artifactId>
+	         <version>1.4.2</version>
+	      </dependency>
+	
+	      <!-- ===== YL#2. JSON 관련 jar 추가하기 ===== -->
+	      <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+	      <dependency>
+	         <groupId>com.fasterxml.jackson.core</groupId>
+	         <artifactId>jackson-databind</artifactId>
+	      </dependency>
+	
+	      <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+	      <dependency>
+	         <groupId>com.fasterxml.jackson.core</groupId>
+	         <artifactId>jackson-core</artifactId>
+	      </dependency>
 	</dependencies>
 
 	<build>

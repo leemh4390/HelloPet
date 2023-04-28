@@ -51,7 +51,7 @@
                         <input type="hidden" name="level" th:value="${#authentication.principal.member.level}"/>
                         <input type="hidden" name="writer" th:value="${article.uid}"/>
 		                    <td align="center">[[${article.id}]]</td>
-		                    <td align="left" style="word-break: break-all;"><a class="qnalink" th:href="@{/cs/qna/view(no=${article.no}, pg=${currentPage}, rdate=${article.rdate})}">[[${article.title}]]</a></td>
+		                    <td align="left" style="word-break: break-all;"><a class="qnalink" th:href="@{/cs/qna/view(no=${article.no}, pg=${currentPage}, rdate=${article.rdate})}"><strong th:if="${article.reply == 0}">[NEW]</strong> [[${article.title}]]</a></td>
 		                    <td align="center" th:text="${article.nick != null ? article.nick.substring(0, 1) + '*'.repeat(article.nick.length() - 1) : ''}"></td>
 		                    <td align="center">[[${article.rdate.substring(0, 10)}]]</td>
 		                    <td align="center">[[${article.hit}]]</td>

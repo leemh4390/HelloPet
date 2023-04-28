@@ -1,0 +1,57 @@
+<th:block th:include="@{my/_header.html}"/>
+                        <div class="mypage-contents">
+                            <div class="mypage-contents_head">
+                                <h2 class="mypage-contents__title">나의 쿠폰</h2>
+                            </div>
+                            <!--게시물 목록-->
+                            <div class="mypage-contents_body">
+                                <table border="0">
+                                    <tr class="listTitle">
+                                        <th>쿠폰명</th>
+                                        <th>할인금액</th>
+                                        <th>적용기준</th>
+                                        <th>유효기간</th>
+                                        <th>상태</th>
+                                    </tr>
+                                    <tr th:each="coupon:${coupons}">
+                                        <td>[[${coupon.cpName}]]</td>
+                                        <th:block th:if="${coupon.disprice == 0}">
+                                        	<td>[[${coupon.discount}]]%</td>
+                                        </th:block>
+                                        <th:block th:unless="${coupon.disprice == 0}">
+                                        	<td>[[${coupon.disprice}]]원</td>
+                                        </th:block>
+                                        <td>[[${coupon.require}]]</td>
+                                        <td>~[[${coupon.vaild}]]</td>
+                                        <th:block th:if="${coupon.status == 0}">
+                                        	<td>미사용</td>
+                                        </th:block>
+                                        <th:block th:unless="${coupon.status == 0}">
+                                        	<td>사용완료</td>
+                                        </th:block>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                            <div class="paging">
+				              <ul>
+				               <th:block th:if="${groups[0]>1}">
+				                   <li><a th:href="@{/my/coupon(pg=${groups[0]-1})}" class="prev">←</a></li>
+				               </th:block>
+				               <th:block th:if="${groups[1] != 0}">
+				               <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+				                   <li><a th:href="@{/my/coupon(pg=${num})}" th:class="${num == currentPage?'num on':'num'}">[[${num}]]</a></li>
+				               </th:block>
+				               </th:block>
+				               <th:block th:if="${groups[1]<lastPageNum}">
+				                   <li><a th:href="@{/my/coupon(pg=${groups[1]+1})}" class="next">→</a></li>
+				               </th:block>
+				              </ul>
+				          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+<th:block th:include="@{my/_footer.html}"/>

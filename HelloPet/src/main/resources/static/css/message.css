@@ -7,6 +7,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -71,6 +72,9 @@ header>.headerTop>div>a:hover {
 header>.headerTop>div>label:hover {
 	color: #10958b;
 }
+header>.headerTop>div>.message {
+	color: #3c83dc;
+}
 
 header>.menu {
     position: absolute;
@@ -114,6 +118,7 @@ main {
     min-width: 1200px;
     width: 100%;
     height: auto;
+    min-height: 700px;
     margin: 0 auto;
 }
 
@@ -190,7 +195,13 @@ section > .container {
     padding-bottom: 15px;
     border-bottom: 1px solid #10958b;
 }
-
+.msg-div > .empty {
+	padding: 100px;
+    text-align: center;
+    box-sizing: border-box;
+    border:none;
+    font-size: 20px;
+}
 
 .msg-list>li {
     display: flex;
@@ -215,6 +226,53 @@ section > .container {
 }
 .msg-list> li > .status1{
     color: #0a413c;
+}
+
+.paging {
+    display: flex;
+    justify-content: center;
+    margin-top: 75px;
+}
+.paging > ul {
+    align-items: center;
+    display: inline-flex;
+    list-style-type: none;
+    justify-content: center;
+    max-width: 100%;
+    width: 100%;
+}
+
+.paging a{
+    display: inline-block;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    align-items: center;
+    text-align: center;
+    height: 32px;
+    width: 32px;
+    margin: 0.3rem 10px;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.paging .on {
+    border: 1px solid #0dbcaf;
+    background: #0dbcaf;
+    color: #fff;
+}
+.paging .prev:hover {
+    background: #0dbcaf;
+    color: #fff;
+}
+.paging .next:hover {
+    background: #0dbcaf;
+    color: #fff;
+}
+.paging .num:hover {
+    color: #32a69f;
+}
+.paging .on:hover {
+    color: #fff;
 }
 
 /* popup */

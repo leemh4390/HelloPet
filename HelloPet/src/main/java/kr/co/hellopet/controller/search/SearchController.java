@@ -5,6 +5,8 @@ package kr.co.hellopet.controller.search;
  * 이름 : 장인화
  * */
 import java.io.IOException;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.hellopet.service.SearchService;
+import kr.co.hellopet.vo.Api_HospitalVO;
+import kr.co.hellopet.vo.ICouponVO;
+import kr.co.hellopet.vo.IMember_couponVO;
 import kr.co.hellopet.vo.MedicalVO;
+import kr.co.hellopet.vo.MemberVO;
+import kr.co.hellopet.vo.MessageVO;
+import kr.co.hellopet.vo.ProductVO;
 import kr.co.hellopet.vo.ReserveVO;
 import kr.co.hellopet.vo.SearchVO;
 
@@ -34,25 +42,61 @@ public class SearchController {
 	
 	
 	@GetMapping(value = {"search/", "search/index"})
-	public String index() {
+	public String index(Model model, Principal principal) {
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "search/index";
 	}
 	
 	@GetMapping("search/reserve")
-	public String reserve(Model model, String hosNo) {
-		
+	public String reserve(Model model, String hosNo, String prodNo, Principal principal) {
 		SearchVO hs = service.selectViewHs(hosNo);
 		model.addAttribute("hs", hs);
+		
+		MedicalVO md = service.selectHospital(hosNo);
+		model.addAttribute("md", md);
+		
+		String uid = principal.getName();
+		int msg2 = service.selectMsg(uid);
+		model.addAttribute("msg2", msg2);
+		
+		List<IMember_couponVO> mc = service.selectMemberCoupon(uid);
+		model.addAttribute("mc", mc);
+		
+		List<ICouponVO> cps = service.selectCoupon(uid, hosNo);
+		List<ICouponVO> filteredCps = new ArrayList<>();
+		for (ICouponVO cp : cps) {
+		    if (cp.getMedNo() == 0 || cp.getMedNo() == Integer.parseInt(hosNo)) {
+		        filteredCps.add(cp);
+		    }
+		}
+		model.addAttribute("cps", filteredCps);
+		
+	
+		ProductVO product = service.selectProductOne(prodNo);
+		model.addAttribute("product", product);
+		model.addAttribute("prodNo", prodNo);
 		
 		return "search/reserve";
 	}
 	
 	@PostMapping("search/reserve")
-	public String reserve(Model model, ReserveVO vo) {
+	public String reserve(Model model, ReserveVO vo, MessageVO msg, String medicalUid, String medicalName) {
 		
-		
-		service.insertReserve(vo);
+		int result = service.insertReserve(vo);
 		String uid = vo.getUid();
+		int medNo = vo.getMedNo();
+		
+		if(result > 0) {
+			msg.setUid(medicalUid);
+			msg.setMedical(medicalName);
+			msg.setTitle("새로운 예약이 도착했습니다.");
+			msg.setContent("내 병원관리 > 예약내역을 확인해주세요. <a href='/HelloPet/admin/confirm/list?medNo="+medNo+"'>예약내역 바로가기</a>");
+			service.insertMsg(msg);
+		}
 		return "redirect:/search/complete?uid="+ uid;
 		
 	}
@@ -65,18 +109,38 @@ public class SearchController {
 		
 		model.addAttribute(uid);
 		
+		int msg2 = service.selectMsg(uid);
+		model.addAttribute("msg2", msg2);
+		
 		return "search/complete";
 	}
 	
 	@GetMapping("search/view2")
-	public String view() {
+	public String view2(Model model, String uid) {
+		
+		MemberVO m = service.selectView2(uid);
+		model.addAttribute("m", m);
+		
+		int msg2 = service.selectMsg(uid);
+		model.addAttribute("msg2", msg2);
+		
 		return "search/view2";
 	}
 	
 	
+	
 	@GetMapping("search/view")
-	public String view(Model model, String hosNo, String pharNo, boolean isMds) {
+	public String view(Model model, String hosNo, String pharNo, boolean isMds, Principal principal) {
 		
+		
+		service.updatePhHit(hosNo);
+		
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		
 		if (hosNo != null) {
 			SearchVO a = service.selectViewHs(hosNo);
@@ -98,8 +162,14 @@ public class SearchController {
 	
 	
 	@GetMapping("search/SearchHs")
-	public String SearchHs(Model model, HttpSession sess, String search) {
+	public String SearchHs(Model model, HttpSession sess, String search, Principal principal) {
 	
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
+		
 		return "search/SearchHs";
 	}
 	
@@ -169,7 +239,13 @@ public class SearchController {
 	
 	
 	@GetMapping("search/SearchPh")
-	public String SearchPh() {
+	public String SearchPh(Model model, Principal principal) {
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "search/SearchPh";
 	}
 	

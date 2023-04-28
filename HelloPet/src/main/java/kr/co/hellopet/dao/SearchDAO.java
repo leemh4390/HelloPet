@@ -5,7 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import kr.co.hellopet.vo.Api_HospitalVO;
+import kr.co.hellopet.vo.ICouponVO;
+import kr.co.hellopet.vo.IMember_couponVO;
 import kr.co.hellopet.vo.MedicalVO;
+import kr.co.hellopet.vo.MemberVO;
+import kr.co.hellopet.vo.MessageVO;
+import kr.co.hellopet.vo.ProductVO;
 import kr.co.hellopet.vo.ReserveVO;
 import kr.co.hellopet.vo.SearchVO;
 /*
@@ -38,16 +44,32 @@ public interface SearchDAO {
 	public int selectSearchPhTotalName(String search);
 	public int selectSearchPhTotalAddr(String search);
 
+	// hit 올리기
+	public int updatePhHit(String medNo);
 	
 	//view
 	public SearchVO selectViewHs(String hosNo);
 	public SearchVO selectViewPh(String pharNo);
+	public MedicalVO selectHospital(String medNo);
+	
+	//view2
+	public MemberVO selectView2(String uid);
 	
 	
 	//reserve (병원예약하기)
-	public void insertReserve(ReserveVO vo);
+	public ProductVO selectProductOne(String prodNo);
+	public int insertReserve(ReserveVO vo);
+	
+	// 병원예약 시 쿠폰 적용
+	public List<IMember_couponVO> selectMemberCoupon(String uid);
+	public List<ICouponVO> selectCoupon(String uid, String hosNo);
+	
 	
 	//complete (예약결과 가져오기)
 	public ReserveVO selectComplete(String uid);
+	
+	// 메시지 보내기
+	public int insertMsg(MessageVO vo);
+	public int selectMsg(String uid);
 
 }

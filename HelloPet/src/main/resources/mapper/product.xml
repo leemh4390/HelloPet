@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 
+ 	날짜 : 2023/03/23
+ 	이름 : 장인화
+ 	내용 : HelloPet product 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.ProductDAO">
+	
+	<select id="Cate1" resultType="kr.co.hellopet.vo.Cate1VO">
+		SELECT * FROM `product_cate1`;
+	</select>
+	
+	<select id="Cate2" resultType="kr.co.hellopet.vo.Cate2VO">
+		SELECT * FROM `product_cate2`;
+	</select>
+	
+	<select id="SelectCate2" resultType="kr.co.hellopet.vo.Cate2VO">
+		SELECT * FROM `product_cate2` WHERE `cate1` = #{cate1}; 
+	</select>
+	
+	<select id="SelectProduct" resultType="kr.co.hellopet.vo.ProductVO">
+		SELECT * FROM `product` WHERE `prodCate1`=#{cate1} AND `prodCate2` =#{cate2} limit #{start}, 9;
+	</select>
+	
+	
+	<select id="SelectProductDog" resultType="kr.co.hellopet.vo.ProductVO">
+		SELECT * FROM `product` WHERE `prodCate1`=#{cate1} AND `prodCate2` =#{cate2} AND (`group` ='dog' or `group`='all') limit #{start}, 9;
+	</select>
+	
+	<select id="SelectProductCat" resultType="kr.co.hellopet.vo.ProductVO">
+		SELECT * FROM `product` WHERE `prodCate1`=#{cate1} AND `prodCate2` =#{cate2} AND (`group` ='cat' or `group`='all') limit #{start}, 9;
+	</select>
+	
+	
+	
+	
+	<select id="SelectCountTotal" resultType="int" parameterType="map">
+		Select Count(`prodNo`) FROM `product` where `prodCate1` =#{cate1} and `prodCate2` =#{cate2};  	
+	</select>
+	<select id="SelectCountDog" resultType="int" parameterType="map">
+		SELECT Count(`prodNo`) FROM `product` WHERE `prodCate1`=#{cate1} AND `prodCate2` =#{cate2} AND (`group` ='dog' or `group`='all');
+	</select>
+	
+	<select id="SelectCountCat" resultType="int" parameterType="map">
+		SELECT Count(`prodNo`) FROM `product` WHERE `prodCate1`=#{cate1} AND `prodCate2` =#{cate2} AND (`group` ='cat' or `group`='all');
+	</select>
+	
+	
+	<select id="SelectProductView" resultType="kr.co.hellopet.vo.ProductVO">
+		Select * From `product` as a
+			JOIN `product_cate1` AS b
+			ON a.prodCate1 = b.cate1
+ 			JOIN `product_cate2` as c
+ 			ON a.prodCate2 = c.cate2
+			WHERE c.cate1=#{cate1} AND c.cate2 =#{cate2}  and `prodNo` =#{prodNo};
+	</select>
+	
+	<select id="SelectProductMap" resultType="kr.co.hellopet.vo.MedicalVO">
+		SELECT a.* FROM `pet_hospital_pharmacy` AS a
+			JOIN `product` AS b
+			ON a.medicalName = b.medicalName
+			WHERE b.prodNo =#{prodNo};
+	</select>
+	
+	<update id="updateHit">
+        update `product` set `hit`=`hit`+1 where `prodNo`=#{prodNo};
+    </update>
+    
+    <select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
+	
+	
+	<select id="selectMaxCoupon" resultType="kr.co.hellopet.vo.ICouponVO">
+		SELECT * FROM `member_coupon` AS a
+			JOIN `coupon` AS b
+			ON a.cpNo = b.cpNo
+			WHERE a.uid =#{uid} AND `status` = '0' ORDER BY `discount` DESC LIMIT 1;
+	</select>
+	
+	<select id="selectMedicalCoupon" resultType="kr.co.hellopet.vo.ICouponVO">
+		SELECT * FROM `member_coupon` AS a
+			JOIN `coupon` AS b
+			ON a.cpNo = b.cpNo
+			JOIN `product` AS c
+			ON b.medNo = c.medNo
+			WHERE a.uid =#{uid} AND c.prodNo =#{prodNo} and `status` = '0' ORDER BY b.discount DESC LIMIT 1;	
+	</select>
+	
+</mapper>

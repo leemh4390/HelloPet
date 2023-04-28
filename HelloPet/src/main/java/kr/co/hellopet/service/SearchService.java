@@ -6,7 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.hellopet.dao.SearchDAO;
+import kr.co.hellopet.vo.Api_HospitalVO;
+import kr.co.hellopet.vo.ICouponVO;
+import kr.co.hellopet.vo.IMember_couponVO;
 import kr.co.hellopet.vo.MedicalVO;
+import kr.co.hellopet.vo.MemberVO;
+import kr.co.hellopet.vo.MessageVO;
+import kr.co.hellopet.vo.ProductVO;
 import kr.co.hellopet.vo.ReserveVO;
 import kr.co.hellopet.vo.SearchVO;
 /*
@@ -51,6 +57,12 @@ public class SearchService {
 		return dao.selectSearchHsTotalAddr(search);
 	}
 	
+	
+	// hit
+	public int updatePhHit(String medNo) {
+		return dao.updatePhHit(medNo);
+	}
+	
 	// searchPh 검색기능
 	public List<SearchVO> SearchPh(String search, int start){
 		return dao.SearchPh(search, start);
@@ -87,10 +99,33 @@ public class SearchService {
 	public SearchVO selectViewPh(String pharNo){
 		return dao.selectViewPh(pharNo);
 	}
-
+	
+	
+	//view2
+	public MemberVO selectView2(String uid){
+		return dao.selectView2(uid);
+	}
+	
+	
 	//reserve
-	public void insertReserve(ReserveVO vo) {
-		dao.insertReserve(vo);
+	public int insertReserve(ReserveVO vo) {
+		return dao.insertReserve(vo);
+	}
+	public MedicalVO selectHospital(String medNo) {
+		return dao.selectHospital(medNo);
+	}
+	
+	public ProductVO selectProductOne(String prodNo) {
+		return dao.selectProductOne(prodNo);
+	}
+	
+	// 예약하기 할 때 쿠폰 적용
+	public List<IMember_couponVO> selectMemberCoupon(String uid) {
+		return dao.selectMemberCoupon(uid);
+	}
+	
+	public List<ICouponVO> selectCoupon(String uid,String hosNo) {
+		return dao.selectCoupon(uid,hosNo);
 	}
 	
 	// complete
@@ -152,6 +187,11 @@ public class SearchService {
 		
     // 페이징 처리 끝 ///////////////////////////////////////////////////////
 	
-	
-	
+	// 메시지
+	public int insertMsg(MessageVO vo) {
+		return dao.insertMsg(vo);
+	}
+	public int selectMsg(String uid) {
+		return dao.selectMsg(uid);
+	}
 }

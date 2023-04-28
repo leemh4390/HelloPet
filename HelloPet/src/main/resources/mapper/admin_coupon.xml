@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+ 	날짜 : 2023/03/29 
+ 	이름 : 김채영
+ 	내용 : HelloPet admin/coupon 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.AdminCouponDAO">
+
+	<select id="selectAdmin" resultType="kr.co.hellopet.vo.MedicalVO">
+		select * from `pet_hospital_pharmacy` where `uid`=#{uid};
+	</select>
+	
+	<insert id="insertAdminCoupon">
+		insert into `coupon` set 
+			`cpName`= #{cpName}, 
+			`disprice`= #{disprice}, 
+			`discount`= #{discount},
+			`require`= #{require},
+			`vaild`= #{vaild}, 
+			`rdate`= NOW();
+	</insert>
+	
+	<select id="selectAdminCoupons" resultType="kr.co.hellopet.vo.ICouponVO">
+		select * from `coupon`
+			 
+			order by `cpNo` desc
+			limit #{start},10;
+	</select>
+	
+	<select id="selectAdminCoupon" resultType="kr.co.hellopet.vo.ICouponVO">
+		select * from `coupon`
+			where `cpNo`=#{cpNo};
+	</select>
+	
+	<select id="selectCouponCount" resultType="int">
+		select count(`cpNo`) from `coupon`
+			order by `rdate` desc;
+	</select>
+	
+	<update id="updateAdminCoupon">
+		update `coupon` set 
+			`cpName`=#{cpName},
+			`disprice`=#{disprice},
+			`discount`=#{discount},
+			`require`=#{require},
+			`vaild`=#{vaild}
+			where `cpNo`=#{cpNo};
+	</update>
+	
+	<delete id="deleteCheck">
+		delete from `coupon` WHERE `cpNo` in (#{cpNo}); 
+	</delete>
+	
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
+	
+</mapper>

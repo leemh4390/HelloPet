@@ -1,0 +1,431 @@
+/* 공통 */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR","Apple SD Gothic Neo",Helvetica,sans-serif,Arial;
+}
+a {
+    text-decoration: none;
+    color: #555;
+}
+ul, ol {list-style: none;}
+input, textarea {
+    outline: none;
+}
+img {border-style: none; max-width: 100%;}
+button {outline: none; border: none;}
+#wrapper {
+    width: 100%;
+    min-width: 1200px;
+}
+
+header {
+    min-width: 1200px;
+    width: 100%;
+    height: 105px;
+    position: relative;
+}
+
+header>div {
+    width: 100%;
+    box-sizing: border-box;
+   
+}
+
+header>.headerTop {
+    position: absolute;
+    height: 35px;
+    background: #e1f3f3;
+}
+
+header>.headerTop>div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+header>.headerTop>div>a {
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+}
+header>.headerTop>div>span {
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+}
+
+header>.menu {
+    position: absolute;
+    top: 35px;
+    height: 70px;
+    background: #32a69f;
+    box-sizing: border-box;
+}
+
+header > .menu > div {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+}
+header > .menu > div > ul {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: -350px;
+}
+header > .menu > div > ul > li {
+    position: relative;
+    top: 0px;
+    float: left;
+}
+header > .menu > div > ul > li > a {
+    font-size: 20px;
+    color: white;
+    padding: 0 64px;
+}
+header > .menu > div > ul > li img {width: 80%;}
+header > .menu > div > ul > li:nth-child(1) {
+    position: relative;
+    top: 3px;
+    left: 300px;
+}
+header > .menu > div > ul > li:nth-child(2) {
+    position: relative;
+    top: 3px;
+    left: 340px;
+}
+header > .menu > div > ul > li:nth-child(3) {
+    position: relative;
+    top: 3px;
+    left: 300px;
+}
+header > .menu > div > ul > li:nth-child(4) {
+    position: relative;
+    top: 3px;
+    left: 245px;
+}
+main {
+    width: 100%;
+    min-width: 1200px;
+    min-height: 800px;
+    margin: 0 auto;
+}
+.top {
+    overflow: hidden;
+    height: 180px;
+    background-color: #e1f4f3;
+    text-align: center;
+}
+
+.top > h3 {
+    color: #555;
+    font-size: 38px;
+    font-weight: bold;
+    padding-top: 60px;
+}
+
+
+footer {
+    margin-top: 100px;
+    height: 180px;
+    background: #b4e8e3;
+    padding: 43px 0 75px;
+}
+.footer-col:first-child {
+    max-width: 524px;
+}
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+}
+.info {margin: 0 50px;}
+.info li {
+    float: left;
+    padding: 8px;
+    line-height: .8;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 300;
+}
+.info li:first-child {
+    font-weight: bold;
+    font-weight: 700;
+}
+.link {
+    margin-right: 100px;
+}
+.link li {
+    float: left;
+    padding: 0 2px;
+}
+.link li a {
+    display: block;
+    line-height: 1;
+    font-family: bold;
+    font-size: 17px;
+    color: #10958b;
+    font-weight: 700;
+    padding: 2px;
+    margin: 0 2px 10px;
+}
+
+
+
+/* product-list */
+
+.product_list {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding-top: 100px;
+}
+
+
+.product_list> table {
+    flex: 1;
+    width: 100%;
+    border-bottom: 3px solid#dddddd;
+    border-top: 3px solid#dddddd;
+}
+
+.product_list > table tr {
+    flex: 1;
+}
+
+.product_list > table tr > th {
+    padding: 20px 10px;
+    color: #333;
+    background-color: #fbfbfb;
+    font-size: 16px;
+    border-bottom: 1px solid #dddddd;
+}
+.product_list > table tr > td{
+    padding: 15px 10px;
+    color: #555;
+    background-color: #fff;
+    font-size: 16px;
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+    text-overflow: ellipsis ;
+}
+
+
+.product_list img:first-child{
+    display: inline-block;
+    width: 80px;
+    height: 60px;
+    }
+
+.product_list .btn_delete{
+    width: 110px;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 30px;
+    background-color: #fff;
+    border: 1px solid #dddddd;
+    font-weight: 300;
+    cursor: pointer;
+    background-color: #f05650;
+    color: white;
+}
+
+.product_list .btn_register{
+    float: right;
+    border: 1px solid #dddddd;
+    width: 140px;
+    height: 43px;
+    margin-top: 40px;
+    text-align: center;
+    line-height: 45px;
+    background-color: #32a69f;
+    color: white;
+    font-size: 18px;
+}
+
+ .paging {
+    display: flex;
+    justify-content: center;
+    margin-top: 75px;
+}
+.paging > ul {
+    align-items: center;
+    display: inline-flex;
+    list-style-type: none;
+    justify-content: center;
+    max-width: 100%;
+    width: 100%;
+}
+
+.paging a{
+    display: inline-block;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    align-items: center;
+    text-align: center;
+    height: 32px;
+    width: 32px;
+    margin: 0.3rem 10px;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.paging .on {
+    border: 1px solid #0dbcaf;
+    background: #0dbcaf;
+    color: #fff;
+}
+.paging .prev:hover {
+    background: #0dbcaf;
+    color: #fff;
+}
+.paging .next:hover {
+    background: #0dbcaf;
+    color: #fff;
+}
+.paging .num:hover {
+    color: #32a69f;
+}
+
+
+/* product-register */
+.product_register{
+    position: relative;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding-top: 100px;
+}
+
+.product_register h3{
+    font-size: 30px;   
+    margin-bottom: 30px;
+}
+
+.product_register .register_table1{
+    margin-bottom: 100px;
+}
+
+.product_register .register_table1  tr{
+    width: 100%;
+    height: auto;
+    flex: 1;
+
+}
+
+.product_register .register_table1  tr  td:first-child{
+    padding: 20px 10px;
+    color: #333;
+    background-color: #fbfbfb;
+    font-size: 16px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    width: 200px;
+}
+
+.product_register .register_table1  tr  td:nth-child(2){
+    width: 980px;
+    padding: 20px 10px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+
+.product_register .register_table1  tr  td:nth-child(2) select{
+    width: 300px;
+    height: 40px;
+    font-size: 16px;
+    color: #555;
+    
+}
+
+.product_register .register_table1  tr  td:nth-child(2) span{
+    padding-left: 7px;
+    margin-right: 10px;
+    
+}
+
+.product_register .register_table2{
+    margin-bottom: 150px;
+}
+
+.product_register .register_table2  tr{
+    width: 100%;
+    height: auto;
+    flex: 1;
+
+}
+
+.product_register .register_table2  tr  td:first-child{
+    padding: 20px 10px;
+    color: #333;
+    background-color: #fbfbfb;
+    font-size: 16px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    width: 200px;
+}
+
+.product_register .register_table2  tr  td:nth-child(2){
+    width: 980px;
+    padding: 20px 10px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    
+}
+
+.product_register .register_table2  tr  td:nth-child(2) input{
+    padding: 5px 5px;
+    height: 30px;
+    font-size: 16px;
+    color: #555;
+    
+}
+
+.product_register .register_table2  tr:first-child  td:nth-child(2) input{
+    width: 500px;
+}
+
+.product_register .register_table2  tr:nth-child(2)  td:nth-child(2) input{
+    width: 500px;
+}
+
+.product_register .register_table2  tr:nth-child(3)  td:nth-child(2) input{
+    width: 500px;
+}
+
+.product_register .register_btn{
+    text-align: right;
+}
+
+.product_register .register_btn a{
+    display: inline-block;
+    border: 1px solid #555;
+    width: 80px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    background-color: white;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+.product_register .btn_delete{
+    border: 1px solid #dddddd;
+    width: 140px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    background-color: #32a69f;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}

@@ -7,6 +7,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -71,7 +72,9 @@ header>.headerTop>div>a:hover {
 header>.headerTop>div>label:hover {
 	color: #10958b;
 }
-
+header>.headerTop>div>.message {
+	color: #3c83dc;
+}
 header>.menu {
     position: absolute;
     top: 35px;
@@ -276,6 +279,14 @@ footer {
     }
 }
 
+.SearchIndex .mawa {
+  transition: all 0.2s linear;
+  overflow: hidden;
+}
+.SearchIndex .mawa:hover {
+ transform: scale(1.02);
+}
+
 
 .SearchIndex > .btns > #s2  {
     position: relative;
@@ -327,6 +338,8 @@ footer {
     height: 100%;
     margin: 100px 0px 60px 17px;
 }
+
+
 
 
 
@@ -1016,6 +1029,101 @@ padding: 0 15px;
 }
 
 
+/*view2*/
+.view2 {
+    min-height: 300px;
+    
+}
+
+.view2 > .contents{
+    
+}
+
+.view2 > .contents> div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 215px;
+    background: #e1f4f3;
+}
+
+.view2 > .contents>.view-top > .title {
+    line-height: 1.4;
+    font-size: 35px;
+    color: #555;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 15px;
+    margin-top: 40px;
+}
+
+
+ 	.view2 > .addrT{
+ 	    margin: 0 auto;
+ 		text-align: center;
+    	padding: 50px 0 30px;
+    	font-size: 30px;
+        font-weight: 400;
+        display: table;
+ 	}
+ 	
+ 	.view2 > .addrT >.addrH{
+ 		
+ 		font-weight: 500;
+ 		color: cornflowerblue;
+ 		display: table-cell;
+ 		
+ 	}
+ 	
+ 	.view2 > .addrT >.addrH:hover{
+ 		
+ 		color: darkblue;
+ 	}
+ 	
+ 	.view2 > .ns {
+ 		width: 800px;
+    	height: 51px;
+    	margin: 0 auto;
+    	display: block;
+    	text-align: center;
+ 	}
+ 	
+ 	.view2 > .ns input {
+ 		width: 300px;
+    	height: 35px;
+    	margin: 0 auto;
+    	display: inline-block;
+ 	}
+ 	
+ 	.view2 > .ns button {
+ 		width: 60px;
+    	height: 35px;
+    	margin-left: 10px;
+    	background-color: #0dbcaf;
+    	color: #fff;
+    	display: inline-block;
+    	
+    	
+ 	}
+ 	
+ 	.view2 .result {
+ 	 	width: 800px;
+ 		margin: 0 auto;
+ 		text-align: center;
+		padding: 25px; 		
+ 	}
+ 	
+ 	.view2 .result > .explain {
+ 		margin-top: 10px;
+ 	}
+ 	
+ 	.view2 .result .placeName {
+ 		font-size: 25px;
+ 		color: #0dbcaf;
+ 		margin: 5px
+ 	}
+
 /*reserve*/
 #reserve > .re{
     width: 900px;
@@ -1085,9 +1193,10 @@ padding: 0 15px;
 
 #reserve > .re table td > #num {
     width: 40px;
-    height: 20px;
+    height: 30px;
     margin-left: auto;
     border: 1px solid #dfe5ed;
+    text-align: center;
 }
 
 #reserve > .re table input {
@@ -1127,6 +1236,13 @@ padding: 0 15px;
     color: dimgray;
 }
 
+#reserve > .re table td > #coupon {
+    width: 206px;
+    height: 40px;
+    margin-left: auto;
+    border: 1px solid #dfe5ed;
+    text-align: center;
+}
 
 
 /*complete*/

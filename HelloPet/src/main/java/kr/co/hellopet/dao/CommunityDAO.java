@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.hellopet.vo.CommunityVO;
+import kr.co.hellopet.vo.MessageVO;
 
 /*
  * 날짜 : 2023/03/09
@@ -69,5 +70,35 @@ public interface CommunityDAO {
 	// 글 좋아요 눌렀을때 -1
 	public int deleteHeart(int no, String uid);
 	
+	// 전체 좋아요수 +1
+	public int updateHeartUp(int no);
 	
+	// 전체 좋아요수 -1
+	public int updateHeartDown(int no);
+	
+	// 댓글달기
+	public int insertReply(CommunityVO vo);
+	
+	// 댓글출력
+	public List<CommunityVO> selectReplys(int no);
+	
+	// 전체 댓글수 +1
+	public int updateReplyUp(CommunityVO vo);
+	
+	// 댓글삭제
+	public int deleteReply(int no, String uid, int reply_no);
+	
+	// 전체 댓글수 -1
+	public int updateReplyDown(int no);
+	
+	// 전체 댓글수 
+	public int selectReplyTotal(int no);
+	
+	// 모달창 최근 좋아요누른 별명 출력
+	public CommunityVO selectHeartUser(int no);
+	
+	// 메세지 보내기
+	public int insertMsg(MessageVO vo);
+	
+	public int selectMsg(String uid);
 }

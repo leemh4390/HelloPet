@@ -44,5 +44,9 @@ public class IndexService {
 	  }
 	  return currentPage;
 	}
+	
+	public int selectMsg(String uid) {
+		return dao.selectMsg(uid);
+	}
 
 }

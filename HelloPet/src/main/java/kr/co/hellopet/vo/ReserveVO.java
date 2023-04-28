@@ -33,7 +33,8 @@ public class ReserveVO {
 	private String status;
 	
 	// 추가필드
-	private String medicalName; // <-- ??
-	private String hosName; // 2022/03/17 추가
+	private String medicalName; 
+	private String hosName; 
+	private String coupon;
 	
 }

@@ -250,6 +250,19 @@ let isReserveOk 	= false;
 			}
 		});
 		
+		$(document).on('focusout','.ceo',function(){
+			
+			let ceo = $(this).val();
+			
+			if(ceo != ''){
+				//입력확인
+				isCeoOk = true;
+			}else{
+				isCeoOk = false;
+			}
+		});
+			
+		
 		
 		$('input[name=tel]').keyup(function(){
 			

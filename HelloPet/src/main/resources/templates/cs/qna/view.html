@@ -12,12 +12,14 @@
     var results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   };
-</script>
-<script>
-	$(function(){
+  
+  $(function(){
 		
 		var level = $('input[name=level]').val(); // 현재 로그인한 사용자의 레벨을 얻어옵니다.
-		console.log(level);
+		console.log('wow'+level);
+		
+		var writerUid = $('input[name=writerUid]').val(); 
+		console.log(writerUid);
 		
 		$('.btnDel').click(function(){
 			if(confirm('정말 삭제하시겠습니까?')){
@@ -32,6 +34,14 @@
 				return false;
 			}else{
 				if(confirm('답변을 작성하시겠습니까?')){
+					$.ajax({
+			            url: "/HelloPet/cs/qna/view",
+			            method: 'post',
+			            data: {'writerUid':writerUid},
+			            success: function(data){
+			            	alert('답변이 성공적으로 작성되었습니다.');
+			            }
+			        });
 					return true;
 				}else{
 					return false;
@@ -46,8 +56,9 @@
 				return false;
 			}
 		});
+		
+        
 	});
-	
 </script>
         <main id="qna">
 		    <div class="top">
@@ -63,7 +74,9 @@
             <section id="view">
                 <div class="container">
                     <table class="viewTable">
-                        <tr><th colspan="2">[[${vo.title}]]</th></tr>
+                        <tr>
+                        	<th colspan="2">[[${vo.title}]]</th>
+                        </tr>
                         <tr>
                             <td style="height: 40px;">
                                 작성자 : <span>[[${vo.nick}]]</span> |
@@ -87,6 +100,7 @@
                     <th:block th:if="${#lists.isEmpty(replys)}">
 	                    <section class="replyForm">
 	                        <form action="#" method="post">
+	                        <input type="hidden" name="writerUid" th:value="${vo.uid}"/>
 	                        <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}"/>
 	                        <input type="hidden" name="level" th:value="${#authentication.principal.member.level}"/>
 	                            <textarea name="content" placeholder="답변 입력"></textarea>

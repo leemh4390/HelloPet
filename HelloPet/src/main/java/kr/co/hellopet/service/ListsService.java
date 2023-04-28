@@ -31,6 +31,9 @@ public class ListsService {
 	public int selectCountTotal() {
 		return dao.selectCountTotal();
 	}
+	public int selectMsg(String uid) {
+		return dao.selectMsg(uid);
+	}
 	
 	/////////// 페이징 처리 ////////////
 	// 현재 페이지 번호

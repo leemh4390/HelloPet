@@ -148,6 +148,25 @@ $(document).ready(function(){
     			$('.county').append(tags);
     		}
     	}
+    	
+    	if(trial == '경상남도'){
+    		$('.county').empty();
+    		$('.county').append("<option value='0'>시·군·구</option>");
+    		for(let values of gyeongsangSounth ){
+    			let tags = "<option>"+values+"</option>";
+    			$('.county').append(tags);
+    		}
+    	}
+    	
+    	if(trial == '제주'){
+    		$('.county').empty();
+    		$('.county').append("<option value='0'>시·군·구</option>");
+    		for(let values of jeju ){
+    			let tags = "<option>"+values+"</option>";
+    			$('.county').append(tags);
+    		}
+    	}	    	
+    	    	
     });
     
     

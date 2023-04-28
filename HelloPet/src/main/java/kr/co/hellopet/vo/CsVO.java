@@ -29,4 +29,6 @@ public class CsVO {
 	
 	private MultipartFile fileimg;
 	private String nick;
+	private int couponNo;
+	private String cpName;
 }

@@ -7,6 +7,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -70,6 +71,9 @@ header>.headerTop>div>a:hover {
 }
 header>.headerTop>div>label:hover {
 	color: #10958b;
+}
+header>.headerTop>div>.message {
+	color: #3c83dc;
 }
 
 header>.menu {

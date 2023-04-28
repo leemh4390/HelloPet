@@ -15,7 +15,7 @@
 	</select>
 
 	<select id="selectMyArticle" resultType="kr.co.hellopet.vo.CommunityVO">
-		SELECT * FROM `community_article` WHERE `uid` = #{uid} ORDER BY `no` DESC LIMIT #{start},7;
+		SELECT * FROM `community_article` WHERE `uid` = #{uid} AND `parent` = 0 ORDER BY `no` DESC LIMIT #{start},7;
 	</select>
 	
 	<select id="selectMyQna" resultType="kr.co.hellopet.vo.CsVO">
@@ -23,15 +23,21 @@
 	</select>
 	
 	<select id="selectMyReserve" resultType="kr.co.hellopet.vo.ReserveVO">
-		SELECT a.*, b.hosName FROM `reserve_list` AS a JOIN `api_hospital` AS b ON a.medNo = b.hosNo WHERE a.uid =  #{uid} LIMIT #{start}, 7;
+		SELECT a.*, b.hosName FROM `reserve_list` AS a JOIN `api_hospital` AS b ON a.medNo = b.hosNo WHERE a.uid =  #{uid} ORDER BY `rdate` DESC LIMIT #{start}, 7;
 	</select>
 	
 	<select id="selectMyReserves" resultType="kr.co.hellopet.vo.ReserveVO">
 		SELECT a.*, b.hosName FROM `reserve_list` AS a JOIN `api_hospital` AS b ON a.medNo = b.hosNo WHERE a.uid =  #{uid} LIMIT 7;
 	</select>
 	
+	<select id="selectMyCoupon" resultType="kr.co.hellopet.vo.MemberCouponVO">
+		SELECT * FROM `member_coupon` as a
+		join `coupon` as b on a.cpNo=b.cpNo
+		WHERE `uid` = #{uid} ORDER BY `no` DESC LIMIT #{start},7;
+	</select>
+	
 	<select id="selectCountMyArticle" resultType="int">
-		SELECT COUNT(`no`) FROM `cs_article` WHERE `uid` = #{uid};
+		SELECT COUNT(`no`) FROM `community_article` WHERE `uid` = #{uid} AND `parent` = 0;
 	</select>
 	
 	<select id="selectCountMyQna" resultType="int">
@@ -39,23 +45,38 @@
 	</select>
 	
 	<select id="selectCountMyReserve" resultType="int">
-		SELECT COUNT('revNo') FROM `reserve_list` WHERE `uid` = 'leemh4390'
+		SELECT COUNT('revNo') FROM `reserve_list` WHERE `uid` = #{uid};
+	</select>	
+	<select id="selectCountMyCoupon" resultType="int">
+		SELECT COUNT('no') FROM `member_coupon` WHERE `uid` = #{uid};
 	</select>	
 
 	<!-- 회원정보 update -->
 	<update id="updateInfoModify">
-	    UPDATE pet_owner
-	    SET `name` = #{name}, `email`= #{email}, `nick` = #{nick}, `hp` = #{hp}
-	    WHERE `uid` = #{uid};
+		update `pet_owner` set
+            `name`=#{name},
+            `hp`=#{hp},
+            `email`=#{email},
+            `nick`=#{nick}
+        where `uid`=#{uid};
 	</update>
 	
-	<!-- 회원 삭제는 하지않고 level 만 변경 -->
+	<!-- 회원 삭제 -->
 	<update id="deleteWithdrawMember">
 		UPDATE `pet_owner` SET `level` = 0, `wdate` = NOW()  WHERE `uid` = #{uid};
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw">
+		update `pet_owner` set `pass`=#{encodedPass} where `uid`=#{uid};
 	</update>
 	
 	<!-- 예약 삭제 -->
 	<delete id="deleteMyReserve">
 		DELETE FROM `reserve_list` WHERE `revNo` = #{no};
 	</delete>
+	
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
 </mapper>

@@ -7,6 +7,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -62,6 +63,16 @@ header>.headerTop>div>label{
     font-size: 15px;
     color: #555;
     font-weight: 300;
+    cursor: pointer;
+}
+header>.headerTop>div>a:hover {
+	color: #10958b;
+}
+header>.headerTop>div>label:hover {
+	color: #10958b;
+}
+header>.headerTop>div>.message {
+	color: #3c83dc;
 }
 header>.menu {
     position: absolute;
@@ -331,6 +342,30 @@ footer {
 #notice > #view > .container > .viewTable tr:last-child > td {
     border-bottom: none;
     padding-top: 10px;
+}
+
+#notice > #view > .container > .viewTable .coupon {
+	border-bottom: none;
+	width: 100px;
+}
+#notice > #view > .container > .viewTable .coupon td {
+	border-bottom: none;
+	width: 400px;
+	float: right;
+}
+#notice > #view > .container > .viewTable .coupon td .coupon_button {
+	float: right;
+}
+#notice > #view > .container > .viewTable .coupon .coupon_img {
+	width: 50px;
+	float: right;
+}
+#notice > #view > .container > .viewTable .coupon .coupon_text {
+	width: 310px;
+	float: right;
+	margin-top: 10px;
+	color: #108781;
+	cursor: pointer;
 }
 
 #notice > #view > .container > .viewTable2 {
@@ -863,6 +898,9 @@ footer {
     background-color: #fff;
     font-size: 16px;
     border-bottom: 1px solid #ddd;
+}
+#qna > #list > .container > .table strong {
+	color: red;
 }
 
 #qna > #list > .container > .paging {

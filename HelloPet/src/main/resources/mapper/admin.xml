@@ -13,6 +13,10 @@
 		select * from `pet_hospital_pharmacy` where `uid`=#{uid};
 	</select>
 	
+	<select id="selectUser" resultType="kr.co.hellopet.vo.MemberVO">
+		select * from `pet_owner` where `uid` = #{uid};	
+	</select>
+	
 	<update id="updateAdmin">
 		update `pet_hospital_pharmacy` set
             `email`=#{email},
@@ -20,16 +24,82 @@
             `ceoHp`=#{ceoHp}
         where `uid`=#{uid};
 	</update>
+	<update id="updateUser">
+		update `pet_owner` set
+            `name`=#{name},
+            `hp`=#{hp},
+            `email`=#{email},
+            `nick`=#{nick}
+        where `uid`=#{uid};
+	</update>
 
 	<select id="selectReserves" resultType="kr.co.hellopet.vo.AdminReserveVO">
-		select * from `reserve_list`
-		 	WHERE `medNo`=#{medNo} order BY `rdate` DESC limit #{start}, 10;
+		select a.*, b.`medicalName` from `reserve_list` as a
+		join `pet_hospital_pharmacy` as b on a.medNo=b.medNo
+		 	WHERE a.`medNo`=#{medNo} order BY a.`rdate` DESC limit #{start}, 10;
 	</select>
 	<select id="selectReserve" resultType="kr.co.hellopet.vo.AdminReserveVO">
-		select * from `reserve_list` WHERE `revNo`=#{revNo};
+		select a.*, b.`medicalName` from `reserve_list` as a 
+		join `pet_hospital_pharmacy` as b on a.medNo=b.medNo
+		
+		WHERE `revNo`=#{revNo};
 	</select>
 	<select id="selectCountTotal" resultType="int" parameterType="map">
         select count(`revNo`) from `reserve_list` WHERE `medNo`=#{medNo};
     </select>
+    
+    <update id="updateConfirm">
+    	update `reserve_list` set `status`= 1 where `revNo`=#{revNo};
+    </update>
+    <update id="updateReject">
+    	update `reserve_list` set `status`= 2 where `revNo`=#{revNo};
+    </update>
+    
+    <insert id="insertMsg">
+    	insert into `message` set
+    		`uid`=#{uid},
+    		<choose>
+					<when test="medical == null">
+						`medical`=null,
+					</when>
+					<when test="medical != null">
+						`medical`=#{medical},
+					</when>
+    		</choose>
+    		`title`=#{title},
+    		`content`=#{content},
+    		`msgRdate`=NOW();
+    </insert>
+    <update id="updateReserve">
+    	update `pet_hospital_pharmacy` set `reserve` = `reserve`+1 where `medNo`=#{medNo};
+    </update>
+    
+    <!-- 회원 삭제 - 데이터 삭제 -->
+	<update id="deleteWithdrawOwner">
+		UPDATE `pet_owner` SET `level` = 0, `wdate` = NOW()  WHERE `uid` = #{uid};
+	</update>
+	<update id="deleteWithdrawAdmin">
+		UPDATE `pet_hospital_pharmacy` SET `level` = 0, `wdate` = NOW()  WHERE `uid` = #{uid};
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="findPwChange">
+		update `pet_hospital_pharmacy` set `pass`=#{pass} where `uid`=#{uid};
+	</update>
+	<update id="findPwChangeUser">
+		update `pet_owner` set `pass`=#{pass} where `uid`=#{uid};
+	</update>
+	
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
+	
+	<!-- coupon -->
+	<update id="deleteCoupon">
+        update `member_coupon` set `status`=1 where `cpNo`=#{cpNo} and `uid`=#{uid};
+    </update>
+    <update id="updateCouponOwner">
+        update `pet_owner` set `coupon`=`coupon`-1 where `uid`=#{uid} AND `coupon` >= 1;
+    </update>
 
 </mapper>

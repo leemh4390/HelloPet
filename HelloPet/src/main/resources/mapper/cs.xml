@@ -44,6 +44,27 @@
 		  ORDER BY `rdate` asc
 		  LIMIT 1;
     </select>
+    <select id="selectNotice" resultType="kr.co.hellopet.vo.CsVO">
+    	select a.*, b.`nick`, c.`cpName` from `cs_article` as a
+            join `pet_owner` as b on a.uid=b.uid
+            left JOIN `coupon` as c on a.couponNo = c.cpNo
+            where `no`=#{no};
+    </select>
+    <insert id="insertCoupon">
+		insert into `member_coupon` set 
+		    `cpNo`=#{cpNo},
+		    `uid`=#{uid},
+		    `rdate`=NOW();
+	</insert>
+	<select id="countCoupon" resultType="int">
+		SELECT COUNT(`no`) FROM `member_coupon` WHERE `cpNo`=#{cpNo} and `uid` = #{uid};
+	</select>
+	<update id="updateDownload">
+        update `coupon` set `download`=`download`+1 where `cpNo`=#{cpNo};
+    </update>
+	<update id="updateCouponOwner">
+        update `pet_owner` set `coupon`=`coupon`+1 where `uid`=#{uid};
+    </update>
     
     <!-- faq -->
 	<insert id="insertFaq">
@@ -137,4 +158,25 @@
 	<delete id="deleteArticle">
         delete from `cs_article` where `no`=#{no} or `parent`=#{parent};
     </delete>
+    
+    <!-- message -->
+    <insert id="insertMsg">
+    	insert into `message` set
+    		`uid`=#{uid},
+    		<choose>
+					<when test="medical == null">
+						`medical`=null,
+					</when>
+					<when test="medical != null">
+						`medical`=#{medical},
+					</when>
+    		</choose>
+    		`title`=#{title},
+    		`content`=#{content},
+    		`msgRdate`=NOW();
+    </insert>
+    
+    <select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
 </mapper>

@@ -23,4 +23,5 @@ public interface IndexDAO {
 	public List<CsVO> selectNotice();
 	public List<CsVO> selectFaq();
 
+	public int selectMsg(String uid);
 }

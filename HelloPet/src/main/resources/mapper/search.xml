@@ -65,6 +65,9 @@
 	 	Select Count(`pharAddr`) from `api_pharmacy` WHERE `pharAddr` Like concat('%', #{search}, '%');
 	</select>
 	
+	<update id="updatePhHit">
+        update `pet_hospital_pharmacy` set `hit`=`hit`+1 where `medNo`=#{medNo};
+    </update>
 	
 	<!-- view -->
 	<select id="selectViewHs" resultType="kr.co.hellopet.vo.SearchVO">
@@ -73,6 +76,11 @@
 	
 	<select id="selectViewPh" resultType="kr.co.hellopet.vo.SearchVO">
 		SELECT * FROM `api_pharmacy` WHERE `pharNo` =#{pharNo};
+	</select>
+	
+	<!-- view2 -->
+	<select id="selectView2" resultType="kr.co.hellopet.vo.MemberVO">
+		select * from `pet_owner` where `uid` =#{uid};
 	</select>
 	
 	<!-- reserve -->
@@ -115,8 +123,35 @@
 			`revDate` 	= #{revDate} ,
 			`revTime` 	= #{revTime} ,
 			`rdate` 	= now(),
-			`status` 	= 0;
+			`status` 	= 0,
+			`coupon` 	= #{coupon};
 	</insert>
+	
+	<select id="selectHospital" resultType="kr.co.hellopet.vo.MedicalVO">
+		SELECT * FROM `pet_hospital_pharmacy` 
+			   WHERE `medNo`= #{medNo};
+	</select>
+	
+	<select id="selectProductOne" resultType="kr.co.hellopet.vo.ProductVO">
+		SELECT * FROM `product` WHERE `prodNo` =#{prodNo}; 
+	</select>
+	
+	<select id="selectMemberCoupon" resultType="kr.co.hellopet.vo.IMember_couponVO">
+		select * from `member_coupon` where `uid` =#{uid};
+	</select>
+	
+	<select id="selectCoupon" resultType="kr.co.hellopet.vo.ICouponVO">
+		SELECT * FROM `member_coupon` AS a
+		JOIN `coupon` AS b
+		ON a.cpNo = b.cpNo
+		WHERE a.uid =#{uid} AND (b.medNo IS NULL OR b.medNo = #{hosNo});
+	</select>
+	<select id="selectCoupon2" resultType="kr.co.hellopet.vo.ICouponVO">
+		SELECT * FROM `member_coupon` AS a
+		JOIN `coupon` AS b
+		ON a.cpNo = b.cpNo
+		WHERE a.uid =#{uid};
+	</select>
 	
 	<!-- complete -->
 	<select id="selectComplete" resultType="kr.co.hellopet.vo.ReserveVO">
@@ -124,6 +159,27 @@
 			   JOIN `reserve_list` AS b 
 			   ON a.medNo = b.medNo
 			   WHERE b.uid = #{uid} AND `reserveOk`=1 ORDER BY b.rdate DESC LIMIT 1;
+	</select>
+	
+	<!-- 메시지 보내기 -->
+	<insert id="insertMsg">
+    	insert into `message` set
+    		`uid`=#{uid},
+    		<choose>
+					<when test="medical == null">
+						`medical`=null,
+					</when>
+					<when test="medical != null">
+						`medical`=#{medical},
+					</when>
+    		</choose>
+    		`title`=#{title},
+    		`content`=#{content},
+    		`msgRdate`=NOW();
+    </insert>
+    
+    <select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
 	</select>
 	
 </mapper>

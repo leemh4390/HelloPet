@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+ 	날짜 : 2023/03/21 
+ 	이름 : 김경준
+ 	내용 : HelloPet admin/product 페이지 기능구현
+  -->
+<mapper namespace="kr.co.hellopet.dao.AdminProductDAO">
+	
+	<select id="selectAdmin" resultType="kr.co.hellopet.vo.MedicalVO">
+		select * from `pet_hospital_pharmacy` where `uid`=#{uid};
+	</select>
+	
+	<insert id="insertAdminProduct">
+		insert into `product` set 
+			`medNo`= #{medNo},
+			`prodCate1`= #{prodCate1}, 
+			`prodCate2`= #{prodCate2},
+			`group`= #{group}, 
+			`prodName`= #{prodName}, 
+			`descript`= #{descript},
+			`medicalName`= #{medicalName},
+			`price`= #{price},
+			`discount`= #{discount}, 
+			`thumb1`=#{thumb1},
+			`detail`=#{detail},
+			`hit`=#{hit},
+			`regip`= #{regip}, 
+			`rdate`= NOW();
+	</insert>
+	
+	<select id="selectAdminProducts" resultType="kr.co.hellopet.vo.AdminProductVO">
+		select * from `product`
+			 
+			order by `prodNo` desc
+			limit #{start},10;
+	</select>
+	
+	<select id="selectAdminProduct" resultType="kr.co.hellopet.vo.AdminProductVO">
+		select * from `product`
+			where `prodNo`=#{prodNo};
+	</select>
+	
+	<select id="selectProductCount" resultType="int">
+		select count(`prodNo`) from `product`
+			order by `rdate` desc;
+	</select>
+	
+	<update id="updateAdminProduct">
+		update `product` set 
+			`prodName`=#{prodName},
+			`descript`=#{descript},
+			`medicalName`=#{medicalName},
+			`price`=#{price},
+			`discount`=#{discount},
+			`regip`=#{regip}
+			where `prodNo`=#{prodNo};
+	</update>
+	
+	<delete id="deleteCheck">
+		delete from `product` WHERE `prodNo` in (#{prodNo}); 
+	</delete>
+	
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
+	
+</mapper>

@@ -22,7 +22,7 @@ $(document).ready(function(){
 	            tags += "<tr class='change'>";
 	            tags += "<td>대표 약사</td>";
 	            tags += "<td>";
-	            tags += "<input type='text' name='ceo' placeholder='대표약사 입력해주세요'>";
+	            tags += "<input type='text' name='ceo' class='ceo' placeholder='대표약사 입력해주세요'>";
 	            tags += "</td>";
 	            tags += "</tr>";
 	        $('#pass').after(tags);
@@ -51,7 +51,7 @@ $(document).ready(function(){
 	            tags += "<tr class='change'>";
 	            tags += "<td>대표 수의사</td>";
 	            tags += "<td>";
-	            tags += "<input type='text' name='ceo' placeholder='대표수의사 입력해주세요'>";
+	            tags += "<input type='text' name='ceo' class='ceo' placeholder='대표수의사 입력해주세요'>";
 	            tags += "</td>";
 	            tags += "</tr>";
 	        $('#pass').after(tags);

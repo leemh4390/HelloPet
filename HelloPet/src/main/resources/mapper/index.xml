@@ -38,6 +38,9 @@
             order by `rdate` desc
             limit 0,5;
 	</select>
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
 
 
 

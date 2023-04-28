@@ -6,6 +6,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -53,7 +54,25 @@ header>.headerTop>div>a {
     color: #555;
     font-weight: 300;
 }
-
+header>.headerTop>div>label{
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+    cursor: pointer;
+}
+header>.headerTop>div>a:hover {
+	color: #10958b;
+}
+header>.headerTop>div>label:hover {
+	color: #10958b;
+}
+header>.headerTop>div>.message {
+	color: #3c83dc;
+}
 header > .menu > div {
     width: 1200px;
     height: 100%;
@@ -364,7 +383,7 @@ li{
             line-height: 1;
             color: #3c83dc;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 27px;
             margin-bottom: 10px;
         }
         h4{
@@ -515,7 +534,7 @@ li{
             line-height: 1;
             color: #3c83dc;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 27px;
             margin-bottom: 10px;
         }
        

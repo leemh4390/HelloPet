@@ -27,7 +27,9 @@
 	<select id="selectCountTotal" resultType="int" parameterType="map">
         select count(`medNo`) from `pet_hospital_pharmacy` where `level`=2;
     </select>
-
+	<select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
 
 
 </mapper>

@@ -1,7 +1,9 @@
 package kr.co.hellopet.controller.cs;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,9 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.hellopet.service.CsService;
 import kr.co.hellopet.vo.CsVO;
+import kr.co.hellopet.vo.MemberCouponVO;
+import kr.co.hellopet.vo.MessageVO;
 
 /* 
  *  날짜 : 2023/03/09
@@ -27,7 +33,7 @@ public class CsController {
 
 	/* notice */
 	@GetMapping("cs/notice/list")
-	public String noticeList(Model model, String pg) {
+	public String noticeList(Model model, String pg, Principal principal) {
 		
 		int currentPage = service.getCurrentPage(pg);
 		int pageSize = 10;
@@ -50,11 +56,23 @@ public class CsController {
         model.addAttribute("pageStartNum", pageStartNum);
         model.addAttribute("groups", groups);
 		
+        if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
+        
 		return "cs/notice/list";
 	}
 
 	@GetMapping("cs/notice/write")
-	public String noticeWrite() {
+	public String noticeWrite(Model model, Principal principal) {
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "cs/notice/write";
 	}
 	
@@ -69,27 +87,75 @@ public class CsController {
 	}
 	
 	@GetMapping("cs/notice/view")
-	public String noticeView(Model model,int no, String pg, String rdate) {
+	public String noticeView(CsVO cs, Model model,int no, String pg, String rdate, Principal principal) {
 		int currentPage = service.getCurrentPage(pg);
 		service.updateArticleHit(no);
 		CsVO prev = service.getPrev(rdate);
 		CsVO next =service.getNext(rdate);
 		
-		CsVO vo = service.selectArticle(no);
+		CsVO vo = null;
+		
+		if(cs.getCouponNo() > 0) {
+			vo = service.selectArticle(no);
+		}else {
+			vo = service.selectNotice(no);
+		}
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("prev", prev);
 		model.addAttribute("next", next);
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
+		
+		
 		return "cs/notice/view";
 	}
 	
+	// 쿠폰 다운로드
+	@ResponseBody
+	@GetMapping("cs/coupon")
+	public int coupon(MemberCouponVO vo ,@RequestParam("cpNo") int cpNo, @RequestParam("uid") String uid){
+		
+		int coupon = service.insertCoupon(vo);
+		if(coupon > 0) {
+			service.updateDownload(cpNo);
+			service.updateCouponOwner(uid);
+		}
+		
+		return coupon;
+	}
+	
+	// 쿠폰 발급 중복체크
+	@ResponseBody
+	@GetMapping("cs/countCoupon")
+	public Map<String, Integer> countCoupon(@RequestParam("cpNo") String cpNo,@RequestParam("uid") String uid) {
+		int count = service.countCoupon(cpNo, uid);
+		int result = count;
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		
+		return map;
+	}
+	
 	@GetMapping("cs/notice/modify")
-	public String noticeModify(Model model,int no, String pg) {
+	public String noticeModify(Model model,int no, String pg, Principal principal) {
 		int currentPage = service.getCurrentPage(pg);
 		CsVO vo = service.selectArticle(no);
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("currentPage", currentPage);
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "cs/notice/modify";
 	}
 	@PostMapping("cs/notice/modify")
@@ -111,14 +177,26 @@ public class CsController {
 
 	/* faq */
 	@GetMapping("cs/faq/list")
-	public String faqList(Model model) {
+	public String faqList(Model model, Principal principal) {
 		List<CsVO> faqs = service.selectFaqs();
 		model.addAttribute("faqs",faqs);
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "cs/faq/list";
 	}
 	
 	@GetMapping("cs/faq/write")
-	public String faqWrite() {
+	public String faqWrite(Model model, Principal principal) {
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
+		
 		return "cs/faq/write";
 	}
 	@PostMapping("cs/faq/write")
@@ -131,10 +209,16 @@ public class CsController {
 	}
 	
 	@GetMapping("cs/faq/modify")
-	public String faqModify(Model model,int no) {
+	public String faqModify(Model model,int no, Principal principal) {
 		CsVO vo = service.selectArticle(no);
 		
 		model.addAttribute("vo", vo);
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "cs/faq/modify";
 	}
 	@PostMapping("cs/faq/modify")
@@ -151,7 +235,7 @@ public class CsController {
 	
 	/* qna */
 	@GetMapping("cs/qna/list")
-	public String qnaList(Model model, String pg) {
+	public String qnaList(Model model, String pg, Principal principal) {
 		
 		int currentPage = service.getCurrentPage(pg);
 		int pageSize = 10;
@@ -173,11 +257,22 @@ public class CsController {
         model.addAttribute("lastPageNum", lastPageNum);
         model.addAttribute("pageStartNum", pageStartNum);
         model.addAttribute("groups", groups);
+        
+        if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		
 		return "cs/qna/list";
 	}
 	@GetMapping("cs/qna/write")
-	public String qnaWrite() {
+	public String qnaWrite(Model model, Principal principal) {
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		return "cs/qna/write";
 	}
 	@PostMapping("cs/qna/write")
@@ -190,7 +285,7 @@ public class CsController {
 	}
 	
 	@GetMapping("cs/qna/view")
-	public String qnaView(Model model,int no, String pg) {
+	public String qnaView(Model model,int no, String pg, Principal principal) {
 		/* 문의하기 글 정보 */
 		int currentPage = service.getCurrentPage(pg);
 		service.updateArticleHit(no);
@@ -199,6 +294,11 @@ public class CsController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("currentPage", currentPage);
 		
+		if(principal != null) {
+			String uid = principal.getName();
+			int msg2 = service.selectMsg(uid);
+			model.addAttribute("msg2", msg2);
+		}
 		
 		
 		List<CsVO> replys = service.selectReply(no);
@@ -209,7 +309,7 @@ public class CsController {
 	}
 	
 	@PostMapping("cs/qna/view")
-	public String qnaView(CsVO vo, String pg, HttpServletRequest req) {
+	public String qnaView(CsVO vo, String pg, HttpServletRequest req, @RequestParam(value="writerUid", required=false) String writerUid, MessageVO msg) {
 		int currentPage = service.getCurrentPage(pg);
 		
 		/* 답변 */
@@ -218,7 +318,12 @@ public class CsController {
 		int result = service.insertReply(vo);
 		
 		if(result > 0) {
-			service.updateReply(vo.getNo());
+			int reply = service.updateReply(vo.getNo());
+			
+			msg.setUid(writerUid);
+			msg.setTitle("회원님의 문의글에 답변이 달렸습니다.");
+			msg.setContent("마이페이지 > 1:1 문의에서 확인하세요. <a href='/HelloPet/cs/qna/view?no="+vo.getNo()+"&pg="+currentPage+"'>문의글 바로가기</a>");
+			service.insertMsg(msg);
 		}
 		
 		return "redirect:/cs/qna/view?no="+vo.getNo()+"&pg="+currentPage;

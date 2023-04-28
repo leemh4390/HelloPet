@@ -161,7 +161,7 @@
     		and `parent` = 0;
     </delete>
     
-    <select id="findHeart" resultType="int" parameterType="map">
+    <select id="findHeart" resultType="int">
     	select count(*) from `community_heart` 
     		where `no`=#{no}
     		and `uid`=#{uid};
@@ -169,18 +169,72 @@
     
     
     <insert id="insertHeart">
-    	insert into `community_heart` set
-    		`no` = #{no},
-    		`uid` = #{uid};
+		INSERT INTO `community_heart` (`no`, `uid`) VALUES (#{no}, #{uid});
     </insert>
     
+    <update id="updateHeartUp">
+    	update `community_article` SET `heart`= `heart`+1 WHERE `no`=#{no};
+    </update>
+    
     <delete id="deleteHeart">
-    	delete from `community_heart`
-    		where `no` = #{no}
-    		and `uid` = #{uid};
+		delete from `community_heart` where `no` = #{no} and `uid` = #{uid};
     </delete>
     
+    <update id="updateHeartDown">
+    	update `community_article` SET `heart`= `heart`-1 WHERE `no`=#{no};
+    </update>
+    
+    <insert id="insertReply">
+    	INSERT INTO `community_article` SET 
+    		`group`='talktalk' , `uid`=#{uid}, `parent`=#{no}, `content`=#{content}, `regip`=#{regip}, `rdate`=NOW(), `reply_no` = (SELECT IFNULL(MAX(b.reply_no) + 1, 1) FROM community_article b);
+    		
+    </insert>
+    
+   <select id="selectReplys" resultType="kr.co.hellopet.vo.CommunityVO">
+   		SELECT a.*, b.`nick` FROM `community_article` AS a
+			JOIN `pet_owner` AS b ON a.uid=b.uid
+			WHERE `parent` = #{no}
+			order by `rdate` asc;
+   </select>
     
     
-
+    <delete id="deleteReply">
+    	DELETE FROM `community_article` WHERE `parent`= #{no} and `uid`=#{uid} and `reply_no`=#{reply_no};
+    </delete>
+    
+    <update id="updateReplyUp">
+    	UPDATE `community_article` SET `reply` = `reply`+1 WHERE `no`=#{no};
+    </update>
+    
+    <update id="updateReplyDown">
+    	UPDATE `community_article` SET `reply` = `reply`-1 WHERE `no`=#{no};
+    </update>
+    
+	<select id="selectHeartUser" resultType="kr.co.hellopet.vo.CommunityVO">
+		SELECT a.*, b.`nick` from`community_heart` AS a 
+				JOIN `pet_owner` AS b ON a.uid=b.uid
+				WHERE `no`=#{no}
+				ORDER by `heart_no` DESC
+				limit 1;
+	</select>
+	
+	<insert id="insertMsg">
+    	insert into `message` set
+    		`uid`=#{uid},
+    		<choose>
+					<when test="medical == null">
+						`medical`=null,
+					</when>
+					<when test="medical != null">
+						`medical`=#{medical},
+					</when>
+    		</choose>
+    		`title`=#{title},
+    		`content`=#{content},
+    		`msgRdate`=NOW();
+    </insert>
+    
+    <select id="selectMsg" resultType="int" parameterType="map">
+		select count(`msgNo`) from `message` where `uid`=#{uid} and `msgStatus`=0;
+	</select>
 </mapper>

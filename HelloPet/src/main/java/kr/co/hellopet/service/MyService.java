@@ -3,11 +3,13 @@ package kr.co.hellopet.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.hellopet.dao.MyDAO;
 import kr.co.hellopet.vo.CommunityVO;
 import kr.co.hellopet.vo.CsVO;
+import kr.co.hellopet.vo.MemberCouponVO;
 import kr.co.hellopet.vo.MemberVO;
 import kr.co.hellopet.vo.ReserveVO;
 
@@ -23,6 +25,9 @@ public class MyService {
 	
 	@Autowired
 	private MyDAO dao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	// 회원 조회
 	public MemberVO selectUser(String uid) {
@@ -48,6 +53,9 @@ public class MyService {
 		return dao.selectMyReserves(uid);
 	};
 	
+	public List<MemberCouponVO> selectMyCoupon(String uid, int start){
+		return dao.selectMyCoupon(uid, start);
+	}
 	// myArticle total 구하기 
 	public int selectCountMyArticle(String uid) {
 		return dao.selectCountMyArticle(uid);
@@ -61,6 +69,11 @@ public class MyService {
 	public int selectCountMyReserve(String uid) {
 		return dao.selectCountMyReserve(uid);
 	}
+	public int selectCountMyCoupon(String uid) {
+		return dao.selectCountMyCoupon(uid);
+	}
+	
+	
 	
 	// 회원 수정
 	public void updateInfoModify(String name, String email, String nick, String hp, String uid) {
@@ -71,10 +84,16 @@ public class MyService {
 		int result = dao.deleteWithdrawMember(uid);
 		return result;
 	}
+	public int updatePw(String uid, String encodedPass) {
+	    return dao.updatePw(uid, encodedPass);
+	}
 	
 	// 예약목록 삭제하기
 	public int deleteMyReserve(int no) {
 		return dao.deleteMyReserve(no);
+	}
+	public int selectMsg(String uid) {
+		return dao.selectMsg(uid);
 	}
 	
 	// pagin 작업
@@ -124,10 +143,6 @@ public class MyService {
 		int groupCurrent = (int) Math.ceil(currentPage / 5.0);
 		int groupStart = (currentPage - 1) / 5 * 5 + 1;
 		int groupEnd = groupStart + 4;
-		
-		System.out.println("currentPage: " + currentPage);
-		System.out.println("groupStart: " + groupStart);
-		System.out.println("groupEnd: " + groupEnd);
 		
 		if(groupEnd > lastPageNum) {
 			groupEnd = lastPageNum;

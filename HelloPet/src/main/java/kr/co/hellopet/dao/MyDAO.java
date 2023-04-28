@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.hellopet.vo.CommunityVO;
 import kr.co.hellopet.vo.CsVO;
+import kr.co.hellopet.vo.MemberCouponVO;
 import kr.co.hellopet.vo.MemberVO;
 import kr.co.hellopet.vo.ReserveVO;
 
@@ -25,15 +26,22 @@ public interface MyDAO {
 	
 	public List<ReserveVO> selectMyReserves(String uid);
 	
+	public List<MemberCouponVO> selectMyCoupon(String uid, int start);
+	
 	public int selectCountMyArticle(String uid);
 	
 	public int selectCountMyQna(String uid);
 	
 	public int selectCountMyReserve(String uid);
+
+	public int selectCountMyCoupon(String uid);
 	
-	public void updateInfoModify(@Param("name") String name, @Param("email") String email, @Param("nick") String nick, @Param("hp") String hp, @Param("uid") String uid);
+	public int updateInfoModify(@Param("name") String name, @Param("email") String email, @Param("nick") String nick, @Param("hp") String hp, @Param("uid") String uid);
 	
 	public int deleteWithdrawMember(@Param("uid") String uid);
+	public int updatePw(String uid, String encodedPass);
 	
 	public int deleteMyReserve(@Param("no") int no );
+	
+	public int selectMsg(String uid);
 }

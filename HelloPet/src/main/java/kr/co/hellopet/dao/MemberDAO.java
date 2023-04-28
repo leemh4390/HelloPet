@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.hellopet.vo.Api_HospitalVO;
 import kr.co.hellopet.vo.Api_PharmacyVO;
+import kr.co.hellopet.vo.CouponVO;
 import kr.co.hellopet.vo.MedicalVO;
 import kr.co.hellopet.vo.MemberVO;
 import kr.co.hellopet.vo.TermsVO;
@@ -19,6 +20,15 @@ public interface MemberDAO {
 	
 	// 일반회원등록
 	public void insertMember(MemberVO vo);
+	
+	// 일반회원 쿠폰 등록
+	public void insertMemberCoupon(int cpNo, String uid);
+	
+	// 일반회원 쿠폰 컬럼 카운트
+	public int selectCountOwnerCoupon(String uid);
+	
+	// 신규회원에게 주는 쿠폰
+	public List<CouponVO> selectCouponGrade();
 	
 	// 병원·약국 등록
 	public void insertMedical(MedicalVO vo);
@@ -80,4 +90,7 @@ public interface MemberDAO {
 	// find password update - pet medical
 	public void updateMedicalPasswordByCodeAndInfo(@Param("pass") String pass, @Param("email") String email, @Param("name") String name, @Param("hp") String hp);
 	
+	public void updateCouponPetOwner(int coupon, String uid);
+	
+	public void updateCouponDownload(int cpNo);
 }

@@ -33,7 +33,7 @@ public class MedicalEntity {
 	private String email;
 	private String tel;
 	private int type;
-	private int level;
+	private String level;
 	private String zip;
 	private String addr1;
 	private String addr2;

@@ -28,7 +28,7 @@
                                     <span th:style="'background: url('+@{/img/favicon_x32.png}+')  center center / cover no-repeat ; '"></span>
                                 </td>
                                 <td>
-                                    <div class="tipTitle"><a th:href="@{/community/tip/view(group='tip', no=${article.no}, uid=${#authentication.principal.member.uid})}">[[${article.title}]]</a></div><br>
+                                    <div class="tipTitle"><a th:href="@{/community/tip/view(group='tip', no=${article.no})}">[[${article.title}]]</a></div><br>
                                     <span class="tipNick">
                                         <div class="tipIcon" th:style="'background: url('+@{/img/favicon_x32.png}+');'"></div>&nbsp헬로펫
                                     </span>
@@ -60,7 +60,5 @@
                     </div>
                 </div>
             </section>
-
-            
         </main>
 <th:block th:include="@{community/_footer.html}"/>

@@ -37,4 +37,8 @@ public class CommunityVO {
 	
 	// 닉네임 join
 	private String nick;
+	
+	// 좋아요, 댓글
+	private int heart_no;
+	private int reply_no;
 }

@@ -6,47 +6,42 @@
 <th:block th:include="@{community/_header.html}"/>
         <script>
             $(function(){
-            $('form').submit(function(){
-            	
-           	if($('select[name=cate]').val() == 0){
-   				alert('카테고리를 지정하세요.');
-   				return false;
-   			}	
-            
-            if($('input[name=title]').val() == ''){
-    				alert('제목을 입력하십시요.');
-    				return false;
-    			}
-    		if($('textarea[name=content]').val() == ''){
-    				alert('내용을 입력하십시요.');
-    				return false;
-    			}
-    			
-			
-   			if($('input[name=fileImg1]').val() == ''){
-   				alert('이미지파일 3개는 필수입니다.');
-   				return false;
-   			}
-   				
-   			
-   			if($('input[name=fileImg2]').val() == ''){
-   				alert('이미지파일 3개는 필수입니다.');
-   				return false;
-   			}
-   				
-   			
-   			if($('input[name=fileImg3]').val() == ''){
-   				alert('이미지파일 3개는 필수입니다.');
-   				return false;
-   			}
-   			
-   			
-   			return true;	
-    		});
-            
-            
-			
-		
+	            $('form').submit(function(){
+	            	
+		           	if($('select[name=cate]').val() == 0){
+		   				alert('카테고리를 지정하세요.');
+		   				return false;
+		   			}	
+		            
+		            if($('input[name=title]').val() == ''){
+		    				alert('제목을 입력하십시요.');
+		    				return false;
+		    			}
+		    		if($('textarea[name=content]').val() == ''){
+		    				alert('내용을 입력하십시요.');
+		    				return false;
+		    			}
+		    			
+					
+		   			if($('input[name=fileImg1]').val() == ''){
+		   				alert('이미지파일 3개는 필수입니다.');
+		   				return false;
+		   			}
+		   				
+		   			
+		   			if($('input[name=fileImg2]').val() == ''){
+		   				alert('이미지파일 3개는 필수입니다.');
+		   				return false;
+		   			}
+		   				
+		   			
+		   			if($('input[name=fileImg3]').val() == ''){
+		   				alert('이미지파일 3개는 필수입니다.');
+		   				return false;
+		   			}
+		   					   			
+		   			return true;	
+	    		});
     		
     	    });
         </script>
@@ -58,7 +53,7 @@
                 <h3 class="write_talktalk">반려동물 톡톡 작성</h3>
             </div>
             <div>
-                <form action="#" class="write_form" method="post" enctype="multipart/form-data">
+                <form th:action="@{/community/talktalk/write}" class="write_form" method="post" enctype="multipart/form-data">
                     <table class="write_table">
                     	<input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}">
                     	<input type="hidden" name="group" value="talktalk">

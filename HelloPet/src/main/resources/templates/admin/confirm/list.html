@@ -2,17 +2,130 @@
 <script>
 	$(function(){
 		
+		$('.confirmForm').submit(function(e){
+			e.preventDefault(); // 폼 제출 막기
+			
+			var uid = $('.popupTable tr:eq(1) td:eq(8)').text();
+			console.log(uid);
+			
+			var medical = $('.popupTable tr:eq(1) td:eq(9)').text();
+			console.log(medical);
+			
+			var medNo = $('.popupTable tr:eq(1) td:eq(10)').text();
+			
+			
+			if(confirm('해당 예약을 수락하시겠습니까?')){
+				
+				var urlParams = new URL(location.href).searchParams;
+				var medNo= urlParams.get('medNo');
+				console.log('here1 ' +medNo);
+				
+				var revNum = $('.popupTable tr:eq(1) td:eq(0)').text();
+				console.log(revNum);
+				
+				var coupon = $('.popupTable tr:eq(1) td:eq(11)').text();
+				console.log(coupon);
+	            
+				let jsonData = {
+						'revNo': parseInt(revNum),
+						'medNo': parseInt(medNo),
+						'uid':uid,
+						'medical':medical,
+						'medNo':medNo,
+						'coupon':coupon
+				};
+	            $.ajax({
+	                url: "/HelloPet/admin/confirm/ok",
+	                method: 'post',
+	                data: jsonData,
+	                success: function(data){
+	                	
+	                    if (data.result) {
+	                        location.href = "/HelloPet/admin/confirm/list?medNo=" + medNo;
+	                    } else {
+	                        alert("수락에 실패하였습니다.");
+	                        return false;
+	                    }
+	                }
+	            });
+	        }else {
+		        var urlParams = new URL(location.href).searchParams;
+			    var medNo = urlParams.get('medNo');
+				var backUrl = "/HelloPet/admin/confirm/list?medNo="+medNo;
+		        
+		        window.location.href = backUrl;
+	            $('#popConfirm').removeClass('on');
+	            return false;
+	        }
+	    });
+		
+		$('.rejectForm').submit(function(e){
+			e.preventDefault(); // 폼 제출 막기
+			
+			var uid = $('.popupTable2 tr:eq(1) td:eq(8)').text();
+			console.log(uid);
+			
+			var medical = $('.popupTable2 tr:eq(1) td:eq(9)').text();
+			console.log(medical);
+			
+			var content = $('.popup-contents tr td textarea[name="content"]').val();
+			console.log(content);
+			
+			var medNo = $('.popupTable2 tr:eq(1) td:eq(10)').text();
+			
+			if(confirm('해당 예약을 거절하시겠습니까?')){
+				
+				var urlParams = new URL(location.href).searchParams;
+				var medNo= urlParams.get('medNo');
+				console.log('here1 ' +medNo);
+				
+				var revNum = $('.popupTable2 tr:eq(1) td:eq(0)').text();
+				console.log(revNum);
+				
+	            
+				let jsonData = {
+						'revNo': parseInt(revNum),
+						'medNo': parseInt(medNo),
+						'uid':uid,
+						'medical':medical,
+						'content':content,
+						'medNo':medNo
+				};
+	            $.ajax({
+	                url: "/HelloPet/admin/confirm/view",
+	                method: 'post',
+	                data: jsonData,
+	                success: function(data){
+	                	
+	                    if (data.result) {
+	                        location.href = "/HelloPet/admin/confirm/list?medNo=" + medNo;
+	                    } else {
+	                        alert("수락에 실패하였습니다.");
+	                        return false;
+	                    }
+	                }
+	            });
+	        }else {
+		        var urlParams = new URL(location.href).searchParams;
+			    var medNo = urlParams.get('medNo');
+				var backUrl = "/HelloPet/admin/confirm/list?medNo="+medNo;
+		        
+		        window.location.href = backUrl;
+	            $('#popReject').removeClass('on');
+	            return false;
+	        }
+	    });
+		
 	});
-
 </script>
         <main>
             <div class="top">
-                <h3>예약내역확인</h3>
+                <h3>예약내역</h3>
             </div>
             <div class="reserve_div">
                 <table class="reserve_table">
                     <tr>
-                        <th>예약번호</th>
+                        <th>#</th>
                         <th>보호자명</th>
                         <th>펫이름</th>
                         <th>예약일</th>
@@ -20,84 +133,141 @@
                         <th>예약상태</th>
                         <th>상태변경</th>
                     </tr>
-                    <tr th:each="item,i:${reserves}">
-                    <td style="display: none" name="revNo" class="revNo">[[${item.revNo}]]</td>
-                        <td>[[${pageStartNum - i.index}]]</td>
-                        <td>[[${item.oName}]]</td>
-                        <th:block th:if="${item.petNum == '1'}">
-                        	<td>[[${item.petName1}]]</td>
-                        </th:block>
-                        <th:block th:if="${item.petNum == '2'}">
-                        	<td>[[${item.petName1}]], [[${item.petName2}]]</td>
-                        </th:block>
-                        <td>[[${item.revDate}]]</td>
-                        <td>[[${item.revTime.substring(0, 5)}]]</td>
-                        <th:block th:if="${item.status == 0}">
-                        	<td>예약대기</td>
-                        </th:block>
-                        <th:block th:if="${item.status == 1}">
-                        	<td>예약수락</td>
-                        </th:block>
-                        <th:block th:if="${item.status == 2}">
-                        	<td>예약거절</td>
-                        </th:block>
-                        
-                        <td>
-                            <a href="#" class="btn btnConfirm">수락</a>
-                            <a class="btn btnReject">거절</a>
-                        </td>
-                    </tr>
+                    <th:block th:if="${#lists.isEmpty(reserves)}">
+		                 <tr>
+					        <td colspan="7">
+					            <p class="empty">예약이 없습니다.</p>
+					        </td>
+					    </tr>
+	                </th:block>
+                    <th:block th:unless="${#lists.isEmpty(reserves)}">
+	                    <tr th:each="item,i:${reserves}">
+	                    <td style="display: none" name="revNo" class="revNo">[[${item.revNo}]]</td>
+	                    <td style="display: none" name="coupon" class="coupon">[[${item.coupon}]]</td>
+	                        <td>[[${pageStartNum - i.index}]]</td>
+	                        <td>[[${item.oName}]]</td>
+	                        <th:block th:if="${item.petNum == '1'}">
+	                        	<td>[[${item.petName1}]]</td>
+	                        </th:block>
+	                        <th:block th:if="${item.petNum == '2'}">
+	                        	<td>[[${item.petName1}]], [[${item.petName2}]]</td>
+	                        </th:block>
+	                        <td>[[${item.revDate}]]</td>
+	                        <td>[[${item.revTime.substring(0, 5)}]]</td>
+	                        <th:block th:if="${item.status == 0}">
+	                        	<td>예약대기</td>
+	                        </th:block>
+	                        <th:block th:if="${item.status == 1}">
+	                        	<td>예약수락</td>
+	                        </th:block>
+	                        <th:block th:if="${item.status == 2}">
+	                        	<td>예약거절</td>
+	                        </th:block>
+	                        
+	                        <th:block th:if="${item.status == 0}">
+		                        <td>
+		                        	<a class="btn btnConfirm">수락</a>
+		                            <a class="btn btnReject">거절</a>
+		                        </td>
+	                        </th:block>
+	                        <th:block th:unless="${item.status == 0}">
+		                        <td>
+		                        </td>
+	                        </th:block>
+	                    </tr>
+                    </th:block>
                 </table>
                 <div class="paging">
-                    <ul>
-                        <li><a href="#" class="prev">←</a></li>
-                        <li><a href="#" class="on">1</a></li>
-                        <li><a href="#" class="next">→</a></li>
-                    </ul>
-                </div>
+                <ul>
+	                <th:block th:if="${groups[0]>1}">
+	                    <li><a th:href="@{/admin/confirm/list(medNo=${medNo},pg=${groups[0]-1})}" class="prev">←</a></li>
+	                </th:block>
+	                <th:block th:if="${groups[1] != 0}">
+	                <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+	                    <li><a th:href="@{/admin/confirm/list(medNo=${medNo},pg=${num})}" th:class="${num == currentPage?'num on':'num'}">[[${num}]]</a></li>
+	                </th:block>
+	                </th:block>
+	                <th:block th:if="${groups[1]<lastPageNum}">
+	                    <li><a th:href="@{/admin/confirm/list(medNo=${medNo},pg=${groups[1]+1})}" class="next">→</a></li>
+	                </th:block>
+                </ul>
+            </div>
             </div>
         </main>
 <th:block th:include="@{admin/_footer.html}"/>
+
+		<!-- 예약 수락 팝업 -->
+        <div id="popConfirm" class="popup">
+            <div>
+                <nav>
+                    <h1>예약수락</h1>
+                    <button class="btnClose">X</button>
+                </nav>
+                <section>
+	                <form method="post" class="confirmForm">
+	                	<article class="reserve">
+	                        <h3>예약정보</h3>
+	                        <table class="popupTable">
+	                            <tr>
+	                                <th>예약번호</th>
+	                                <th>보호자명</th>
+	                                <th>보호자연락처</th>
+	                                <th>펫이름/종/나이</th>
+	                                <th>진료과목</th>
+	                                <th>특이사항</th>
+	                                <th>예약일</th>
+	                                <th>시간</th>
+	                            </tr>
+	                            <tr class="confirmResult">
+	                            
+	                            </tr>
+	                        </table>
+	                    </article>
+	                    <div>
+	                        <input type="submit" class="btnOk" value="수락">
+	                    </div>
+	                </form>              
+                </section>                    
+            </div>
+        </div>
 
         <!-- 예약 거절 팝업 -->
         <div id="popReject" class="popup">
             <div>
                 <nav>
-                    <h1>예약거절사유</h1>
+                    <h1>예약거절</h1>
                     <button class="btnClose">X</button>
                 </nav>
                 <section>
-                	<article class="reserve">
-                        <h3>예약정보</h3>
-                        <table class="popupTable">
-                            <tr>
-                                <th>예약번호</th>
-                                <th>보호자명</th>
-                                <th>펫이름</th>
-                                <th>예약일</th>
-                                <th>시간</th>
-                            </tr>
-                            <tr th:if="${reserve != null}">
-                                <td>[[${reserve.revNo}]]</td>
-		                        <td>[[${reserve.oName}]]</td>
-		                        <td>[[${reserve.petName1}]]</td>
-		                        <td>[[${reserve.revDate}]]</td>
-		                        <td>[[${reserve.revTime}]]</td>
-                            </tr>
-                        </table>
-                    </article>
-                    <form action="#">
+	                <form method="post" class="rejectForm">
+	                	<article class="reserve">
+	                        <h3>예약정보</h3>
+	                        <table class="popupTable2">
+	                            <tr>
+	                                <th>예약번호</th>
+	                                <th>보호자명</th>
+	                                <th>보호자연락처</th>
+	                                <th>펫이름/종/나이</th>
+	                                <th>진료과목</th>
+	                                <th>특이사항</th>
+	                                <th>예약일</th>
+	                                <th>시간</th>
+	                            </tr>
+	                            <tr class="rejectResult">
+	                                
+	                            </tr>
+	                        </table>
+	                    </article>
 	                    <table class="popup-contents">
 	                        <tr>
 	                            <th>거절사유</th>
-	                            <td><textarea name="reject" placeholder="거절사유 입력"></textarea></td>
+	                            <td><textarea name="content" placeholder="거절사유 입력"></textarea></td>
 	                        </tr>
 	                    </table>
 	                    <div>
-	                        <button class="btnCancel">취소</button>
 	                        <input type="submit" class="btnSubmit" value="보내기">
 	                    </div>
-                    </form>              
+	                 </form>              
                 </section>                    
             </div>
         </div>

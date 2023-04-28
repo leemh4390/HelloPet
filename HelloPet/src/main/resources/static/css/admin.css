@@ -7,6 +7,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -54,6 +55,25 @@ header>.headerTop>div>a {
     color: #555;
     font-weight: 300;
 }
+header>.headerTop>div>label{
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+    cursor: pointer;
+}
+header>.headerTop>div>a:hover {
+	color: #10958b;
+}
+header>.headerTop>div>label:hover {
+	color: #10958b;
+}
+header>.headerTop>div>.message {
+	color: #3c83dc;
+}
 header>.headerTop>div>span {
     display: inline-block;
     height: 100%;
@@ -93,6 +113,7 @@ header > .menu > div > ul > li > a {
     padding: 0 64px;
 }
 header > .menu > div > ul > li img {width: 80%;}
+
 header > .menu > div > ul > li:nth-child(1) {
     position: relative;
     top: 3px;
@@ -107,6 +128,11 @@ header > .menu > div > ul > li:nth-child(3) {
     position: relative;
     top: 3px;
     left: 300px;
+}
+header > .menu > div > ul > li:nth-child(4) {
+    position: relative;
+    top: 3px;
+    left: 245px;
 }
 main {
     width: 100%;
@@ -336,7 +362,114 @@ table {
     cursor: pointer;
 }
 
+.find {
+	height: 700px;
+    width: 1100px;
+    margin: 0 auto;
+    padding-top: 100px;
+    box-sizing: border-box;
+}
+
+
+.find > nav {
+    border-bottom: 2px solid #32a69f;
+}
+.find > nav > h1 {
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.find table {
+    position: relative;
+    width: 100%;
+    table-layout: fixed;
+    border-top: 1px solid #b6bdc7;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.find table tr > td {
+    padding: 20px;
+    border: 1px solid #e9e9e9;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+.find table tr > td:nth-child(1) {width: 150px;}
+ .find table tr > td:nth-child(2) {font-weight: bold;}
+
+ .findPwChange table input {
+    width: 190px;
+    height: 40px;
+    border: 1px solid #e4eaec;
+    background: #f7f7f7;
+    text-indent: 10px;
+}
+
+.find table div {
+    margin-top: 4px;
+}
+
+
+.find > form >  p {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    line-height: 20px;
+    font-size: 16px;
+}
+
+ .find > form .btn {
+    float: right;
+}
+
+ .findPwChange table tr > td:nth-child(1) {width: 180px;}
+
+ .find > form .btn > .btnCancel {
+  display: inline-block;
+  width: 90px;
+  height: 50px;
+  text-align: center;
+  line-height: 36px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+  .find > form .btnCancel:hover {
+  background-color: #f7f7f7;
+}
+
+.find > form .btn > .btnNext {
+  padding: 7px 20px;
+  display: inline-block;
+  width: 90px;
+  height: 50px;
+  text-align: center;
+  line-height: 36px;
+  background-color: #067dfd;
+  border: 1px solid #0063ce;
+  border-radius: 2px;
+  font-weight: bold;
+  color: #fff;
+  margin: 10px auto;
+    cursor: pointer;
+  box-sizing: border-box;
+}
+
+.find > form .btn > .btnNext:hover {
+  background-color: #036dde;
+}
+
 /* confirm */
+.reserve_div .empty {
+	padding: 45px;
+    text-align: center;
+    box-sizing: border-box;
+    border:none;
+    font-size: 20px;
+}
+
 .reserve_div {
     position: relative;
     margin: 0 auto;
@@ -372,13 +505,14 @@ table {
     text-align: center;
 }
 .reserve_div > table tr > td .btn {
-    padding: 7px  20px;
-    margin: 10px;
+    padding: 7px 20px;
+    margin: 5px;
     color: #fff;
     font-size: 17px;
     font-weight: 300;
     background: #0dbcaf;
     cursor: pointer;
+    border:none;
 }
 .reserve_div > table tr > td .btnReject {
     background: #243b39;
@@ -442,7 +576,7 @@ table {
 .popup.on {display: block;}
 .popup > div {
     display: table;        
-    width: 50%;
+    width: 70%;
     height: auto;                
     margin: 0 auto;
     margin-top: 200px;
@@ -481,29 +615,54 @@ table {
     box-sizing: border-box;
 }
 
-.popup > div > section > article {}
-.popup > div > section > article > h3 {
+.popup > div > section > form > article {}
+.popup > div > section > form > article > h3 {
     font-size: 20px;
     margin-bottom: 4px;
 }
-.popup > div > section > article > .popupTable {
+.popup > div > section > form > article > .popupTable {
     flex: 1;
     width: 100%;
     border-bottom: 3px solid#dddddd;
     border-top: 3px solid#dddddd;
 }
-.popup > div > section  > article > .popupTable tr {
+.popup > div > section > form  > article > .popupTable tr {
     flex: 1;
 }
 
-.popup > div > section  > article > .popupTable tr > th {
+.popup > div > section > form  > article > .popupTable tr > th {
     padding: 10px 10px;
     color: #333;
     background-color: #fbfbfb;
     font-size: 16px;
     border-bottom: 1px solid #dddddd;
 }
-.popup > div > section > article > .popupTable tr > td{
+.popup > div > section > form > article > .popupTable tr > td{
+    padding: 15px 10px;
+    color: #555;
+    background-color: #fff;
+    font-size: 16px;
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+}
+.popup > div > section > form > article > .popupTable2 {
+    flex: 1;
+    width: 100%;
+    border-bottom: 3px solid#dddddd;
+    border-top: 3px solid#dddddd;
+}
+.popup > div > section  > form > article > .popupTable2 tr {
+    flex: 1;
+}
+
+.popup > div > section > form  > article > .popupTable2 tr > th {
+    padding: 10px 10px;
+    color: #333;
+    background-color: #fbfbfb;
+    font-size: 16px;
+    border-bottom: 1px solid #dddddd;
+}
+.popup > div > section > form > article > .popupTable2 tr > td{
     padding: 15px 10px;
     color: #555;
     background-color: #fff;
@@ -561,6 +720,20 @@ table {
     cursor: pointer;
 }
 .btnSubmit:hover {
+    background: #09887f;
+    border: 1px solid #09887f;
+}
+.btnOk {
+    padding: 7px  20px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 300;
+    background: #0dbcaf;
+    border: 1px solid #0dbcaf;
+    margin: 10px auto;
+    cursor: pointer;
+}
+.btnOk:hover {
     background: #09887f;
     border: 1px solid #09887f;
 }

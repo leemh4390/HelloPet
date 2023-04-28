@@ -1,0 +1,62 @@
+<th:block th:include="@{admin/_header.html}"/>
+<link rel="stylesheet" th:href="@{/css/admin_product.css}">
+<script>
+	$(function(){
+			$('.c-price').on('input', function(){
+		        $('input[name=discount]').val(0);
+		    });
+	
+		    $('.c-discount').on('input', function(){
+		        $('input[name=disprice]').val(0);
+		    });
+    		
+    	});
+</script>
+        <main>
+            <div class="top">
+                <h3>쿠폰 기본정보수정</h3>
+            </div>
+            <div class="product_register">
+                <form action="#" method="post">
+                    
+                    <h3>기본정보</h3>
+                    <table class="register_table2">
+                        <tr>
+                            <td>쿠폰명</td>
+                            <td>
+                                <input type="text" class="c-name" name="cpName" th:value="${coupon.cpName}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>할인가</td>
+                            <td> 
+                                <input type="text" class="c-price" name="disprice" th:value="${coupon.disprice}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>할인율</td>
+                            <td> 
+                                <input type="text" class="c-discount" name="discount" th:value="${coupon.discount}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>적용조건</td>
+                            <td> 
+                                <input type="text" class="c-req" name="require" th:value="${coupon.require}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>유효기간</td>
+                            <td> 
+                                <input type="date" class="c-vaild" name="vaild" th:value="${coupon.vaild}">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="register_btn">
+                        <a th:href="@{list}">취소</a>
+                        <input type="submit" class="btn_delete" value="수정하기">
+                    </div>
+                </form>
+            </div>
+        </main>
+<th:block th:include="@{admin/_footer.html}"/>

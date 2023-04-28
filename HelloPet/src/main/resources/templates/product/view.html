@@ -1,0 +1,201 @@
+<th:block th:include="@{product/_header.html}"/>
+<!-- 
+날짜 : 2023-03-22 ~ 2023-03-24
+내용 : product view 상품 리스트 출력 구현 하기
+이름 : 장인화
+ -->
+<script>
+	$(function(){
+		var level = $('.level').text();
+		console.log(level);
+		
+		$('#aCardAdd').click(function(){
+			if(level !=  null && $.trim(level) !== ''){
+				if(level == 1 || level == 7){
+					return true;
+				}else{
+					alert('일반회원만 가능합니다.')
+					return false;
+				}
+				
+			}else{
+				alert('로그인이 필요합니다.');
+				return false;
+			}
+		});
+	});
+</script>
+<div id="productView">
+
+    <div id="container" ng-app="appProduct" class="ng-scope">
+    	<div class="div1">
+	    	<h3 class="title">진료상품</h3>
+	    </div>
+    
+        <div class="wid1200">
+	          <div class="lodcation">
+	              <span class="ic-home">
+	              	  <a th:href="@{/index}">HOME </a>
+	              </span>
+	                  >
+	              <span>
+	                  <a th:href="@{/product}">진료상품 </a>
+	              </span>
+	                  >
+	              <span>
+	                  <a th:href="@{/product/list?(cate1=${cate1})}">[[${product.c1Name}]] </a>
+	              </span>
+	                  >
+	              <span>
+	                  <a th:href="@{/product/list?(cate1=${cate1},cate2=${cate2})}">[[${product.c2Name}]] </a>
+	              </span>
+	           </div>
+        </div>
+        
+        <div class="hhh">
+	       	<div class="prod-hd">
+	            <div class="thumb">
+	                <img th:src="${product.thumb1}"  style=" width: 450px;" >
+	            </div>
+	        </div>
+	        
+	        
+	        <div class="explain">
+		        <div class="prod-inf">
+		            <h2 class="tit">[[${product.prodName}]] </h2>
+		        </div>
+		        
+		        <div class="prod-gud">
+		            <dl>
+		                <dt>수술가격</dt>
+		                <dd class="price">
+		                	<th:block th:if="${product.discount != 0}">
+								<div class="oriPrice">
+									<span class="ori" data-th-text="${#numbers.formatInteger(product.price, 3, 'COMMA')}">[[${product.price}]]원</span>
+									<span class="discount">[[${product.discount}]]%↓</span>
+								</div>
+							 </th:block>
+							 <th:block th:if="${product.discount == 0}">
+		                        <div class="disPrice">
+		                        	<span data-th-text="${#numbers.formatInteger(product.price, 3, 'COMMA')}">[[${product.price}]]</span>
+		                        </div>
+	                         </th:block>		
+							 <th:block th:if="${product.discount != 0}">
+	                        	<div class="disPrice">
+		                        	<span data-th-text="${#numbers.formatInteger(product.price*(100-product.discount)/100, 3, 'COMMA')}">
+		                        	[[${#numbers.formatInteger(product.price*(100-product.discount)/100, 3)}]]</span>
+		                        </div>
+	                        </th:block>
+		                </dd>
+		            </dl>
+		             <dl sec:authorize="isAuthenticated()">
+		                <dt>쿠폰할인가</dt>
+		                <dd class="MaxDc">
+		                    <strong id="coupon">[[${cp.cpName}]] 적용 시 
+		                    <span id="MaxDcRE" data-th-text="${#numbers.formatInteger(product.price*(100-cp.discount)/100, 3, 'COMMA')}">
+		                    [[${#numbers.formatInteger(product.price*(100-cp.discount)/100, 3)}]]</span></strong>
+		                    <span class="nono">(중복할인 불가)</span>
+		                </dd>
+		             </dl>
+		            <dl>
+		                <dt>판매병원명</dt>
+		                <dd class="hospital">
+		                    <strong id="sSaleHospInfo">[[${product.medicalName}]]</strong>
+		                </dd>
+		            </dl>
+		            <dl>
+		                <dt>기본 설명</dt>
+		                <dd class="description">
+		                    <strong id="sSaleDescriptInfo">[[${product.descript}]]</strong>
+		                </dd>
+		            </dl>
+		        </div>
+		    
+		        <div class="button-box">
+		            <a style="cursor:pointer" class="btn btn-lg btn-line blue" id="aCardAdd"
+		             	th:href="@{/search/reserve(hosNo=${product.medNo},prodNo=${product.prodNo})}">예약하기</a>
+		             	
+		        </div>
+		        <label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span>
+			  </div>  
+		</div>  
+		  
+		  
+		  
+		  
+        <div class="prod-con" style="margin-top :150px">
+            <div class="prod-tab"></div>
+        </div>
+        <div class="prod-bx">
+            <div class="detail-left">
+                <div class="d101" id="d101">
+                    <img th:src="${product.detail}">
+                </div>
+
+            </div>
+        </div>
+		
+		<div class="detail1">
+			<div class="detail">	       
+	        	<h3 class="detail-tit">업체정보 : [[${product.medicalName}]]</h3>
+			</div>
+		</div>
+        <div id="map"></div>
+        <input type="hidden" name="addr1" th:value="${med.addr1}">
+        <input type="hidden" name="medName" th:value="${med.medicalName}">
+        
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5f25185293d664bcd951443d8b8e4a67&libraries=services"></script>
+        <script>
+        
+        
+        
+        let addr = $('input[name=addr1]').val();
+        let medName = $('input[name=medName]').val();
+        console.log(addr);
+        console.log(medName);
+        
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };  
+
+	    // 지도를 생성합니다    
+	    var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	    // 주소-좌표 변환 객체를 생성합니다
+	    var geocoder = new kakao.maps.services.Geocoder();
+	
+	    // 주소로 좌표를 검색합니다
+	    geocoder.addressSearch(addr, function(result, status) {
+	
+	        // 정상적으로 검색이 완료됐으면 
+	         if (status === kakao.maps.services.Status.OK) {
+	
+	            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	            // 결과값으로 받은 위치를 마커로 표시합니다
+	            var marker = new kakao.maps.Marker({
+	                map: map,
+	                position: coords
+	            });
+	
+	            // 인포윈도우로 장소에 대한 설명을 표시합니다
+	            var infowindow = new kakao.maps.InfoWindow({
+	                content: '<div style="width:150px;text-align:center;padding:6px 0;">'+medName+'</div>'
+	            });
+	            infowindow.open(map, marker);
+	
+	            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	            map.setCenter(coords);
+	        } 
+	    });    
+				   
+		</script>
+	  
+	  
+   	 
+
+</div>
+
+<th:block th:include="@{product/_footer.html}"/>

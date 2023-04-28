@@ -1,124 +1,12 @@
 <th:block th:include="@{my/_header.html}"/>
-<script>
-
-	function list(){
-		$.ajax({
-			url : '/HelloPet/my/myReserve_List',
-			method : 'GET',
-			dataType : 'json',
-			success : function(data){
-				let total = data.total;
-				let currentPage = data.currentPage;
-				let lastPageNum = data.lastPageNum;
-				let pageStartNum =data.pageStartNum;
-				let groups = data.groups;
-				let i = 0;
-				
-				$('.reserve-list').remove();
-				$('.prev a').remove();
-				$('.num a').remove();
-				$('.next a').remove();
-	            $.each(data.articles, function(index, articles) {
-	            	i += 1;
-	                let tags = "<tr class='reserve-list'>";
-		                tags += "<td><input type='checkbox' class='rev_No' value='"+articles.revNo+"'></td>";
-		                tags += "<td>"+(total - i + 1)+"</td>";
-		                tags += "<td>";
-		                if (articles.status == 0) {
-		                  tags += "<span>예약대기중</span>";
-		                } else if (articles.status == 1) {
-		                  tags += "<span>예약확정</span>";
-		                } else if (articles.status == 2) {
-		                  tags += "<span>예약거절</span>";
-		                }
-		                tags += "</td>";
-		                tags += "<td>"+articles.hosName+"</td>";
-		                tags += "<td>"+articles.petName1+"</td>";
-		                tags += "<td>"+articles.revDate+"</td>";
-		                tags += "<td>"+articles.revTime+"</td>";
-		                tags += "</tr>";
-	                $('.reserve_table').append(tags);
-	            });
-	            
-	            
-	            // prve 
-	            if(groups[0] == null || groups[0] <= 5) {
-            	  let prevHtml = "<span class='prev'><a href='/my/myReserve?pg=1'>&lt;&nbsp;이전</a></span>";
-            	  $('.paging').append(prevHtml);
-	            }
-	            
-	            // num
-	            let html  = "<span class='num'>";
-	            for(let num = groups[0]; num <= groups[1]; num++){
-	            	 html += "<a href='/HelloPet/my/myReserve?pg="+num+"' class='num" + (num == currentPage ? "current on" : "off") + "' style='margin-right: 5px;'>" + num + "</a>";
-            	}
-	            	html += "</span>";
-            	$('.paging').append(html);
-				
-            	// next
-            	let nextHtml = "";
-            	if (groups[1] < lastPageNum) {
-            	    nextHtml += "<span class='next'>";
-            	    nextHtml += "<a href='/HelloPet/my/myReserve?pg=" + (groups[1] + 1) + "'>다음&nbsp;&gt;</a>";
-            	    nextHtml += "</span>";
-            	    
-            	} else if (groups[1] >= lastPageNum) {
-            	    nextHtml += "<span class='next'>";
-            	    nextHtml += "<a href='/HelloPet/my/myReserve?pg=" + lastPageNum + "'>다음&nbsp;&gt;</a>";
-            	    nextHtml += "</span>";
-            	}
-            	
-            	$('.paging').append(nextHtml);
-			}
-		});
-	}
-
-	$(document).ready(function(){
-		$('.reserve_cancel').click(function(){
-			
-			// 배열 생성
-			let arr_rev   = [];
-			
-			// 데이터를 배열에 넣기
-			$('.rev_No:checked').each(function(){
-				arr_rev.push($(this).val());
-			});
-			
-			// 크기 확인
-			let length = arr_rev.length;
-			
-			if(length > 0){
-				
-				let jsonData = {'rev_No' : arr_rev};
-				
-				// ajax 처리..
-				$.ajax({
-					url : '/HelloPet/my/myReserveCancel',
-					method : 'GET' ,
-					data : jsonData ,
-					dataType : 'json' ,
-					traditional : true ,
-					success : function(data) {
-						if(data.result > 0){
-							alert(data.result + " 건이 삭제되었습니다.");
-							list();
-						}
-					}
-				});
-				
-			}else{
-				alert('취소하고 싶은 게시글을 체크해주세요.');
-			}
-		});
-	});
-		
-</script>
  	<div class="mypage-contents">
 	     <div class="mypage-contents_head">
-	         <h2 class="mypage-contents__title">게시글관리</h2>
+	         <h2 class="mypage-contents__title">예약관리</h2>
 	   	</div>
 	         <!--게시물 목록-->
 	         <div class="reserve_div">
+	         	 <input type="hidden" name="currentPage" th:value="${currentPage}"/>
+	         	 <input type="hidden" name="lastPageNum" th:value="${lastPageNum}"/>
 	             <table class="reserve_table">
 	                 <tr>
 	                     <th>#</th>
@@ -129,7 +17,13 @@
 	                     <th>예약일</th>
 	                     <th>시간</th>
 	                 </tr>
-	                 <tr th:each="article,i:${articles}" class="reserve-list">
+	                 <tr th:if="${articles.size() == 0}">
+	                 	<td colspan="7">
+	                 		예약이 없습니다.
+	                 	</td>
+	                 </tr>
+	                 
+	                 <tr th:each="article,i:${articles}" class="reserve-list" th:if="${articles.size() > 0}">
 	                     <td><input type="checkbox" class="rev_No" th:value="${article.revNo}"></td>
 	                     <td>[[${pageStartNum - i.index }]]</td>
 	                     <td>
@@ -146,34 +40,30 @@
 	                     <td>[[${article.hosName}]]</td>
 	                     <td>[[${article.petName1}]]</td>
 	                     <td>[[${article.revDate}]]</td>
-	                     <td>[[${article.revTime}]]</td>
+	                     <td>[[${article.revTime.substring(0,5)}]]</td>
 	                 </tr>
 	             </table>
 	             <div class="reserve_cancel">
-	                 <a href="#">취소</a>
+	                 <a href="#">삭제</a>
 	             </div>
 	         </div>
         	 <!-- 검색목록 페이지 번호 -->
          	<!-- 검색목록 페이지 번호 -->
        		<div class="paging">
-				<span class="prev" th:if="${currentPageGroup == null or currentPageGroup[0] <= 5}">
-				    <a th:href="@{/my/myReserve(pg=1)}">
-				      &lt;&nbsp;이전
-				    </a>
-				</span>
-                    <span class="num">
-                    <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
-                        <a th:href="@{/my/myReserve(pg=${num})}" 
-                        th:class="${num==currentPage ? 'on':'off'}"+"${num==currentPage?'num current':'num'}">[[${num}]]</a>
-                    </th:block>
-                    </span>
-                    <span class="next" th:if="${groups[1] < lastPageNum}">
-                        <a th:href="@{/my/myReserve(pg=${groups[1]+1})}">다음&nbsp;></a>
-                    </span>
-				<span class="next" th:if="${groups[1] >= lastPageNum}">
-				    <a th:href="@{/my/myReserve(pg=${lastPageNum})}">다음&nbsp;></a>
-				</span>
-   			</div>
+              <ul>
+               <th:block th:if="${groups[0]>1}">
+                   <li><a th:href="@{/my/myReserve(pg=${groups[0]-1})}" class="prev">←</a></li>
+               </th:block>
+               <th:block th:if="${groups[1] != 0}">
+               <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                   <li><a th:href="@{/my/myReserve(pg=${num})}" th:class="${num == currentPage?'num on':'num'}">[[${num}]]</a></li>
+               </th:block>
+               </th:block>
+               <th:block th:if="${groups[1]<lastPageNum}">
+                   <li><a th:href="@{/my/myReserve(pg=${groups[1]+1})}" class="next">→</a></li>
+               </th:block>
+              </ul>
+          </div>
       	</div>
   </div>
   </div>

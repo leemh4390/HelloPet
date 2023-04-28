@@ -1,19 +1,5 @@
 <th:block th:include="@{cs/_header.html}"/>
 <script>
-  window.onload = function() {
-    var rdate = getUrlParameter('rdate');
-    history.replaceState(null, null, window.location.pathname + "?no=" + getUrlParameter('no') + "&pg=" + getUrlParameter('pg'));
-    // rdate 값을 사용하여 필요한 곳에 전달합니다.
-  }
-
-  function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  };
-</script>
-<script>
 	$(function(){
 		$('.btnDel').click(function(){
 			if(confirm('정말 삭제하시겠습니까?')){
@@ -22,11 +8,65 @@
 				return false;
 			}
 		});
+		var uid = $('input[name=uid]').val();
+    	console.log("uid"+uid);
+
+    	var level = $('input[name=level]').val();
+    	console.log("level"+level);
+    	
+    	var cpNo = parseInt($('span[name=cpNo]').text());
+		console.log("cpNo"+cpNo);
 		
+		let jsonData = {
+				'cpNo' : cpNo,
+				'uid' : uid
+		};
+		
+		$('.coupon_button').click(function(){
+			if(level != null){
+				if(level == 1){
+					$.ajax({
+						url : '/HelloPet/cs/countCoupon',
+						method : 'GET',
+						data : {'uid':uid, 'cpNo':cpNo},
+						dataType : 'json',
+						success : function(data){
+							if(data.result == 0){
+								$.ajax({
+									url : "/HelloPet/cs/coupon",
+							    	method : 'GET',
+							    	data : jsonData,
+							    	dataType : 'json',
+							    	success : function(data){
+							    		alert('쿠폰이 발급되었습니다. 마이페이지 > 나의 쿠폰에서 확인하세요.');
+							    		window.location.reload();
+							    	}
+							    });
+							}else{
+								alert('이미 발급된 쿠폰입니다.');
+								return false;
+							}
+						}
+					 });
+				}else{
+					alert('일반회원만 발급 가능합니다.');
+	    			return false;
+				}
+				
+			}else{
+    			alert('로그인이 필요합니다.');
+    			return false;
+    		}
+		});
 	});
 	
 </script>
  <main id="notice">
+ <input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}" sec:authorize="hasAuthority('ROLE_1')">
+ <input type="hidden" name="level" th:value="${#authentication.principal.member.level}" sec:authorize="hasAuthority('ROLE_1')">
+ <input type="hidden" name="level" th:value="${#authentication.principal.member.level}" sec:authorize="hasAuthority('ROLE_7')">
+ <input type="hidden" name="level" th:value="${#authentication.principal.medical.level}" sec:authorize="hasAuthority('ROLE_2')">
+ <input type="hidden" name="level" th:value="${#authentication.principal.medical.level}" sec:authorize="hasAuthority('ROLE_3')">
 		    <div class="top">
 		        <h3>고객센터</h3>
 		    </div>
@@ -50,6 +90,20 @@
                             </td>
                             <td align="right"></td>
                         </tr>
+                        <tr class="coupon" th:if="${vo.couponNo} > 0">
+                        	<td>
+		                        <div class="cs_view_coupon">
+				                	<div class="coupon_button">
+				                		<div class="coupon_text" th:text="${vo.cpName + ' 다운로드'}"></div>
+				                		<div class="coupon_img" style="cursor : pointer;">
+				                			<img th:src="@{/img/cscoupon.png}">
+				                			<span name="cpNo" style="display: none;" th:text="${vo.couponNo}"></span>
+				                		</div>
+				                		
+				                	</div>
+			                	</div>
+		                	</td>
+	                	</tr>
                         <tr>
                             <td colspan="2" class="content">
                             	<th:block th:if="${vo.img} != null">
@@ -58,6 +112,7 @@
                                 <p>[[${vo.content}]]</p>
                             </td>
                         </tr>
+                        
                     </table>
                     <table class="viewTable2">
                         <tr>

@@ -1,19 +1,27 @@
 <th:block th:include="@{disease/_header.html}"/>
-    
+ <script>
+	$(function(){
+		var urlParams = new URL(location.href).searchParams;
+		var group= urlParams.get('group');
+		console.log(group);
+		if (group == 'dog') {
+			$('li:contains("반려견")').addClass('on');
+		} else if (group == 'cat') {
+			$('li:contains("반려묘")').addClass('on');
+		}
+	});
+</script>   
 </head>
-
         <main>
-            <div id="sub-wrap">
                 <div id="sub-wrap">
                     <div class="top">
                         <h3>증상별 질병검색</h3>
                     </div>
                     <div class="tab">
                         <ul>
-                            <li class="on"><a th:href="@{/disease/index(group=dog)}">반려견</a></li>
-                            <li><a th:href="@{/disease/index(group=cat)}">반려견</a></li>
+                            <li th:classappend="${group == 'dog'}?'on':'off'"><a th:href="@{/disease/index(group=dog)}">반려견</a></li> 
+                			<li th:classappend="${group == 'cat'}?'on':'off'"><a th:href="@{/disease/index(group=cat)}">반려묘</a></li> 
                         </ul>
-                        
                     </div>
                 <div class="top-round top-round--lager">
                     <h4 class="title">[[${vo.c1Name}]]</h4> 
@@ -52,6 +60,5 @@
                     </div>
                 </section>
             </div>
-            </div>       
-                </main>
-               <th:block th:include="@{disease/_footer.html}"/>
+          </main>
+<th:block th:include="@{disease/_footer.html}"/>

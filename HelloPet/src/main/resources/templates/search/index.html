@@ -4,6 +4,7 @@
 이름 : 장인화
 내용 : 동물병원 search index 
  -->
+ 
  <script>
  
  function checkUidHs() {
@@ -28,21 +29,34 @@
 	  }
 	}
  
- 
+ function goView2() {
+	 let uid = $('.uid').text();
+	 console.log(uid)
+	 
+	  if (uid) {
+	    window.location.href = "/HelloPet/search/view2?uid=" + uid// uid가 있으면 해당 페이지로 이동
+	  } else {
+	    alert("로그인이 필요합니다."); // uid가 없으면 알람 띄우기
+	  }
+	}
  </script>
 
         <main class="SearchIndex">
             <div class="start">
             	<img th:src="@{/img/search2.jpg}" alt="한번에">
-				<label sec:authorize="isAuthenticated()" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span>
-				</label>
+				<label sec:authorize="hasAuthority('ROLE_1')" style="display: none;"><span class="uid" name="uid" sec:authentication="principal.member.uid">길동</span></label>
+				<label sec:authorize="hasAuthority('ROLE_7')" style="display: none;"><span class="uid" name="uid"  sec:authentication="principal.member.uid">길동</span></label>
+				<label sec:authorize="hasAuthority('ROLE_2')"  style="display: none;"><span class="uid" name="uid" sec:authentication="principal.medical.uid">길동</span></label>
+				<label sec:authorize="hasAuthority('ROLE_3')" style="display: none;"><span class="uid" name="uid"  sec:authentication="principal.medical.uid">길동</span></label>
+				
 			</div>
             <div class="btns">
                     <div id="s1" onclick="checkUidHs()"><img th:src="@{/img/search-find1.png}" alt="찾기1"></div>
                     <div id="s2" onclick="checkUidPh()"><img th:src="@{/img/search-find2.png}" alt="찾기2"></a>
             </div>
             <div class="end">
-                <img th:src="@{/img/search1.jpg}" alt="신규회원혜택">
+            	<img class="mawa" th:src="@{/img/search-주변.png}" alt="내 주변 병원" onclick="goView2()" style="margin: 20px 120px;">
+                <img th:src="@{/img/search1.jpg}" alt="신규회원혜택" style="width: 80%;margin: 20px 120px;">
             </div>
         </main>
 <th:block th:include="@{search/_footer.html}"/>

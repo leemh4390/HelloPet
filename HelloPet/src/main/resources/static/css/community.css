@@ -7,6 +7,7 @@
 a {
     text-decoration: none;
     color: #555;
+    cursor: pointer;
 }
 ul, ol {list-style: none;}
 input, textarea {
@@ -55,6 +56,25 @@ header>.headerTop>div>a {
     font-size: 14px;
     color: #555;
     font-weight: 300;
+}
+header>.headerTop>div>label{
+    display: inline-block;
+    height: 100%;
+    line-height: 35px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 300;
+    cursor: pointer;
+}
+header>.headerTop>div>a:hover {
+	color: #10958b;
+}
+header>.headerTop>div>label:hover {
+	color: #10958b;
+}
+header>.headerTop>div>.message {
+	color: #3c83dc;
 }
 
 header>.menu {
@@ -166,13 +186,9 @@ main {
     color: #fff;
 }
 
-
-
-
-
-
 footer {
-    height: 180px;
+    margin-top: 100px;
+    height: 200px;
     background: #b4e8e3;
     padding: 43px 0 75px;
 }
@@ -180,14 +196,12 @@ footer {
     max-width: 524px;
 }
 .footer .container {
-    display: flex;
+     display: flex;
     justify-content: space-between;
     position: relative;
-    width: 1200px;
-    margin: 0 auto;
 }
 
-.info {margin: 0 -8px;}
+.info {margin: 0 50px;}
 .info li {
     float: left;
     padding: 8px;
@@ -201,7 +215,7 @@ footer {
     font-weight: 700;
 }
 .link {
-    margin: -10px;
+    margin-right: 100px;
 }
 .link li {
     float: left;
@@ -1459,6 +1473,8 @@ color: #fff;
     padding-left: 45px;
 }
 
+
+
 .gallery_modal_right  .gallery_content_head_top .content_item_img{
     position: absolute;
     top: 50%;
@@ -1512,6 +1528,18 @@ color: #fff;
     background-color: white;
 }
 
+.gallery_modal_right  .gallery_content_head_top .icon-heart-mint{
+    width: 18px;
+    height: 15px;
+    background-image: url(../img/icon-heart-mint.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+}
+
 .gallery_modal_right  .gallery_content_head_top .icon-talk{
     width: 16px;
     height: 15px;
@@ -1554,6 +1582,8 @@ color: #fff;
     z-index: 0;
 }
 
+
+
 .gallery_content_head_bottom .v_responsive{
     transition: padding-bottom .2s cubic-bezier(.25,.8,.5,1);
     flex: 1 0 0px;
@@ -1566,6 +1596,8 @@ color: #fff;
     left: 0;
     width: 100%;
     height: 100%;
+    background-image: url(../img/favicon_x32.png);
+    background-position: center center;
 }
 
 .gallery_content_head_bottom .v_responsive_content{
@@ -1627,9 +1659,11 @@ color: #fff;
     margin: -5px 0;
 }
 
-.gallery_content_body .content_item{
+.gallery_content_body .content_reply{
     padding: 5px 0;
 }
+
+
 
 .gallery_content_body .content_item_inner{
     position: relative;
@@ -1638,7 +1672,10 @@ color: #fff;
     align-items: center;
     min-height: 36px;
     padding-left: 45px;
+    margin-bottom: 20px;
 }
+
+
 
 .gallery_content_body .content_item_img{
     top: 26px;
@@ -1652,6 +1689,7 @@ color: #fff;
     background-size: cover;
     background-color: #eee;
     border-radius: 100%;
+    background-image: url(../img/favicon_x32.png);
 }
 
 .gallery_content_body .content_item_con{
@@ -1723,7 +1761,7 @@ color: #fff;
     display: none;
 }
 
-.gallery_content_body .info_item > span{
+.gallery_content_body .info_item  span{
     margin-left: 5px;
 }
 

@@ -16,23 +16,65 @@
     <link async="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/admin.css}">
     <script th:src="@{/js/popup.js}"></script>
+    <script>
+        function goMsg (){
+        	var uid = $('.uid').text();
+        	console.log(uid);
+        	
+        	location.href="/HelloPet/message/message";
+        }
+        
+        $(function(){
+        	var level = $('.level').text();
+        	console.log(level);
+        	
+        	$('.cs').click(function(){
+    			if(level !=  null && $.trim(level) !== ''){
+        			if(level == 1 || level == 7){
+        				return true;
+        			}else{
+        				alert('일반회원만 가능합니다.')
+        				return false;
+        			}
+        			
+        		}else{
+        			alert('로그인이 필요합니다.');
+        			return false;
+        		}
+        	});
+        });
+    </script>
 </head>
 <body>
     <div id="wrapper">
         <header class="header">
             <div class="headerTop">
                 <div>
-                    <span th:text="${vo.medicalName}+'님'"></span>
+                    <span sec:authorize="hasAuthority('ROLE_2')"  th:text="${vo.medicalName}+'님'"></span>
+                    <span sec:authorize="hasAuthority('ROLE_3')"  th:text="${vo.medicalName}+'님'"></span>
+                    <label sec:authorize="hasAuthority('ROLE_7')" th:text="웹관리자님"></label>
                     <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
                     <a th:href="@{/}">홈으로 가기</a>
+                    <a sec:authorize="isAuthenticated()" onclick="goMsg()" class="message">알림 ([[${msg2}]])</a>
+                	<a th:href="@{/cs/notice/list}">고객센터</a>
                 </div>
             </div>
             <div class="menu">
                 <div>
-                    <ul>
-                        <li class="logo"><a th:href="@{/admin/info(medNo=${vo.medNo})}"><img th:src="@{/img/admin_logo.png}" alt="logo"></a></li>
+                    <ul sec:authorize="hasAuthority('ROLE_2')">
+                        <li class="logo"><a  th:href="@{/admin/info(medNo=${vo.medNo})}"><img th:src="@{/img/admin_logo.png}" alt="logo"></a></li>
                         <li><a th:href="@{/admin/info(medNo=${vo.medNo})}">정보관리</a></li>
-                        <li><a th:href="@{/admin/confirm/list(medNo=${vo.medNo})}">예약내역확인</a></li>
+                        <li><a th:href="@{/admin/confirm/list(medNo=${vo.medNo})}">예약내역</a></li>
+                    </ul>
+                    <ul sec:authorize="hasAuthority('ROLE_3')">
+                        <li class="logo"><a  th:href="@{/admin/info(pharNo=${vo.pharNo})}"><img th:src="@{/img/admin_logo.png}" alt="logo"></a></li>
+                        <li><a th:href="@{/admin/info(pharNo=${vo.pharNo})}">정보관리</a></li>
+                    </ul>
+                    <ul sec:authorize="hasAuthority('ROLE_7')">
+                        <li class="logo"><a  th:href="@{/admin/info}"><img th:src="@{/img/admin_logo.png}" alt="logo"></a></li>
+                        <li><a th:href="@{/admin/info}">정보관리</a></li>
+                        <li><a th:href="@{/admin/product/list}">진료상품관리</a></li>
+                        <li><a th:href="@{/admin/coupon/list}">쿠폰관리</a></li>
                     </ul>
                 </div>
             </div>

@@ -5,6 +5,9 @@
 -->
 <th:block th:include="@{community/_header.html}"/>
         <script>
+        
+        /*<![CDATA[*/
+        
             $(function(){
             	
             	
@@ -18,51 +21,64 @@
                 
                 
                 
-                	let heartVal = $('input[name=find]').val(); 
-                	let uid = $('input[name=uid]').val();
-                	let no = $('input[name=no]').val();
-                	
+                	let heartVal = "[[${find}]]";
+               		let uid = "[[${uid}]]";
+                	let no = "[[${article.no}]]";
+                	let writerUid = "[[${article.uid}]]";
+                	let nick = $('input[name=nick]').val();
                 	
                 	
                 	let jsonData = {'no' : no,
-        							'uid' : uid};
+        							'uid' : uid,
+        							'writerUid' : writerUid,
+        							'nick' : nick};
         	
                 
                 	if(heartVal > 0){
                 		$('.heart_img').html('<img src="/HelloPet/img/icon-heart-mint.png">');
                 		
-                		// 클릭
-                		$.ajax({
-    						url : "/HelloPet/community/HeartDown",
-    				    	method : 'POST',
-    				    	data : jsonData,
-    				    	dataType : 'json',
-    				    	success : function(data){
-    				    		alert('down');
-    				    	}
-    				    		
-    				    	});
+                		$('.heart_img').click(function(){
+                			$.ajax({
+        						url : "/HelloPet/community/HeartDown",
+        				    	method : 'GET',
+        				    	data : jsonData,
+        				    	dataType : 'json',
+        				    	success : function(data){
+        				    			$('.heart_img').html('<img src="/HelloPet/img/icon-heart.png">');
+        				    			window.location.reload();
+        				    	}
+        				    		
+        				    	});
+                		});
+                		
                 	}else{
+                		
                 		$('.heart_img').html('<img src="/HelloPet/img/icon-heart.png">');
                 		
-                		// 클릭
-                		$.ajax({
-    						url : "/HelloPet/community/HeartUp",
-    				    	method : 'POST',
-    				    	data : jsonData,
-    				    	dataType : 'json',
-    				    	success : function(data){
-    				    		alert('up');
-    				    	}
-    				    		
-    				    	});
+                		$('.heart_img').click(function(){
+                			$.ajax({
+        						url : "/HelloPet/community/HeartUp",
+        				    	method : 'GET',
+        				    	data : jsonData,
+        				    	dataType : 'json',
+        				    	success : function(data){
+        				    		$('.heart_img').html('<img src="/HelloPet/img/icon-heart-mint.png">');
+        				    		window.location.reload();
+        				    	}
+        				    		
+        				    	});
+                		});
+                		
                 		
                 	}
                 	
-        	
+                	
          });
+        
+            /*]]>*/
         </script>
         <main>
+        	<input type="hidden" name="nick" th:value="${#authentication.principal.member.nick}" sec:authorize="isAuthenticated()">
             <div class="top">
                 <h3>커뮤니티</h3>
             </div>
@@ -72,8 +88,6 @@
                     <li><a th:href="@{/community/talktalk/list}">반려동물 톡톡</a></li>
                 </ul>
             </div>
-            	<input type="hidden" name="no" th:value="${article.no}">
-            	<input type="hidden" name="find" th:value="${find}">
             <div class="tip_view_title">
                 <h3>[[${article.title}]]</h3>
                 <span class="tip_view_nick"><div class="tipIcon" th:style="'background: url('+ @{/img/favicon_x32.png}+');'"></div>&nbsp헬로펫</span>
@@ -100,9 +114,6 @@
                 		</div>
                 	</div>
                 </div>
-                <th:block>
-		    		<input type="hidden" name="uid" th:value="${#authentication.principal.member.uid}" sec:authorize="isAuthenticated()">
-		    	</th:block>
                 <div class="view_link">
                     <a th:href="@{/community/tip/list}"><button class="view_list">목록</button></a>
                     <a sec:authorize="hasAuthority('ROLE_7')" th:href="@{/community/tip/modify(group='tip', no=${article.no})}"><button class="view_modify">수정</button></a>

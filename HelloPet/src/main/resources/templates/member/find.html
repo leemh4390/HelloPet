@@ -1,4 +1,4 @@
-<th:block th:include="/member/_header.html"/>
+<th:block th:include="@{member/_header.html}"/>
 <script>
     $(document).ready(function(){
         $('button[name=btnFindEmail]').click(function(){
@@ -74,11 +74,11 @@
 <div class="find_div">
     <main class="find_main">
         <div class="findEmail">
-            <h3>이메일 찾기</h3>
+            <h3>아이디 찾기</h3>
             <div>
                 <input type="text" name="name" placeholder="이름">
                 <input type="text" name="hp" placeholder="010-0000-0000">
-                <button type="button" name="btnFindEmail">이메일찾기</button>
+                <button type="button" name="btnFindEmail">아이디찾기</button>
             </div>
         </div>
         <div class="findPass">
@@ -100,4 +100,4 @@
             <a href="">개인정보취급방침 ></a>
     </div>
 </div>
-<th:block th:include="/member/_footer.html"/>
+<th:block th:include="@{member/_footer.html}"/>

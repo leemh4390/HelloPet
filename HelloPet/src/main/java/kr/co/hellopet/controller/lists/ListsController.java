@@ -1,5 +1,6 @@
 package kr.co.hellopet.controller.lists;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class ListsController {
 	private ListsService service;
 
 	@GetMapping("lists/list")
-	public String list(Model model, @RequestParam(value ="type", required=false) String type, String pg) {
+	public String list(Model model, @RequestParam(value ="type", required=false) String type, String pg, Principal principal) {
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int result = service.selectMsg(uid);
+			model.addAttribute("result", result);
+		}
 		
 		int currentPage = service.getCurrentPage(pg);
         int start = service.getLimitStart(currentPage);
@@ -36,8 +43,6 @@ public class ListsController {
 		List<ListsVO> hits = service.selectHit(start);
 		List<ListsVO> news = service.selectNew(start);
 		List<ListsVO> reserves = service.selectReserve(start);
-		
-		
 		
 		model.addAttribute("type", type);
 		model.addAttribute("hits", hits);

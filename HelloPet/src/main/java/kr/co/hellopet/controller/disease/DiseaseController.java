@@ -1,5 +1,6 @@
 package kr.co.hellopet.controller.disease;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,13 @@ public class DiseaseController {
 	/*dog*/
 	
 	@GetMapping("disease/index")
-	public String index(Model model, String group) {
+	public String index(Model model, String group, Principal principal) {
+		
+		if(principal != null) {
+			String uid = principal.getName();
+			int result = service.selectMsg(uid);
+			model.addAttribute("result", result);
+		}
 		
 		if(group == null) {
 			group = "dog";
@@ -43,16 +50,20 @@ public class DiseaseController {
 		model.addAttribute("resultMaps", resultMaps);
 		model.addAttribute("group", group);
 		
+		
 		return "disease/index";
 		
 	}
 	
 	@GetMapping("disease/view")
-	public String view(Model model, int cate1, int cate2) {
-		
+	public String view(Model model, int cate1, int cate2, Principal principal) {
 		DiseaseVO vo = service.selectDisease(cate1, cate2);
-		
 		model.addAttribute("vo", vo);
+		if(principal != null) {
+			String uid = principal.getName();
+			int result = service.selectMsg(uid);
+			model.addAttribute("result", result);
+		}
 		
 		return "disease/view";
 	}

@@ -4,6 +4,77 @@
 	$(function(){
 		var uid = $('input[name=uid]').val();
 		console.log(uid);
+		
+		$('button[name=btnWithdrawAdmin]').click(function(e){
+			e.preventDefault();
+
+			let uid = $('input[name=uid]').val();
+
+			let jsonData = {'uid' : uid};
+
+			let aws = confirm('탈퇴하시겠습니까?');
+
+			if(aws){
+
+				$.ajax({
+					url : '/HelloPet/admin/withdrawAdmin',
+					method : 'GET',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						console.log(data);
+						if(data == 1){
+								$.ajax({
+		                        url: '/HelloPet/member/logout',
+		                        method: 'GET',
+		                        success: function(){
+		                            alert('탈퇴 완료 되었습니다.');
+		                            location.href = '/HelloPet/';
+		                        }
+	                    	});
+						}else{
+							// 실패
+							alert('실패하였습니다. 관리자에게 문의해주세요.');
+						}
+					}
+				});
+			}
+		});
+		$('button[name=btnWithdrawOwner]').click(function(e){
+			e.preventDefault();
+
+			let uid = $('input[name=uid]').val();
+
+			let jsonData = {'uid' : uid};
+
+			let aws = confirm('탈퇴하시겠습니까?');
+
+			if(aws){
+
+				$.ajax({
+					url : '/HelloPet/admin/withdrawOwner',
+					method : 'GET',
+					data : jsonData,
+					dataType : 'json',
+					success : function(data){
+						console.log(data);
+						if(data == 1){
+								$.ajax({
+		                        url: '/HelloPet/member/logout',
+		                        method: 'GET',
+		                        success: function(){
+		                            alert('탈퇴 완료 되었습니다.');
+		                            location.href = '/HelloPet/';
+		                        }
+	                    	});
+						}else{
+							// 실패
+							alert('실패하였습니다. 관리자에게 문의해주세요.');
+						}
+					}
+				});
+			}
+		});
 	});
 	
 </script>
@@ -12,15 +83,15 @@
                 <h3>정보관리</h3>
             </div>
             <div class="info_div">
-                <table class="info_table">
+                <table class="info_table" sec:authorize="hasAuthority('ROLE_2')">
                 <input type="hidden" name="uid" th:value="${#authentication.principal.medical.uid}"/>
                     <tr>
                         <td>아이디</td>
-                        <td><span th:text="${vo.uid}"></span></td>
+                        <td><span name="uid" th:text="${vo.uid}"></span></td>
                     </tr>
                     <tr>
                         <td>비밀번호</td>
-                        <td><a href="#"><button>비밀번호수정</button></a></td>
+                        <td><a th:href="@{/admin/pwChange}"><button>비밀번호수정</button></a></td>
                     </tr>
                     <tr>
                         <td>병원명/약국명</td>
@@ -44,11 +115,87 @@
                     </tr>
                     <tr>
                         <td>회원탈퇴</td>
-                        <td><a href="#"><button>탈퇴하기</button></a></td>
+                        <td><button name="btnWithdrawAdmin">탈퇴하기</button></td>
                     </tr>
                     <tr>
                         <td>주소</td>
                         <td><span th:text="${#authentication.principal.medical.addr1}"></span></td>
+                    </tr>
+                    
+                </table>
+                <table class="info_table" sec:authorize="hasAuthority('ROLE_3')">
+                <input type="hidden" name="uid" th:value="${#authentication.principal.medical.uid}"/>
+                    <tr>
+                        <td>아이디</td>
+                        <td><span name="uid" th:text="${vo.uid}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td><a th:href="@{/admin/pwChange}"><button>비밀번호수정</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>병원명/약국명</td>
+                        <td><span th:text="${vo.medicalName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>TEL</td>
+                        <td><span th:text="${vo.tel}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>EMAIL</td>
+                        <td><span th:text="${vo.email}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>대표자명</td>
+                        <td><span th:text="${vo.ceo}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>대표자 전화번호</td>
+                        <td><span th:text="${vo.ceoHp}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>회원탈퇴</td>
+                        <td><button name="btnWithdrawAdmin">탈퇴하기</button></td>
+                    </tr>
+                    <tr>
+                        <td>주소</td>
+                        <td><span th:text="${#authentication.principal.medical.addr1}"></span></td>
+                    </tr>
+                    
+                </table>
+                <table class="info_table" sec:authorize="hasAuthority('ROLE_7')">
+                <input type="hidden" name="uid" sec:authorize="hasAuthority('ROLE_7')" th:value="${#authentication.principal.member.uid}"/>
+                    <tr>
+                        <td>아이디</td>
+                        <td><span name="uid" th:text="${user.uid}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td><a th:href="@{/admin/pwChangeUser}"><button>비밀번호수정</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>이름</td>
+                        <td><span th:text="${user.name}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>전화번호</td>
+                        <td><span th:text="${user.hp}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>EMAIL</td>
+                        <td><span th:text="${user.email}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>닉네임</td>
+                        <td><span th:text="${user.nick}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>회원탈퇴</td>
+                        <td><button name="btnWithdrawOwner">탈퇴하기</button></td>
+                    </tr>
+                    <tr>
+                        <td>주소</td>
+                        <td><span th:text="${#authentication.principal.member.addr1}"></span></td>
                     </tr>
                     
                 </table>
@@ -57,4 +204,4 @@
                 </div>
             </div>
         </main>
-<th:block th:include="@{_footer.html}"/>
+<th:block th:include="@{admin/_footer.html}"/>

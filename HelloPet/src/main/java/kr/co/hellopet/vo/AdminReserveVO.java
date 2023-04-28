@@ -16,7 +16,7 @@ import lombok.ToString;
 public class AdminReserveVO {
 	
 	private int id;
-	private int revNo;
+	private Integer revNo;
 	private String uid;
 	private String medNo;
 	private String oPh;
@@ -34,5 +34,16 @@ public class AdminReserveVO {
 	private String revTime;
 	private String rdate;
 	private int status;
+	
+	private String medicalName;
+	private int coupon;
+	
+	// 메시지
+	private int msgNo;
+	private String medical;
+	private String title;
+	private String content;
+	private int msgStatus;
+	private String msgRdate;
 
 }
