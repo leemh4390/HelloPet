@@ -56,9 +56,7 @@
                             <input type="checkbox" name="remember-me"><i class="circle"></i><span class="text">아이디저장</span>
                         </div>
                         <input type="submit" id="login" value="로그인">
-	                    <!-- 네이버 로그인 버튼 노출 영역 -->
-					    <div id="naver_id_login"></div>
-					    <!-- //네이버 로그인 버튼 노출 영역 -->
+                        <input type="naver" id="naver" value="Naver 로 로그인">
                         <input type="text" id="kakao" value="Kakao 로 로그인">
                         <input type="text" id="apple" value="Apple 로 로그인">
                         <ul>
@@ -73,12 +71,4 @@
         </article>
     </div>
 </main>
-<script type="text/javascript">
-    var naver_id_login = new naver_id_login("jiZuINHHWMgk1sv9NlGc", "http://localhost:8081/HelloPet/");
-    var state = naver_id_login.getUniqState();
-    naver_id_login.setButton("green", 3,40);
-    naver_id_login.setDomain("http://127.0.0.1:8081/HelloPet/member/login");
-    naver_id_login.setState(state);
-    naver_id_login.init_naver_id_login();
-</script>
 <th:block th:include="@{member/_footer.html}"/>

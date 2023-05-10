@@ -332,7 +332,16 @@ input[name=privacy_check] {
     color: #fff;
 }
 
-input[id=naver] {}
+input[id=naver] {
+	background: url(../img/social-n.png) no-repeat;
+    background-position-x: 10px;
+    background-position-y: 10px;
+    text-align: center;
+    background-size: auto 30px;
+    background-color: #81c147;
+    font-size: 14px;
+    color: #000;
+}
 
 input[id=kakao] {
     background: url(../img/social-k.png) no-repeat;
